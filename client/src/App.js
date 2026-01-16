@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import BirthdayReveal from './BirthdayReveal';
+import FlowerGarden from './FlowerGarden';
 
 function App() {
   const [status, setStatus] = useState(null);
@@ -140,6 +141,8 @@ function App() {
   // --- VIEW 4: COUNTDOWN & QUESTS ---
   return (
     <div className="app-container">
+      {/* 🌸 THE MAGIC BACKGROUND 🌸 */}
+      <FlowerGarden />
       <h1>🎂 {status.daysLeft} Days to Go! 🎂</h1>
       <p className="subtitle">Target: {new Date(userDate).toDateString()}</p>
       
