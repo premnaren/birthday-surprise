@@ -1,0 +1,135 @@
+/* client/src/BirthdayReveal.css */
+
+/* 1. THE CURTAIN (Intro Layer) */
+.curtain-container {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: white;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: transform 1.5s ease-in-out;
+    text-align: center;
+    /* Cute polka dot background */
+    background-image: radial-gradient(#ffccd5 20%, transparent 20%), radial-gradient(#ffccd5 20%, transparent 20%);
+    background-position: 0 0, 50px 50px;
+    background-size: 100px 100px;
+}
+
+.curtain-text {
+    font-size: 3.5rem;
+    color: #ff8fa3;
+    text-shadow: 2px 2px 0px #590d22;
+    animation: bounce 2s infinite;
+    margin-bottom: 30px;
+}
+
+.btn-open-curtain {
+    padding: 15px 40px;
+    font-size: 1.2rem;
+    background: #ff4d6d;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
+    transition: transform 0.2s;
+}
+
+.btn-open-curtain:hover { transform: scale(1.1); }
+
+/* Animation to slide the curtain up */
+.curtain-open {
+    transform: translateY(-100%);
+}
+
+/* 2. THE MAIN PHOTO AREA */
+.reveal-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff0f3;
+    position: relative;
+    overflow: hidden;
+}
+
+.photo-frame {
+    position: relative;
+    width: 300px;
+    height: 400px;
+    background: white;
+    padding: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    transform: rotate(-3deg);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.3s;
+    z-index: 10;
+}
+
+.photo-frame:hover {
+    transform: rotate(0deg) scale(1.05);
+}
+
+.photo-img {
+    width: 100%;
+    height: 80%;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.caption {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.click-hint {
+    margin-top: 5px;
+    font-size: 0.8rem;
+    color: #888;
+}
+
+/* 3. THE LETTER CARD POPUP */
+.letter-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    animation: fadeIn 0.5s;
+}
+
+.letter-card {
+    background: white;
+    width: 90%;
+    max-width: 400px;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    border: 5px solid #ff8fa3;
+    position: relative;
+    animation: popUp 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.cute-sticker {
+    width: 120px;
+    margin-bottom: 20px;
+}
+
+.letter-body {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    font-family: 'Courier New', monospace; /* Looks like a typed letter */
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
