@@ -1,79 +1,104 @@
-// client/src/BirthdayReveal.js
-import React, { useState, useRef } from 'react';
-import './BirthdayReveal.css';
+import React, { useState, useEffect } from 'react';
+import FlowerGarden from './FlowerGarden'; // 1. Import the Flowers
 
-function BirthdayReveal() {
-    const [isOpen, setIsOpen] = useState(false);
-    const [showLetter, setShowLetter] = useState(false);
-    
-    // Audio ref to handle music
-    const audioRef = useRef(null);
+const BirthdayReveal = () => {
+    // --- THEME LOGIC (Same as App.js) ---
+    const [theme, setTheme] = useState(localStorage.getItem('app_theme') || 'system');
 
-    const handleOpenCurtain = () => {
-        setIsOpen(true);
-        // Try to play music when user clicks (browsers block autoplay)
-        if (audioRef.current) {
-            audioRef.current.play().catch(e => console.log("Audio play failed", e));
+    useEffect(() => {
+        const root = document.documentElement;
+        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const isDark = theme === 'dark' || (theme === 'system' && systemDark);
+
+        if (isDark) {
+            root.setAttribute('data-theme', 'dark');
+        } else {
+            root.removeAttribute('data-theme');
         }
-    };
+        localStorage.setItem('app_theme', theme);
+    }, [theme]);
 
     return (
-        <div className="reveal-container">
-            {/* 0. HIDDEN AUDIO PLAYER */}
-            {/* Put your song.mp3 in the 'public' folder of your react app */}
-            <audio ref={audioRef} loop>
-                <source src="/song.mp3" type="audio/mpeg" />
-            </audio>
+        <div className="birthday-container" style={{ 
+            textAlign: 'center', 
+            padding: '50px', 
+            minHeight: '100vh',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            color: 'var(--text-color)', // Use Theme Colors
+            position: 'relative'
+        }}>
+            
+            {/* 🌸 1. THE FLOWERS 🌸 */}
+            <FlowerGarden />
 
-            {/* 1. THE CURTAIN LAYER */}
-            <div className={`curtain-container ${isOpen ? 'curtain-open' : ''}`}>
-                <h1 className="curtain-text">Happy<br/>Birthday!</h1>
-                <button className="btn-open-curtain" onClick={handleOpenCurtain}>
-                    Tap to Open 🎁
-                </button>
+            {/* 🌗 2. THEME TOGGLE (Top Right) 🌗 */}
+            <div className="theme-toggle" style={{ position: 'fixed', top: '20px', right: '20px' }}>
+                <button 
+                    className={theme === 'light' ? 'active' : ''} 
+                    onClick={() => setTheme('light')}>☀️</button>
+                <button 
+                    className={theme === 'system' ? 'active' : ''} 
+                    onClick={() => setTheme('system')}>💻</button>
+                <button 
+                    className={theme === 'dark' ? 'active' : ''} 
+                    onClick={() => setTheme('dark')}>🌙</button>
             </div>
 
-            {/* 2. THE MAIN PHOTO REVEAL */}
-            {/* Only clickable after curtain opens */}
-            <div className="photo-frame" onClick={() => isOpen && setShowLetter(true)}>
-                {/* --- REPLACE WITH HER PHOTO URL --- */}
-                <img 
-                    src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" 
-                    alt="Birthday Girl" 
-                    className="photo-img" 
-                />
+            {/* THE CONTENT CARD */}
+            <div className="card" style={{ padding: '40px', maxWidth: '600px', zIndex: 2 }}>
+                <h1>🎉 Happy Birthday! 🎉</h1>
+                <p style={{ fontSize: '1.2rem', margin: '20px 0' }}>
+                    You unlocked all the surprises! I hope you liked this little digital gift.
+                </p>
                 
-                <div className="caption">
-                    <h2>My Love ❤️</h2>
-                    <p className="click-hint">(Tap the photo!)</p>
+                {/* Placeholder for a photo if you want one */}
+                <div style={{ 
+                    width: '100%', 
+                    height: '200px', 
+                    backgroundColor: '#ffe5ec', 
+                    borderRadius: '15px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    margin: '20px 0',
+                    color: '#ff4d6d'
+                }}>
+                    (Insert Cute Photo Here) 📸
                 </div>
+
+                <p>I love you so much! ❤️</p>
             </div>
 
-            {/* 3. THE FINAL LETTER */}
-            {showLetter && (
-                <div className="letter-overlay">
-                    <div className="letter-card">
-                        <img 
-                            src="https://cdn-icons-png.flaticon.com/512/4213/4213642.png" 
-                            alt="Cute Bear" 
-                            className="cute-sticker"
-                        />
-                        <h3>To my favorite person,</h3>
-                        <p className="letter-body">
-                            Happy Birthday! 🎉<br/><br/>
-                            You are the best thing that ever happened to me. 
-                            I hope today brings you as much joy as you bring into my life.
-                            <br/><br/>
-                            Let's celebrate! 🎂
-                        </p>
-                        <button className="btn-close" onClick={() => setShowLetter(false)}>
-                            Close ❤️
-                        </button>
-                    </div>
-                </div>
-            )}
+            {/* 🔄 3. RESET BUTTON (Bottom Right) 🔄 */}
+            <button 
+                onClick={() => {
+                    if(window.confirm("Are you sure you want to reset the app?")) {
+                        localStorage.clear();
+                        window.location.reload();
+                    }
+                }}
+                style={{
+                    position: 'fixed',
+                    bottom: '20px',
+                    right: '20px',
+                    background: 'var(--card-bg)',
+                    color: 'var(--text-color)',
+                    border: '2px solid var(--secondary-color)',
+                    padding: '10px 15px',
+                    borderRadius: '30px',
+                    cursor: 'pointer',
+                    fontWeight: 'bold',
+                    zIndex: 100,
+                    boxShadow: '0 4px 10px rgba(0,0,0,0.1)'
+                }}
+            >
+                🔄 Reset App
+            </button>
         </div>
     );
-}
+};
 
 export default BirthdayReveal;
