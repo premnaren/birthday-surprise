@@ -488,3 +488,81 @@ h1 {
     visibility: visible; /* <--- Shows it */
     opacity: 1;          /* <--- Makes it solid */
 }
+
+/* --- COLOR VARIABLES (The Magic) --- */
+:root {
+    /* LIGHT MODE (Your current pink theme) */
+    --bg-color: #ffe5ec;
+    --text-color: #590d22;
+    --card-bg: #ffffff;
+    --card-shadow: rgba(255, 143, 163, 0.3);
+    --primary-color: #ff4d6d;
+    --secondary-color: #ff8fa3;
+    --locked-bg: #e0e0e0;
+}
+
+[data-theme='dark'] {
+    /* DARK MODE (Vampire/Romantic Dark Theme) */
+    --bg-color: #2b0811;       /* Very dark maroon */
+    --text-color: #ffe5ec;     /* Light pink text */
+    --card-bg: #4a101e;        /* Darker red card */
+    --card-shadow: rgba(0, 0, 0, 0.4);
+    --primary-color: #ff8fa3;  /* Softer pink for dark mode */
+    --secondary-color: #800f2f;
+    --locked-bg: #3d2b2f;
+}
+
+/* Apply the variables */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+}
+
+/* --- THEME BUTTONS --- */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--card-bg);
+    padding: 5px;
+    border-radius: 30px;
+    box-shadow: 0 4px 10px var(--card-shadow);
+    display: flex;
+    gap: 5px;
+    z-index: 1000;
+}
+
+.theme-toggle button {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 50%;
+    transition: 0.2s;
+    opacity: 0.5;
+}
+
+.theme-toggle button.active {
+    background-color: var(--bg-color);
+    opacity: 1;
+    transform: scale(1.1);
+    box-shadow: 0 2px 5px var(--card-shadow);
+}
+
+.card {
+    background: var(--card-bg); /* Use variable */
+    color: var(--text-color);   /* Use variable */
+    /* ... keep your other settings like padding/border-radius ... */
+    box-shadow: 0 10px 20px var(--card-shadow);
+}
+
+.date-input {
+    background-color: var(--card-bg);
+    color: var(--primary-color);
+    border: 3px solid var(--secondary-color);
+    /* ... keep other settings ... */
+}

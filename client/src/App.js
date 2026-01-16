@@ -9,6 +9,26 @@ function App() {
   const [inputAnswer, setInputAnswer] = useState("");
   const [showReward, setShowReward] = useState(null);
   const [showHint, setShowHint] = useState(false);
+
+  // --- THEME STATE ---
+  const [theme, setTheme] = useState(localStorage.getItem('app_theme') || 'system');
+
+  // Apply Theme Logic
+  useEffect(() => {
+    const root = document.documentElement;
+    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    // Determine if we should be dark
+    const isDark = theme === 'dark' || (theme === 'system' && systemDark);
+
+    if (isDark) {
+      root.setAttribute('data-theme', 'dark');
+    } else {
+      root.removeAttribute('data-theme');
+    }
+    
+    localStorage.setItem('app_theme', theme);
+  }, [theme]);
   
   // NEW: Store the user's birthdate
   const [userDate, setUserDate] = useState(localStorage.getItem('birthday_date') || "");
@@ -143,6 +163,22 @@ function App() {
     <div className="app-container">
       {/* 🌸 THE MAGIC BACKGROUND 🌸 */}
       <FlowerGarden />
+
+      {/* THEME TOGGLE BUTTONS */}
+      <div className="theme-toggle">
+        <button 
+            className={theme === 'light' ? 'active' : ''} 
+            onClick={() => setTheme('light')} 
+            title="Light Mode">☀️</button>
+        <button 
+            className={theme === 'system' ? 'active' : ''} 
+            onClick={() => setTheme('system')} 
+            title="System Default">💻</button>
+        <button 
+            className={theme === 'dark' ? 'active' : ''} 
+            onClick={() => setTheme('dark')} 
+            title="Dark Mode">🌙</button>
+      </div>
       <h1>🎂 {status.daysLeft} Days to Go! 🎂</h1>
       <p className="subtitle">Target: {new Date(userDate).toDateString()}</p>
       
