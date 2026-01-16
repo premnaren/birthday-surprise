@@ -73,10 +73,10 @@ const BirthdayReveal = () => {
                 <h1>🎉 Happy Birthday, My Love! 🎉</h1>
                 
                 {/* PHOTO SECTION */}
-                <div className="photo-frame">
-    {/* Make sure the slash / is there! */}
-    <img src="/us.jpg" alt="Us" />
-</div>
+                    <div className="photo-frame">
+                    {/* The slash '/' tells it to look in the public folder */}
+                    <img src="/us.jpg" alt="Us" />
+                </div>
 
                 {/* NOTE SECTION */}
                 <div className="note-content">

@@ -664,3 +664,54 @@ body {
     color: white;
     transform: scale(1.1);
 }
+
+/* --- NOTEBOOK PAPER STYLE --- */
+.note-content {
+    /* 1. Paper Background */
+    background-color: #fffbf0; /* Slight off-white/cream color */
+    
+    /* 2. Drawing the Lines (Magic!) */
+    background-image: 
+        /* The Vertical Red Margin Line */
+        linear-gradient(90deg, transparent 49px, #ff8fa3 49px, #ff8fa3 51px, transparent 51px),
+        /* The Horizontal Blue Lines */
+        linear-gradient(#e1e1e1 1px, transparent 1px);
+    
+    /* 3. Sizing the Lines */
+    background-size: 100% 100%, 100% 30px; /* 30px is the height of one line */
+    background-attachment: local;
+    
+    /* 4. Text Alignment */
+    line-height: 30px; /* MUST match the background-size height to sit on lines */
+    padding: 30px 20px 30px 60px; /* Left padding (60px) pushes text past the red margin */
+    
+    /* 5. Font Styling */
+    font-family: 'Indie Flower', 'Comic Sans MS', cursive; /* Handwritten style */
+    font-size: 1.1rem;
+    color: #2b2d42; /* Dark ink color */
+    text-align: left; /* Handwriting is usually left-aligned */
+    
+    /* 6. Paper Effects */
+    margin: 20px auto;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.1); /* Drop shadow */
+    border: 1px solid #e0e0e0;
+    border-radius: 2px; /* Slight sharp corners like real paper */
+    position: relative;
+}
+
+/* Optional: Add "Tape" at the top to make it look stuck on */
+.note-content::before {
+    content: "";
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 30px;
+    background-color: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transform: translateX(-50%) rotate(-2deg); /* Tilted tape */
+}
