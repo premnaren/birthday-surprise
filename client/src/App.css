@@ -413,3 +413,78 @@ h1 {
     opacity: 1;
     transform: scale(1.2);
 }
+
+/* --- LOCKED CARD TOOLTIP --- */
+.card {
+    position: relative; /* Needed to position the tooltip inside */
+    overflow: visible;  /* Allow tooltip to go outside bounds if needed */
+}
+
+.locked-tooltip {
+    visibility: hidden;
+    background-color: #590d22; /* Dark red/pink background */
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 10px;
+    
+    /* Position it */
+    position: absolute;
+    bottom: -35px; /* Floats below the card */
+    left: 50%;
+    transform: translateX(-50%);
+    
+    /* Font style */
+    font-size: 0.8rem;
+    white-space: nowrap; /* Keep it on one line */
+    z-index: 10;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+/* Create a tiny arrow pointing up */
+.locked-tooltip::after {
+    content: "";
+    position: absolute;
+    bottom: 100%; /* At the top of the tooltip */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #590d22 transparent;
+}
+
+/* Show tooltip on hover */
+.card.locked:hover .locked-tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* 1. Default State: HIDDEN */
+.locked-tooltip {
+    visibility: hidden; /* <--- CRITICAL: Hides it normally */
+    opacity: 0;         /* <--- CRITICAL: Makes it transparent */
+    
+    /* Styling */
+    background-color: #590d22;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 10px;
+    position: absolute;
+    bottom: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.8rem;
+    white-space: nowrap;
+    z-index: 10;
+    transition: opacity 0.3s;
+}
+
+/* 2. Hover State: VISIBLE */
+/* This code runs ONLY when mouse is on the card */
+.card.locked:hover .locked-tooltip {
+    visibility: visible; /* <--- Shows it */
+    opacity: 1;          /* <--- Makes it solid */
+}
