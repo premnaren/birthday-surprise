@@ -74,9 +74,9 @@ const BirthdayReveal = () => {
                 
                 {/* PHOTO SECTION */}
                 <div className="photo-frame">
-                    {/* REPLACE THIS WITH YOUR IMAGE TAG */}
-                    <img src="https://via.placeholder.com/300" alt="Us" style={{width:'100%', borderRadius:'10px'}} />
-                </div>
+    {/* Make sure the slash / is there! */}
+    <img src="/us.jpg" alt="Us" />
+</div>
 
                 {/* NOTE SECTION */}
                 <div className="note-content">
