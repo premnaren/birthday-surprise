@@ -12,7 +12,7 @@ function App() {
   const [showHint, setShowHint] = useState(false);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/status')
+    fetch('https://birthday-surprise-fa8d.onrender.com/api/status')
       .then(res => res.json())
       .then(data => setStatus(data))
       .catch(err => {
