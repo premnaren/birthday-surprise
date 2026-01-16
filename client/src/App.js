@@ -17,7 +17,7 @@ function App() {
     if (!userDate) return; // Don't fetch if we don't have a date yet
 
     // Replace with your RENDER URL in production!
-    const API_BASE = 'http://localhost:5000'; 
+    const API_BASE = 'https://birthday-surprise-fa8d.onrender.com'; 
     // const API_BASE = 'https://your-render-app.onrender.com';
 
     fetch(`${API_BASE}/api/status?date=${userDate}`)
