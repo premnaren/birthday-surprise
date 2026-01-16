@@ -75,7 +75,7 @@ const BirthdayReveal = () => {
                 {/* PHOTO SECTION */}
                     <div className="photo-frame">
                     {/* The slash '/' tells it to look in the public folder */}
-                    <img src="/us.jpeg" alt="Us" />
+                    <img src="/couple.jpg" alt="Us" />
                 </div>
 
                 {/* NOTE SECTION */}
