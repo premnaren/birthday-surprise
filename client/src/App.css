@@ -715,3 +715,83 @@ body {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     transform: translateX(-50%) rotate(-2deg); /* Tilted tape */
 }
+
+/* --- INTERACTIVE NOTE STYLES --- */
+
+/* The Container */
+.note-section {
+    margin-top: 30px;
+    height: auto; /* Allow it to grow */
+    min-height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 1. The Folded Envelope (Hidden State) */
+.folded-note {
+    background: #fff;
+    width: 200px;
+    height: 120px;
+    border-radius: 10px;
+    border: 2px solid #ff8fa3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    background-image: repeating-linear-gradient(
+        45deg,
+        #fff,
+        #fff 10px,
+        #ffe5ec 10px,
+        #ffe5ec 20px
+    );
+}
+
+.folded-note:hover {
+    transform: scale(1.05) rotate(2deg);
+    box-shadow: 0 8px 20px rgba(255, 77, 109, 0.3);
+}
+
+.heart-seal {
+    font-size: 2.5rem;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+.folded-note p {
+    margin-top: 5px;
+    font-weight: bold;
+    color: #590d22;
+    font-size: 0.9rem;
+}
+
+/* 2. The Open Note (Visible State) */
+.note-content.open {
+    animation: unfold 0.6s ease-out; /* Fun unfolding animation */
+    cursor: pointer; /* Click to close */
+}
+
+/* Tiny hint text at bottom of note */
+.close-hint {
+    display: block;
+    margin-top: 15px;
+    font-size: 0.7rem;
+    color: #888;
+    font-style: italic;
+}
+
+/* Unfold Animation */
+@keyframes unfold {
+    0% {
+        transform: scaleY(0.1);
+        opacity: 0;
+    }
+    100% {
+        transform: scaleY(1);
+        opacity: 1;
+    }
+}

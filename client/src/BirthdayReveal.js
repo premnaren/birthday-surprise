@@ -1,15 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import FlowerGarden from './FlowerGarden';
-import couplePhoto from './couple.jpg';
-import './App.css'; // Ensure CSS is linked
+import couplePhoto from './couple.jpg'; // Importing the photo directly!
+import './App.css'; 
 
 const BirthdayReveal = () => {
     // --- STATE MANAGEMENT ---
     const [theme, setTheme] = useState(localStorage.getItem('app_theme') || 'system');
     const [curtainOpen, setCurtainOpen] = useState(false);
+    const [noteOpen, setNoteOpen] = useState(false); // <--- NEW STATE FOR NOTE
     const audioRef = useRef(null);
 
-    // --- 1. THEME LOGIC ---
+    // --- THEME LOGIC ---
     useEffect(() => {
         const root = document.documentElement;
         const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -21,10 +22,9 @@ const BirthdayReveal = () => {
         localStorage.setItem('app_theme', theme);
     }, [theme]);
 
-    // --- 2. MUSIC CONTROL ---
+    // --- MUSIC CONTROL ---
     const handleCurtainClick = () => {
         setCurtainOpen(true);
-        // Try to play music when user interacts (browsers block auto-play)
         if (audioRef.current) {
             audioRef.current.play().catch(e => console.log("Audio play failed:", e));
         }
@@ -34,7 +34,7 @@ const BirthdayReveal = () => {
         <div className="birthday-container" style={{ 
             minHeight: '100vh',
             position: 'relative',
-            overflow: 'hidden', // Keeps curtain inside
+            overflow: 'hidden',
             color: 'var(--text-color)',
             display: 'flex',
             justifyContent: 'center',
@@ -44,20 +44,19 @@ const BirthdayReveal = () => {
             {/* 🌸 BACKGROUND FLOWERS 🌸 */}
             <FlowerGarden />
 
-            {/* 🎵 AUDIO PLAYER (Hidden) 🎵 */}
-            {/* REPLACE '/song.mp3' with your actual music file in the public folder */}
+            {/* 🎵 AUDIO PLAYER 🎵 */}
             <audio ref={audioRef} loop>
                 <source src="/song.mp3" type="audio/mpeg" />
             </audio>
 
-            {/* 🌗 THEME TOGGLE (Top Right) 🌗 */}
+            {/* 🌗 THEME TOGGLE 🌗 */}
             <div className="theme-toggle" style={{ position: 'fixed', top: '20px', right: '20px', zIndex: 50 }}>
                 <button className={theme === 'light' ? 'active' : ''} onClick={() => setTheme('light')}>☀️</button>
                 <button className={theme === 'system' ? 'active' : ''} onClick={() => setTheme('system')}>💻</button>
                 <button className={theme === 'dark' ? 'active' : ''} onClick={() => setTheme('dark')}>🌙</button>
             </div>
 
-            {/* 🎭 THE CURTAIN (Slides Up) 🎭 */}
+            {/* 🎭 THE CURTAIN 🎭 */}
             <div 
                 className={`curtain ${curtainOpen ? 'open' : ''}`} 
                 onClick={handleCurtainClick}
@@ -69,31 +68,42 @@ const BirthdayReveal = () => {
                 </div>
             </div>
 
-            {/* 💌 MAIN CONTENT (The Note & Photo) 💌 */}
-            <div className="card birthday-card">
+            {/* 💌 MAIN CONTENT 💌 */}
+            <div className="birthday-card">
                 <h1>🎉 Happy Birthday, My Love! 🎉</h1>
                 
                 {/* PHOTO SECTION */}
-                    <div className="photo-frame">
-    {/* We use the variable name inside curly braces now */}
-    <img src={couplePhoto} alt="Us" />
-</div>
-
-                {/* NOTE SECTION */}
-                <div className="note-content">
-                    <p>
-                        To my favorite person in the world, <br/><br/>
-                        I hope you enjoyed this little countdown! You make every day brighter 
-                        just by being you. I can't wait to celebrate with you today.
-                        <br/><br/>
-                        P.S. You can click on the background to plant flowers for me! 🌸
-                    </p>
+                <div className="photo-frame">
+                    <img src={couplePhoto} alt="Us" />
                 </div>
-                
-                <p className="signature">With all my love, <br/> <strong>Prem</strong> ❤️</p>
+
+                {/* --- THE INTERACTIVE NOTE --- */}
+                <div className="note-section">
+                    {!noteOpen ? (
+                        // 1. CLOSED STATE (The Envelope)
+                        <div className="folded-note" onClick={() => setNoteOpen(true)}>
+                            <div className="heart-seal">❤️</div>
+                            <p>Read My Letter</p>
+                        </div>
+                    ) : (
+                        // 2. OPEN STATE (The Notebook Paper)
+                        <div className="note-content open" onClick={() => setNoteOpen(false)}>
+                            <p>
+                                To my favorite person in the world, <br/><br/>
+                                I hope you enjoyed this little countdown! You make every day brighter 
+                                just by being you. I can't wait to celebrate with you today.
+                                <br/><br/>
+                                P.S. You can click on the background to plant flowers for me! 🌸
+                            </p>
+                            <p className="signature">With all my love, <br/> <strong>Prem</strong> ❤️</p>
+                            <span className="close-hint">(Click to close)</span>
+                        </div>
+                    )}
+                </div>
+
             </div>
 
-            {/* 🔄 RESET BUTTON (Bottom Right) 🔄 */}
+            {/* 🔄 RESET BUTTON 🔄 */}
             <button 
                 onClick={() => {
                     if(window.confirm("Reset the app to Day 1?")) {
