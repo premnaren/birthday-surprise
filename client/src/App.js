@@ -101,6 +101,8 @@ function App() {
       }
   };
 
+  
+
   // --- VIEW 1: DATE ENTRY SCREEN ---
   if (!userDate) {
       return (
@@ -116,6 +118,18 @@ function App() {
           </div>
       );
   }
+
+  // --- HELPER: Calculate Unlock Date ---
+  const getUnlockDate = (dayLevel) => {
+      if (!userDate) return "";
+      const target = new Date(userDate);
+      // Logic: Day 1 unlocks 7 days before birthday. Day 7 unlocks 1 day before.
+      // Days to subtract = 8 - dayLevel
+      target.setDate(target.getDate() - (8 - dayLevel));
+      
+      // Return pretty format (e.g., "Jan 16")
+      return target.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  };
 
   // --- VIEW 2: LOADING ---
   if (!status) return <div className="loading">Checking the timeline...</div>;
@@ -139,10 +153,23 @@ function App() {
                 <div 
                     key={q.id} 
                     className={`card ${isCompleted ? 'done' : (isUnlocked ? 'unlocked' : 'locked')}`}
-                    onClick={() => { if (isUnlocked && !isCompleted) setActiveQuest(q); }}
+                    onClick={() => {
+                        if (isUnlocked && !isCompleted) setActiveQuest(q);
+                    }}
                 >
                     <div className="day-badge">Day {level}</div>
-                    <div className="status-icon">{isCompleted ? "✅" : (isUnlocked ? "🔓" : "🔒")}</div>
+                    <div className="status-icon">
+                        {isCompleted ? "✅" : (isUnlocked ? "🔓" : "🔒")}
+                    </div>
+
+                    {/* 👇 PASTE THIS NEW CODE HERE 👇 */}
+                    {!isUnlocked && (
+                        <div className="locked-tooltip">
+                            Unlocks {getUnlockDate(level)} 🔒
+                        </div>
+                    )}
+                    {/* 👆 END OF NEW CODE 👆 */}
+
                 </div>
             );
         })}
