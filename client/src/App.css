@@ -273,3 +273,37 @@ h1 {
     from { opacity: 0; transform: translateY(-5px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+.intro-screen {
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.intro-card {
+    width: 300px;
+    padding: 40px;
+    height: auto; /* Allow it to grow */
+}
+
+.date-input {
+    width: 100%;
+    padding: 15px;
+    margin: 20px 0;
+    border: 2px solid #ff8fa3;
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1rem;
+    color: #590d22;
+}
+
+.btn-reset {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.1);
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}

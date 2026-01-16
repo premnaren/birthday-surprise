@@ -1,116 +1,87 @@
 import React, { useState, useEffect } from 'react';
-import BirthdayReveal from './BirthdayReveal';
 import './App.css';
+import BirthdayReveal from './BirthdayReveal';
 
 function App() {
   const [status, setStatus] = useState(null);
   const [activeQuest, setActiveQuest] = useState(null);
   const [inputAnswer, setInputAnswer] = useState("");
-  const [showReward, setShowReward] = useState(null); 
-  
-  // NEW: State to toggle hint visibility
+  const [showReward, setShowReward] = useState(null);
   const [showHint, setShowHint] = useState(false);
+  
+  // NEW: Store the user's birthdate
+  const [userDate, setUserDate] = useState(localStorage.getItem('birthday_date') || "");
 
+  // 1. Fetch Status (Now Dynamic!)
   useEffect(() => {
-    fetch('https://birthday-surprise-fa8d.onrender.com/api/status')
+    if (!userDate) return; // Don't fetch if we don't have a date yet
+
+    // Replace with your RENDER URL in production!
+    const API_BASE = 'http://localhost:5000'; 
+    // const API_BASE = 'https://your-render-app.onrender.com';
+
+    fetch(`${API_BASE}/api/status?date=${userDate}`)
       .then(res => res.json())
       .then(data => setStatus(data))
-      .catch(err => {
-          console.error("Error connecting to server:", err);
-          setStatus({ daysLeft: 7, unlockedLevel: 1, isBirthday: false });
-      });
-  }, []);
+      .catch(err => console.error("Error:", err));
+  }, [userDate]);
 
-  // ---------------------------------------------------------
-  // 2. THE 7 QUESTS (Now with HINTS!)
-  // ---------------------------------------------------------
-  const quests = [
-      { 
-        id: 1, 
-        question: "Let's start easy. Where did we go for our very first date?", 
-        answer: "coffee", 
-        hint: "It involves beans and milk! ☕", // <--- NEW HINT
-        reward: "Yay! I transferred ₹500 to your GPay. Go buy yourself a treat! ☕" 
-      },
-      { 
-        id: 2, 
-        question: "What is the name of the first movie we watched together?", 
-        answer: "avengers", 
-        hint: "It has Iron Man and Thor in it. 🦸‍♂️",
-        reward: "Correct! Reward: A Coupon for '1 Free Back Massage' from me! 💆‍♀️" 
-      },
-      { 
-        id: 3, 
-        question: "I have a specific nickname for you. Type it below:", 
-        answer: "babu", 
-        hint: "It starts with 'B' and is 4 letters long. 👶",
-        reward: "Aww! Reward: Check the 'Saved Messages' in our chat for a voice note. 🎤" 
-      },
-      { 
-        id: 4, 
-        question: "What color was the dress you wore on my last birthday?", 
-        answer: "red", 
-        hint: "It's the color of roses (and my face when I see you). 🌹",
-        reward: "You look beautiful in it. Reward: I'm cooking dinner tonight! 🍝" 
-      },
-      { 
-        id: 5, 
-        question: "Virtual Hunt: What is the passcode to my phone?", 
-        answer: "1234", 
-        hint: "It's the most common password in the world. 🔢",
-        reward: "Correct! Reward: A hidden chocolate bar is inside your laptop bag! 🍫" 
-      },
-      { 
-        id: 6, 
-        question: "Almost there. Enter the date of our Anniversary (DDMM)", 
-        answer: "1016", 
-        hint: "It's in October! 📅",
-        reward: "Perfect. Reward: A custom Spotify Playlist I made just for you. 🎵" 
-      },
-      { 
-        id: 7, 
-        question: "Final Step: Just type 'Open' to unlock my heart.", 
-        answer: "open", 
-        hint: "Opposite of Close. 🔓",
-        reward: "You did it! Get ready for the big surprise tomorrow... ❤️" 
+  // Handle Date Submit
+  const handleDateSubmit = (e) => {
+      e.preventDefault();
+      const dateInput = e.target.elements.date.value;
+      if(dateInput) {
+          localStorage.setItem('birthday_date', dateInput);
+          setUserDate(dateInput);
       }
-  ];
-
-  const handleQuestClick = (quest) => {
-      setActiveQuest(quest);
-      setInputAnswer("");
-      setShowHint(false); // Reset hint when opening a new quest
   };
 
-  const checkAnswer = () => {
-      const cleanInput = inputAnswer.trim().toLowerCase();
-      const cleanAnswer = activeQuest.answer.toLowerCase();
+  // --- QUEST DATA (Keep your customized quests here) ---
+  const quests = [
+      { id: 1, question: "First date spot?", answer: "coffee", hint: "Beans!", reward: "Treat yourself! ☕" },
+      // ... Paste your other quests here ...
+      { id: 7, question: "Type 'Open'", answer: "open", hint: "Not closed", reward: "Big surprise tomorrow!" }
+  ];
 
-      if (cleanInput === cleanAnswer) {
+  // --- LOGIC HANDLERS ---
+  const checkAnswer = () => {
+      if (inputAnswer.trim().toLowerCase() === activeQuest.answer.toLowerCase()) {
           localStorage.setItem(`quest_${activeQuest.id}`, 'true');
           setShowReward(activeQuest.reward);
           setActiveQuest(null);
           setInputAnswer("");
       } else {
-          alert("Wrong answer! Try again, love. ❌");
+          alert("Try again! ❌");
       }
   };
 
-  const closeReward = () => {
-      setShowReward(null);
-  };
+  // --- VIEW 1: DATE ENTRY SCREEN ---
+  if (!userDate) {
+      return (
+          <div className="app-container intro-screen">
+              <div className="card intro-card">
+                  <h1>👋 Welcome!</h1>
+                  <p>Please enter your special date to begin.</p>
+                  <form onSubmit={handleDateSubmit}>
+                      <input type="date" name="date" required className="date-input" />
+                      <button type="submit" className="btn-submit">Enter</button>
+                  </form>
+              </div>
+          </div>
+      );
+  }
 
-  if (!status) return <div className="loading">Loading your surprise...</div>;
+  // --- VIEW 2: LOADING ---
+  if (!status) return <div className="loading">Checking the timeline...</div>;
 
- // 5. THE BIRTHDAY VIEW (Day 0)
-if (status.isBirthday) {
-    return <BirthdayReveal />;
-}
+  // --- VIEW 3: BIRTHDAY ---
+  if (status.isBirthday) return <BirthdayReveal />;
 
+  // --- VIEW 4: COUNTDOWN & QUESTS ---
   return (
     <div className="app-container">
       <h1>🎂 {status.daysLeft} Days to Go! 🎂</h1>
-      <p className="subtitle">Complete the daily quest to unlock your special reward</p>
+      <p className="subtitle">Target: {new Date(userDate).toDateString()}</p>
       
       <div className="quest-grid">
         {quests.map((q, index) => {
@@ -122,69 +93,49 @@ if (status.isBirthday) {
                 <div 
                     key={q.id} 
                     className={`card ${isCompleted ? 'done' : (isUnlocked ? 'unlocked' : 'locked')}`}
-                    onClick={() => {
-                        if (isUnlocked && !isCompleted) handleQuestClick(q);
-                    }}
+                    onClick={() => { if (isUnlocked && !isCompleted) setActiveQuest(q); }}
                 >
                     <div className="day-badge">Day {level}</div>
-                    <div className="status-icon">
-                        {isCompleted ? "✅" : (isUnlocked ? "🔓" : "🔒")}
-                    </div>
+                    <div className="status-icon">{isCompleted ? "✅" : (isUnlocked ? "🔓" : "🔒")}</div>
                 </div>
             );
         })}
       </div>
 
-      {/* QUESTION MODAL */}
+      {/* MODALS (Quest & Reward) - Same as before */}
       {activeQuest && (
           <div className="modal">
               <div className="modal-content">
-                  <h2>Day {activeQuest.id} Challenge</h2>
-                  <p className="question-text">{activeQuest.question}</p>
-                  
-                  <input 
-                      type="text"
-                      value={inputAnswer} 
-                      onChange={(e) => setInputAnswer(e.target.value)} 
-                      placeholder="Type your answer..."
-                      className="answer-input"
-                      autoFocus
-                  />
-
-                  {/* --- NEW HINT SECTION --- */}
-                  <div className="hint-section">
-                      {!showHint ? (
-                          <button className="btn-hint-toggle" onClick={() => setShowHint(true)}>
-                              💡 Need a Hint?
-                          </button>
-                      ) : (
-                          <p className="hint-text">
-                              <strong>Hint:</strong> {activeQuest.hint}
-                          </p>
-                      )}
-                  </div>
-                  {/* ------------------------ */}
-                  
-                  <div className="button-group">
-                      <button className="btn-submit" onClick={checkAnswer}>Submit</button>
-                      <button className="btn-close" onClick={() => setActiveQuest(null)}>Cancel</button>
-                  </div>
+                  <h2>Day {activeQuest.id}</h2>
+                  <p>{activeQuest.question}</p>
+                  <input value={inputAnswer} onChange={e => setInputAnswer(e.target.value)} className="answer-input" />
+                  <button className="btn-hint-toggle" onClick={() => setShowHint(!showHint)}>💡 Hint</button>
+                  {showHint && <p className="hint-text">{activeQuest.hint}</p>}
+                  <button className="btn-submit" onClick={checkAnswer}>Submit</button>
+                  <button className="btn-close" onClick={() => setActiveQuest(null)}>Cancel</button>
               </div>
           </div>
       )}
-
-      {/* REWARD MODAL */}
       {showReward && (
           <div className="modal reward-overlay">
-              <div className="modal-content reward-card">
-                  <div className="confetti">🎉</div>
-                  <h2>Quest Complete!</h2>
-                  <p className="reward-label">Your Reward:</p>
-                  <p className="reward-text">{showReward}</p>
-                  <button className="btn-claim" onClick={closeReward}>Claim Reward 🎁</button>
-              </div>
+             <div className="modal-content reward-card">
+                 <h2>🎉 Quest Complete!</h2>
+                 <p>{showReward}</p>
+                 <button className="btn-claim" onClick={() => setShowReward(null)}>Close</button>
+             </div>
           </div>
       )}
+      
+      {/* RESET BUTTON (For testing) */}
+      <button 
+        className="btn-reset" 
+        onClick={() => {
+            localStorage.clear();
+            window.location.reload();
+        }}
+      >
+        🔄 Reset App
+      </button>
     </div>
   );
 }
