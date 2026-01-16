@@ -36,11 +36,57 @@ function App() {
       }
   };
 
-  // --- QUEST DATA (Keep your customized quests here) ---
+// --- QUEST DATA (The Full List) ---
   const quests = [
-      { id: 1, question: "First date spot?", answer: "coffee", hint: "Beans!", reward: "Treat yourself! ☕" },
-      // ... Paste your other quests here ...
-      { id: 7, question: "Type 'Open'", answer: "open", hint: "Not closed", reward: "Big surprise tomorrow!" }
+      { 
+        id: 1, 
+        question: "Let's start easy. Where did we go for our very first date?", 
+        answer: "coffee", 
+        hint: "It involves beans and milk! ☕", 
+        reward: "Yay! I transferred ₹500 to your GPay. Go buy yourself a treat! ☕" 
+      },
+      { 
+        id: 2, 
+        question: "What is the name of the first movie we watched together?", 
+        answer: "avengers", 
+        hint: "It has Iron Man and Thor in it. 🦸‍♂️",
+        reward: "Correct! Reward: A Coupon for '1 Free Back Massage' from me! 💆‍♀️" 
+      },
+      { 
+        id: 3, 
+        question: "I have a specific nickname for you. Type it below:", 
+        answer: "babu", 
+        hint: "It starts with 'B' and is 4 letters long. 👶",
+        reward: "Aww! Reward: Check the 'Saved Messages' in our chat for a voice note. 🎤" 
+      },
+      { 
+        id: 4, 
+        question: "What color was the dress you wore on my last birthday?", 
+        answer: "red", 
+        hint: "It's the color of roses (and my face when I see you). 🌹",
+        reward: "You look beautiful in it. Reward: I'm cooking dinner tonight! 🍝" 
+      },
+      { 
+        id: 5, 
+        question: "Virtual Hunt: What is the passcode to my phone?", 
+        answer: "1234", 
+        hint: "It's the most common password in the world. 🔢",
+        reward: "Correct! Reward: A hidden chocolate bar is inside your laptop bag! 🍫" 
+      },
+      { 
+        id: 6, 
+        question: "Almost there. Enter the date of our Anniversary (DDMM)", 
+        answer: "1016", 
+        hint: "It's in October! 📅",
+        reward: "Perfect. Reward: A custom Spotify Playlist I made just for you. 🎵" 
+      },
+      { 
+        id: 7, 
+        question: "Final Step: Just type 'Open' to unlock my heart.", 
+        answer: "open", 
+        hint: "Opposite of Close. 🔓",
+        reward: "You did it! Get ready for the big surprise tomorrow... ❤️" 
+      }
   ];
 
   // --- LOGIC HANDLERS ---

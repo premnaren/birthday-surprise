@@ -307,3 +307,58 @@ h1 {
     cursor: pointer;
     font-size: 0.8rem;
 }
+
+/* Button Styles */
+.button-group {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-submit {
+    background: #ff8fa3;
+    color: white;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.btn-submit:hover { background: #ff5c7c; }
+
+.btn-close {
+    background: #ddd;
+    color: #555;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.btn-close:hover { background: #bbb; }
+
+/* The new Intro Screen Styles */
+.intro-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+.intro-card {
+    width: 300px;
+    padding: 40px;
+    text-align: center;
+}
+.date-input {
+    width: 80%;
+    padding: 10px;
+    margin: 20px 0;
+    border: 2px solid #ff8fa3;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    color: #590d22;
+    text-align: center;
+}
