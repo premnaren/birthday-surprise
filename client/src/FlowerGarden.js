@@ -17,12 +17,19 @@ const FlowerGarden = () => {
         constructor(x, y) {
             this.x = x;
             this.y = y;
+            
+            // 1. RANDOM SIZES (Big variation: 10px to 40px)
             this.size = 0;
-            this.maxSize = Math.random() * 20 + 15; // Random size
-            this.growthSpeed = Math.random() * 0.5 + 0.2;
-            this.color = `hsl(${Math.random() * 60 + 320}, 100%, 60%)`; // Random Pinks/Reds
+            this.maxSize = Math.random() * 30 + 10; 
+            
+            this.growthSpeed = Math.random() * 0.8 + 0.3; // Some grow faster
+            this.color = `hsl(${Math.random() * 90 + 310}, 100%, 60%)`; // Pinks, Purples, Reds
+            
             this.stemHeight = 0;
-            this.maxStemHeight = Math.random() * 50 + 50;
+            this.maxStemHeight = Math.random() * 100 + 50; // Taller stems
+            
+            // 2. THE CURVE (Bends left or right by -50px to +50px)
+            this.bendOffset = Math.random() * 100 - 50; 
         }
 
         grow() {
@@ -34,25 +41,42 @@ const FlowerGarden = () => {
         }
 
         draw() {
-            // Draw Stem
+            // Calculate where the tip of the stem is right now
+            const progress = this.stemHeight / this.maxStemHeight;
+            const currentBend = this.bendOffset * progress;
+            const tipX = this.x + currentBend;
+            const tipY = this.y - this.stemHeight;
+
+            // --- DRAW CURVED STEM ---
             ctx.beginPath();
             ctx.moveTo(this.x, this.y);
-            ctx.lineTo(this.x, this.y - this.stemHeight);
+            
+            // Quadratic Curve: Control point is halfway up but only half the bend
+            // This creates a smooth "C" or "S" like curve
+            ctx.quadraticCurveTo(
+                this.x + (currentBend / 2), // Control X
+                this.y - (this.stemHeight / 2), // Control Y
+                tipX, // End X
+                tipY  // End Y
+            );
+            
             ctx.lineWidth = 2;
             ctx.strokeStyle = '#2d6a4f'; // Dark green stem
             ctx.stroke();
 
-            // Draw Flower only if stem is done growing
-            if (this.stemHeight >= this.maxStemHeight) {
+            // --- DRAW FLOWER ---
+            // Only draw the head if the stem has started growing
+            if (this.stemHeight > 5) {
                 ctx.beginPath();
-                ctx.arc(this.x, this.y - this.stemHeight, this.size, 0, Math.PI * 2);
+                // The flower sits exactly at the "tip" calculated above
+                ctx.arc(tipX, tipY, this.size, 0, Math.PI * 2);
                 ctx.fillStyle = this.color;
                 ctx.fill();
                 
-                // Inner dot
+                // Inner dot (Yellow center)
                 ctx.beginPath();
-                ctx.arc(this.x, this.y - this.stemHeight, this.size / 3, 0, Math.PI * 2);
-                ctx.fillStyle = '#ffea00'; // Yellow center
+                ctx.arc(tipX, tipY, this.size / 3, 0, Math.PI * 2);
+                ctx.fillStyle = '#ffea00'; 
                 ctx.fill();
             }
         }
@@ -60,13 +84,7 @@ const FlowerGarden = () => {
 
     // --- ANIMATION LOOP ---
     const animate = () => {
-        // Clear screen slightly for a "trail" effect, or fully to be clean
-        // We won't clear it so flowers STAY on screen! 
-        // But we need to redraw them to animate growth.
-        // So we redraw the background first.
-        
-        // Actually, to make them "stay", we should only draw the new frame.
-        // But to animate growth, we need to clear and redraw array.
+        // We clear the canvas every frame to animate the growth smoothly
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         
         flowersRef.current.forEach((flower) => {
@@ -81,22 +99,22 @@ const FlowerGarden = () => {
 
     // --- INTERACTION ---
     const handleClick = (e) => {
-        // Add a new flower at the click position
         const rect = canvas.getBoundingClientRect();
+        // Allow clicking anywhere
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
         flowersRef.current.push(new Flower(x, y));
     };
 
-    // Attach listener to WINDOW so we can click through buttons
-    window.addEventListener('click', handleClick);
+    // Listen to Window clicks to catch clicks on top of buttons too
+    window.addEventListener('mousedown', handleClick); // 'mousedown' feels faster than 'click'
     window.addEventListener('resize', () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
     });
 
     return () => {
-        window.removeEventListener('click', handleClick);
+        window.removeEventListener('mousedown', handleClick);
     };
   }, []);
 
@@ -109,8 +127,8 @@ const FlowerGarden = () => {
             left: 0,
             width: '100%',
             height: '100%',
-            zIndex: -1, // Puts it BEHIND everything else
-            pointerEvents: 'none' // Lets clicks pass through to buttons
+            zIndex: -1, 
+            pointerEvents: 'none' 
         }} 
     />
   );
