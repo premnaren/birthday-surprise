@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import FlowerGarden from './FlowerGarden';
+import couplePhoto from './couple.jpg';
 import './App.css'; // Ensure CSS is linked
 
 const BirthdayReveal = () => {
@@ -74,9 +75,9 @@ const BirthdayReveal = () => {
                 
                 {/* PHOTO SECTION */}
                     <div className="photo-frame">
-                    {/* The slash '/' tells it to look in the public folder */}
-                    <img src="/couple.jpg" alt="Us" />
-                </div>
+    {/* We use the variable name inside curly braces now */}
+    <img src={couplePhoto} alt="Us" />
+</div>
 
                 {/* NOTE SECTION */}
                 <div className="note-content">
