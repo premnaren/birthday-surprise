@@ -17,97 +17,111 @@ const FlowerGarden = () => {
         constructor(x, y) {
             this.x = x;
             this.y = y;
-            
-            // 1. RANDOM SIZES (Big variation: 10px to 40px)
+            // Random sizes: Some tiny buds, some big blooms
             this.size = 0;
-            this.maxSize = Math.random() * 30 + 10; 
-            
-            this.growthSpeed = Math.random() * 0.8 + 0.3; // Some grow faster
-            this.color = `hsl(${Math.random() * 90 + 310}, 100%, 60%)`; // Pinks, Purples, Reds
+            this.maxSize = Math.random() * 25 + 12; 
+            this.growthSpeed = Math.random() * 0.8 + 0.3;
+            // Pretty Pinks, Purples, Oranges
+            this.color = `hsl(${Math.random() * 60 + 320}, 90%, 65%)`; 
             
             this.stemHeight = 0;
-            this.maxStemHeight = Math.random() * 100 + 50; // Taller stems
+            this.maxStemHeight = Math.random() * 120 + 60; // Taller stems
             
-            // 2. THE CURVE (Bends left or right by -50px to +50px)
-            this.bendOffset = Math.random() * 100 - 50; 
+            // Curve factor: How much it bends left or right
+            this.bendOffset = Math.random() * 80 - 40; 
+            
+            // Random rotation for the flower head so they don't all look aligned
+            this.rotation = Math.random() * Math.PI * 2;
         }
 
         grow() {
             if (this.stemHeight < this.maxStemHeight) {
-                this.stemHeight += 2;
+                this.stemHeight += 2.5; // Grow stems faster
             } else if (this.size < this.maxSize) {
                 this.size += this.growthSpeed;
             }
         }
 
         draw() {
-            // Calculate where the tip of the stem is right now
+            // Calculate tip position based on growth and bend
             const progress = this.stemHeight / this.maxStemHeight;
             const currentBend = this.bendOffset * progress;
             const tipX = this.x + currentBend;
             const tipY = this.y - this.stemHeight;
 
             // --- DRAW CURVED STEM ---
-            ctx.beginPath();
-            ctx.moveTo(this.x, this.y);
-            
-            // Quadratic Curve: Control point is halfway up but only half the bend
-            // This creates a smooth "C" or "S" like curve
-            ctx.quadraticCurveTo(
-                this.x + (currentBend / 2), // Control X
-                this.y - (this.stemHeight / 2), // Control Y
-                tipX, // End X
-                tipY  // End Y
-            );
-            
-            ctx.lineWidth = 2;
-            ctx.strokeStyle = '#2d6a4f'; // Dark green stem
-            ctx.stroke();
-
-            // --- DRAW FLOWER ---
-            // Only draw the head if the stem has started growing
-            if (this.stemHeight > 5) {
+            if (this.stemHeight > 0) {
                 ctx.beginPath();
-                // The flower sits exactly at the "tip" calculated above
-                ctx.arc(tipX, tipY, this.size, 0, Math.PI * 2);
+                ctx.moveTo(this.x, this.y);
+                // Create smooth quadratic curve
+                ctx.quadraticCurveTo(
+                    this.x + (currentBend / 2), // Control point X
+                    this.y - (this.stemHeight / 1.5), // Control point Y (lower down looks better)
+                    tipX, tipY // End point
+                );
+                ctx.lineWidth = 3;
+                ctx.strokeStyle = '#4d908e'; // A nicer teal-green stem color
+                ctx.lineCap = 'round';
+                ctx.stroke();
+            }
+
+            // --- DRAW FLOWER HEAD (Petals!) ---
+            // Only draw head if stem has started
+            if (this.stemHeight > 10) {
+                ctx.save(); // Save current canvas state
+                ctx.translate(tipX, tipY); // Move origin to flower tip
+                ctx.rotate(this.rotation); // Rotate the whole flower slightly
+
+                const petalCount = 6;
+                const angleStep = (Math.PI * 2) / petalCount;
+                // Petal size relative to overall flower size
+                const petalSize = this.size * 0.5; 
+                // How far out petals sit from center
+                const petalRadius = this.size * 0.4; 
+
                 ctx.fillStyle = this.color;
+                
+                // Draw 6 overlapping circles for petals
+                for(let i = 0; i < petalCount; i++) {
+                    const angle = i * angleStep;
+                    const pX = Math.cos(angle) * petalRadius;
+                    const pY = Math.sin(angle) * petalRadius;
+                    ctx.beginPath();
+                    ctx.arc(pX, pY, petalSize, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+
+                // Draw Center Dot (Yellow pistil)
+                ctx.beginPath();
+                ctx.arc(0, 0, this.size * 0.35, 0, Math.PI * 2);
+                ctx.fillStyle = '#ffd60a'; // Bright yellow
                 ctx.fill();
                 
-                // Inner dot (Yellow center)
-                ctx.beginPath();
-                ctx.arc(tipX, tipY, this.size / 3, 0, Math.PI * 2);
-                ctx.fillStyle = '#ffea00'; 
-                ctx.fill();
+                ctx.restore(); // Restore canvas state
             }
         }
     }
 
     // --- ANIMATION LOOP ---
     const animate = () => {
-        // We clear the canvas every frame to animate the growth smoothly
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
         flowersRef.current.forEach((flower) => {
             flower.grow();
             flower.draw();
         });
-        
         requestAnimationFrame(animate);
     };
-    
     animate();
 
     // --- INTERACTION ---
     const handleClick = (e) => {
         const rect = canvas.getBoundingClientRect();
-        // Allow clicking anywhere
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
         flowersRef.current.push(new Flower(x, y));
     };
 
-    // Listen to Window clicks to catch clicks on top of buttons too
-    window.addEventListener('mousedown', handleClick); // 'mousedown' feels faster than 'click'
+    window.addEventListener('mousedown', handleClick);
     window.addEventListener('resize', () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
@@ -122,13 +136,8 @@ const FlowerGarden = () => {
     <canvas 
         ref={canvasRef}
         style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            zIndex: -1, 
-            pointerEvents: 'none' 
+            position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
+            zIndex: -1, pointerEvents: 'none' 
         }} 
     />
   );
