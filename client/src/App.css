@@ -1636,3 +1636,50 @@ a,
     color: #ffb3c1 !important;
     text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
+
+/* --- 🎵 SPINNING MUSIC CONTROLLER (Bottom Left) 🎵 --- */
+
+.music-control {
+    position: fixed;
+    bottom: 20px; /* changed from 'top' to 'bottom' */
+    left: 20px;   /* stays on the left */
+    width: 60px;  /* Made it slightly bigger */
+    height: 60px;
+    cursor: pointer;
+    z-index: 1000; /* High z-index to sit above balloons */
+    transition: transform 0.2s ease;
+    
+    /* Optional: Add a subtle glow so it pops against the dark background */
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2); 
+    background: black; /* Fills the transparent parts of the PNG if any */
+}
+
+.music-control:hover {
+    transform: scale(1.1); /* Pop effect on hover */
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+}
+
+.music-icon {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    object-fit: cover;
+    display: block;
+}
+
+/* THE SPIN ANIMATION */
+.music-icon.spinning {
+    animation: spinRecord 4s linear infinite; /* Smooth rotation */
+}
+
+/* STOP ANIMATION WHEN PAUSED */
+.music-icon {
+    animation: none; /* Default state is stopped */
+}
+
+@keyframes spinRecord {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}

@@ -22,6 +22,9 @@ const BirthdayReveal = () => {
     const [time, setTime] = useState({ years: 0, days: 0, hours: 0, minutes: 0, seconds: 0 });
     const [candles, setCandles] = useState([true, true, true, true, true]); 
     const [wished, setWished] = useState(false);
+    
+    // 🎵 MUSIC STATE (New)
+    const [isPlaying, setIsPlaying] = useState(false);
     const audioRef = useRef(null);
 
     // Theme Logic
@@ -56,9 +59,23 @@ const BirthdayReveal = () => {
         return () => clearInterval(interval);
     }, []);
 
+    // 🎵 UPDATED: Starts music + spinning state
     const handleCurtainClick = () => {
         setCurtainOpen(true);
-        if (audioRef.current) audioRef.current.play().catch(e => console.log(e));
+        if (audioRef.current) {
+            audioRef.current.play().catch(e => console.log(e));
+            setIsPlaying(true); 
+        }
+    };
+
+    // 🎵 NEW: Toggles music on/off
+    const toggleMusic = () => {
+        if (isPlaying) {
+            audioRef.current.pause();
+        } else {
+            audioRef.current.play();
+        }
+        setIsPlaying(!isPlaying);
     };
 
     const blowCandle = (index, e) => {
@@ -74,10 +91,18 @@ const BirthdayReveal = () => {
 
     return (
         <div className="birthday-container">
-            {/* 🎈 BALLOONS RESTORED HERE 🎈 */}
             <div style={{zIndex: 0}}><BalloonSky /></div>
 
             <audio ref={audioRef} loop><source src="/song.mp3" /></audio>
+
+            {/* 🎵 SPINNING MUSIC ICON (Click to Toggle) */}
+            <div className="music-control" onClick={toggleMusic} style={{ zIndex: 1000 }}>
+                <img 
+                    src="/music-icon.png" 
+                    alt="Music Toggle" 
+                    className={`music-icon ${isPlaying ? 'spinning' : ''}`} 
+                />
+            </div>
 
             <div className="theme-toggle" style={{ position: 'fixed', top: '20px', right: '20px', zIndex: 100 }}>
                 <button onClick={() => setTheme('light')}>☀️</button>
