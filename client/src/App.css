@@ -1617,3 +1617,22 @@ a,
     color: #ffb3c1;
     text-shadow: 0 0 10px rgba(255, 77, 109, 0.8);
 }
+
+/* --- 🛠️ FIX "TOGETHER FOR" TEXT COLOR 🛠️ --- */
+
+.live-clock-container h3 {
+    /* 1. Use the Theme Color (Dark Maroon in Light Mode) */
+    color: var(--text-color) !important; 
+    
+    /* 2. Style Adjustments */
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-shadow: none; /* Clean look for Light Mode */
+}
+
+/* 3. Dark Mode Overrides (Keep it glowing light pink) */
+[data-theme='dark'] .live-clock-container h3 {
+    color: #ffb3c1 !important;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
