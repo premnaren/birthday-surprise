@@ -1794,3 +1794,30 @@ a,
     75% { transform: translateX(-10px); }
     100% { transform: translateX(0); }
 }
+
+/* --- 🛠️ FIX REWARD MODAL IN DARK MODE 🛠️ --- */
+
+/* 1. Default Style (Light Mode) - Already looks good */
+.reward-card {
+    background: #fff0f3; /* Light Pink */
+    color: #333;         /* Dark Text */
+}
+
+/* 2. DARK MODE OVERRIDE (The Fix) */
+[data-theme='dark'] .reward-card {
+    /* Turn the card dark maroon so white text is visible */
+    background: #2b0811 !important; 
+    border: 2px solid #ff4d6d;      /* Glowing Pink Border */
+    box-shadow: 0 0 20px rgba(255, 77, 109, 0.4); /* Glow effect */
+}
+
+/* 3. Fix the Text Colors inside the Dark Card */
+[data-theme='dark'] .reward-card h2 {
+    color: #ff4d6d !important; /* Bright Pink Title */
+    text-shadow: 0 0 5px rgba(255, 77, 109, 0.5);
+}
+
+[data-theme='dark'] .reward-card p {
+    color: #ffe5ec !important; /* Very Light Pink Paragraph */
+    font-weight: 500;
+}
