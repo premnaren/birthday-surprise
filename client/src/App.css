@@ -1412,3 +1412,76 @@ p, h1, h2, h3, span, input {
     0% { transform: scale(1); opacity: 0.9; }
     100% { transform: scale(1.1); opacity: 1; }
 }
+
+/* --- 🎈 BALLOON SKY EFFECT 🎈 --- */
+
+/* 1. The clickable background layer */
+.balloon-sky-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0; /* Behind everything else */
+    overflow: hidden;
+    cursor: crosshair; /* Fun cursor to indicate clicking */
+}
+
+/* 2. The Balloon Shape */
+.balloon {
+    position: absolute;
+    bottom: -120px; /* Start just below the screen */
+    width: 60px;
+    height: 80px;
+    /* Creates the classic oval balloon shape */
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    animation: floatUp linear forwards;
+    box-shadow: inset -5px -5px 10px rgba(0,0,0,0.1); /* Subtle depth */
+}
+
+/* Little knot at the bottom */
+.balloon::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 8px;
+    background: inherit;
+    border-radius: 50%;
+}
+
+/* The string hanging down */
+.balloon .string {
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    width: 1px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.6);
+}
+
+/* --- Balloon Theme Colors --- */
+.color-0 { background-color: #ff4d6d; } /* Hot Pink */
+.color-1 { background-color: #ff8fa3; } /* Soft Pink */
+.color-2 { background-color: #c9184a; } /* Deep Red */
+.color-3 { background-color: #ffb3c1; } /* Lighter Pink */
+.color-4 { background-color: #ffd60a; } /* Pop of Yellow */
+
+/* --- The Floating Animation --- */
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.8;
+    }
+    50% {
+        /* Slight wiggle as it goes up */
+        transform: translateY(-50vh) rotate(5deg) translateX(10px);
+    }
+    100% {
+        /* Float completely off the top */
+        transform: translateY(-120vh) rotate(-5deg);
+        opacity: 0;
+    }
+}

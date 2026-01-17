@@ -1,14 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
-import FlowerGarden from './FlowerGarden';
-import confetti from 'canvas-confetti'; 
-import './App.css'; 
+// 1. REMOVE FlowerGarden import
+// import FlowerGarden from './FlowerGarden';
+// 2. ADD BalloonSky import
+import BalloonSky from './BalloonSky';
+import confetti from 'canvas-confetti';
+import './App.css';
 
 // 📸 CONFIGURATION
 const PHOTOS = [
-    "/pic1.jpg", "/pic2.jpg", "/pic3.jpg", "/pic4.jpg", "/pic5.jpg" 
+    "/pic1.jpg", "/pic2.jpg", "/pic3.jpg", "/pic4.jpg", "/pic5.jpg"
 ];
 // 📅 START DATE (For the Clock)
-const START_DATE = "2022-10-16"; 
+const START_DATE = "2022-10-16";
 
 // --- ⏳ SUB-COMPONENT: LIVE CLOCK ---
 const LiveClock = () => {
@@ -47,21 +50,20 @@ const LiveClock = () => {
 
 // --- 🎂 SUB-COMPONENT: INTERACTIVE CAKE ---
 const BirthdayCake = () => {
-    const [candles, setCandles] = useState([true, true, true, true, true]); 
+    const [candles, setCandles] = useState([true, true, true, true, true]);
     const [wished, setWished] = useState(false);
 
-    // --- FIX APPLIED HERE ---
-    // We now accept 'e' (the event data) and stop it from bubbling up.
+    // We pass 'e' (the click event) here
     const blowCandle = (index, e) => {
-        e.stopPropagation(); // <--- STOP THE FLOWERS! 🛑
+        // --- CRITICAL FIX ---
+        // This stops the click from reaching the BalloonSky background
+        e.stopPropagation();
 
-        // Only proceed if the candle is currently lit
         if (candles[index]) {
             const newCandles = [...candles];
-            newCandles[index] = false; 
+            newCandles[index] = false;
             setCandles(newCandles);
 
-            // Check if all are out
             if (newCandles.every(c => c === false) && !wished) {
                 setWished(true);
                 triggerBigExplosion();
@@ -80,7 +82,7 @@ const BirthdayCake = () => {
     };
 
     return (
-        // Added stopPropagation to container too, just in case clicks miss the candle slightly
+        // Add stopPropagation to the container as a backup safety measure
         <div className="cake-container" onClick={(e) => e.stopPropagation()}>
             <h3>{wished ? "🎉 YAY! Make a Wish! 🎉" : "🎂 Blow out the candles!"}</h3>
             <div className="cake">
@@ -91,7 +93,7 @@ const BirthdayCake = () => {
                 <div className="icing"></div>
                 <div className="candles">
                     {candles.map((isLit, i) => (
-                        // Updated onClick to pass 'e'
+                        // Pass 'e' to the blowCandle function
                         <div key={i} className="candle" onClick={(e) => blowCandle(i, e)}>
                             <div className={`flame ${isLit ? 'lit' : 'out'}`}></div>
                         </div>
@@ -107,7 +109,7 @@ const BirthdayReveal = () => {
     const [theme, setTheme] = useState(localStorage.getItem('app_theme') || 'system');
     const [curtainOpen, setCurtainOpen] = useState(false);
     const [noteOpen, setNoteOpen] = useState(false);
-    const [currentIndex, setCurrentIndex] = useState(0); 
+    const [currentIndex, setCurrentIndex] = useState(0);
     const audioRef = useRef(null);
 
     useEffect(() => {
@@ -130,13 +132,15 @@ const BirthdayReveal = () => {
 
     return (
         <div className="birthday-container">
-            <div style={{zIndex: 0}}><FlowerGarden /></div>
+            {/* 3. USE THE NEW BALLOON SKY HERE */}
+            <div style={{zIndex: 0}}><BalloonSky /></div>
+
             <audio ref={audioRef} loop><source src="/song.mp3" /></audio>
 
             <div className="theme-toggle" style={{ position: 'fixed', top: '20px', right: '20px', zIndex: 100 }}>
-                <button className={theme === 'light' ? 'active' : ''} onClick={() => setTheme('light')}>☀️</button>
-                <button className={theme === 'system' ? 'active' : ''} onClick={() => setTheme('system')}>💻</button>
-                <button className={theme === 'dark' ? 'active' : ''} onClick={() => setTheme('dark')}>🌙</button>
+                <button onClick={() => setTheme('light')}>☀️</button>
+                <button onClick={() => setTheme('system')}>💻</button>
+                <button onClick={() => setTheme('dark')}>🌙</button>
             </div>
 
             <div className={`curtain ${curtainOpen ? 'open' : ''}`} onClick={handleCurtainClick} style={{zIndex: 200}}>
@@ -148,7 +152,7 @@ const BirthdayReveal = () => {
             </div>
 
             <div className="split-layout" style={{zIndex: 10}}>
-                
+
                 {/* LEFT SIDE */}
                 <div className="left-zone">
                     <h1 className="bday-title">Happy Birthday!</h1>
@@ -158,7 +162,7 @@ const BirthdayReveal = () => {
                             if (index === currentIndex) className += " active";
                             else if (index === (currentIndex - 1 + PHOTOS.length) % PHOTOS.length) className += " prev";
                             else if (index === (currentIndex + 1) % PHOTOS.length) className += " next";
-                            else className += " hidden"; 
+                            else className += " hidden";
                             return (
                                 <div key={index} className={className}>
                                     <div className="polaroid-inner"><img src={photo} alt="Memory" /></div>
@@ -189,7 +193,7 @@ const BirthdayReveal = () => {
                     <BirthdayCake />
                 </div>
             </div>
-            
+
             <button onClick={() => { if(window.confirm("Reset?")) { localStorage.clear(); window.location.reload(); }}} className="reset-btn" style={{zIndex: 100}}>
                 🔄 Reset
             </button>
