@@ -5,7 +5,7 @@ import FlowerGarden from './FlowerGarden';
 
 // --- 🔒 CONFIGURATION ---
 // The Fixed Birthday Date
-const TARGET_DATE = new Date("2026-01-17T00:00:00"); 
+const TARGET_DATE = new Date("2026-02-07T00:00:00"); 
 
 // --- 📜 QUEST DATA ---
 const quests = [
