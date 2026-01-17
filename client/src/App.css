@@ -1305,10 +1305,12 @@ p, h1, h2, h3, span, input {
     text-transform: uppercase;
 }
 
-/* --- 🎂 CAKE STYLES 🎂 --- */
+/* --- 🎂 CAKE STYLES (Fixed) 🎂 --- */
 .cake-container {
     margin-top: 50px;
     text-align: center;
+    position: relative;
+    z-index: 20; /* Ensures cake is above balloons */
 }
 
 .cake {
@@ -1379,6 +1381,7 @@ p, h1, h2, h3, span, input {
     width: 70%;
     display: flex;
     justify-content: space-between;
+    z-index: 25; /* Makes sure clicks hit the candle, not the balloon */
 }
 
 .candle {
@@ -1387,7 +1390,7 @@ p, h1, h2, h3, span, input {
     background: white;
     background: repeating-linear-gradient(45deg, white, white 5px, #ff4d6d 5px, #ff4d6d 10px);
     position: relative;
-    cursor: pointer;
+    cursor: pointer; /* Shows the hand pointer */
 }
 
 /* Flame Animation */
@@ -1400,12 +1403,24 @@ p, h1, h2, h3, span, input {
     top: -20px;
     left: -1px;
     box-shadow: 0 0 10px yellow, 0 0 20px orange;
-    animation: flicker 1s infinite alternate;
-    transition: opacity 0.5s;
+    transition: opacity 0.3s ease;
+    opacity: 1; /* Default to visible */
 }
 
+/* Flicker only when lit */
+.flame.lit {
+    animation: flicker 1s infinite alternate;
+}
+
+/* --- THE FIX: Forces flame to vanish --- */
 .flame.out {
-    opacity: 0;
+    opacity: 0 !important; 
+    animation: none;
+}
+
+@keyframes flicker {
+    0% { transform: scale(1); opacity: 0.9; }
+    100% { transform: scale(1.1); opacity: 1; }
 }
 
 @keyframes flicker {
@@ -1484,4 +1499,26 @@ p, h1, h2, h3, span, input {
         transform: translateY(-120vh) rotate(-5deg);
         opacity: 0;
     }
+}
+
+/* --- CUSTOM CURSORS (Updated) --- */
+
+/* 1. Default Cursor: Hot Pink Arrow with White Border */
+body {
+    cursor: url("data:image/svg+xml;utf8,<svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z' fill='%23ff4d6d' stroke='white' stroke-width='1'/></svg>") 0 0, auto;
+}
+
+/* 2. Hover Cursor: White Arrow with Black Border */
+button, 
+a, 
+.card, 
+.btn-submit, 
+.hint-btn, 
+.curtain, 
+.name-input, 
+.answer-input,
+.theme-toggle button,
+.candle, /* Added candle here so it shows the hover cursor */
+.balloon-sky-container {
+    cursor: url("data:image/svg+xml;utf8,<svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z' fill='white' stroke='black' stroke-width='1'/></svg>") 0 0, pointer;
 }
