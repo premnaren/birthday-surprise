@@ -1,19 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
-// 1. REMOVE FlowerGarden import
-// import FlowerGarden from './FlowerGarden';
-// 2. ADD BalloonSky import
 import BalloonSky from './BalloonSky';
 import confetti from 'canvas-confetti';
 import './App.css';
 
-// 📸 CONFIGURATION
-const PHOTOS = [
-    "/pic1.jpg", "/pic2.jpg", "/pic3.jpg", "/pic4.jpg", "/pic5.jpg"
+// 📸 CONFIGURATION: Photos + Names
+const MEMORIES = [
+    { img: "/pic1.jpg", text: "My Love ❤️" },
+    { img: "/pic2.jpg", text: "Best Day Ever" },
+    { img: "/pic3.jpg", text: "Crazy Times 🤪" },
+    { img: "/pic4.jpg", text: "Our Trip ✈️" },
+    { img: "/pic5.jpg", text: "Forever Us" }
 ];
-// 📅 START DATE (For the Clock)
+
+// 📅 START DATE
 const START_DATE = "2022-10-16";
 
-// --- ⏳ SUB-COMPONENT: LIVE CLOCK ---
 const LiveClock = () => {
     const [time, setTime] = useState({ years: 0, days: 0, hours: 0, minutes: 0, seconds: 0 });
 
@@ -48,22 +49,16 @@ const LiveClock = () => {
     );
 };
 
-// --- 🎂 SUB-COMPONENT: INTERACTIVE CAKE ---
 const BirthdayCake = () => {
     const [candles, setCandles] = useState([true, true, true, true, true]);
     const [wished, setWished] = useState(false);
 
-    // We pass 'e' (the click event) here
     const blowCandle = (index, e) => {
-        // --- CRITICAL FIX ---
-        // This stops the click from reaching the BalloonSky background
         e.stopPropagation();
-
         if (candles[index]) {
             const newCandles = [...candles];
             newCandles[index] = false;
             setCandles(newCandles);
-
             if (newCandles.every(c => c === false) && !wished) {
                 setWished(true);
                 triggerBigExplosion();
@@ -82,7 +77,6 @@ const BirthdayCake = () => {
     };
 
     return (
-        // Add stopPropagation to the container as a backup safety measure
         <div className="cake-container" onClick={(e) => e.stopPropagation()}>
             <h3>{wished ? "🎉 YAY! Make a Wish! 🎉" : "🎂 Blow out the candles!"}</h3>
             <div className="cake">
@@ -93,7 +87,6 @@ const BirthdayCake = () => {
                 <div className="icing"></div>
                 <div className="candles">
                     {candles.map((isLit, i) => (
-                        // Pass 'e' to the blowCandle function
                         <div key={i} className="candle" onClick={(e) => blowCandle(i, e)}>
                             <div className={`flame ${isLit ? 'lit' : 'out'}`}></div>
                         </div>
@@ -104,7 +97,6 @@ const BirthdayCake = () => {
     );
 };
 
-// --- 🏠 MAIN COMPONENT ---
 const BirthdayReveal = () => {
     const [theme, setTheme] = useState(localStorage.getItem('app_theme') || 'system');
     const [curtainOpen, setCurtainOpen] = useState(false);
@@ -121,7 +113,8 @@ const BirthdayReveal = () => {
     }, [theme]);
 
     useEffect(() => {
-        const interval = setInterval(() => setCurrentIndex((p) => (p + 1) % PHOTOS.length), 3500);
+        // Updated to use MEMORIES.length
+        const interval = setInterval(() => setCurrentIndex((p) => (p + 1) % MEMORIES.length), 3500);
         return () => clearInterval(interval);
     }, []);
 
@@ -132,9 +125,7 @@ const BirthdayReveal = () => {
 
     return (
         <div className="birthday-container">
-            {/* 3. USE THE NEW BALLOON SKY HERE */}
             <div style={{zIndex: 0}}><BalloonSky /></div>
-
             <audio ref={audioRef} loop><source src="/song.mp3" /></audio>
 
             <div className="theme-toggle" style={{ position: 'fixed', top: '20px', right: '20px', zIndex: 100 }}>
@@ -152,24 +143,28 @@ const BirthdayReveal = () => {
             </div>
 
             <div className="split-layout" style={{zIndex: 10}}>
-
                 {/* LEFT SIDE */}
                 <div className="left-zone">
                     <h1 className="bday-title">Happy Birthday!</h1>
                     <div className="polaroid-stack">
-                        {PHOTOS.map((photo, index) => {
+                        {MEMORIES.map((memory, index) => {
                             let className = "polaroid-card";
                             if (index === currentIndex) className += " active";
-                            else if (index === (currentIndex - 1 + PHOTOS.length) % PHOTOS.length) className += " prev";
-                            else if (index === (currentIndex + 1) % PHOTOS.length) className += " next";
+                            else if (index === (currentIndex - 1 + MEMORIES.length) % MEMORIES.length) className += " prev";
+                            else if (index === (currentIndex + 1) % MEMORIES.length) className += " next";
                             else className += " hidden";
                             return (
                                 <div key={index} className={className}>
-                                    <div className="polaroid-inner"><img src={photo} alt="Memory" /></div>
+                                    <div className="polaroid-inner">
+                                        <img src={memory.img} alt="Memory" />
+                                    </div>
+                                    {/* 🖋️ CAPTION ADDED HERE 🖋️ */}
+                                    <div className="polaroid-caption">{memory.text}</div>
                                 </div>
                             );
                         })}
                     </div>
+                    
                     <div className="note-section">
                         {!noteOpen ? (
                             <div className="folded-note" onClick={() => setNoteOpen(true)}>
