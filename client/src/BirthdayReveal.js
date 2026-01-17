@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import confetti from 'canvas-confetti'; 
 import './App.css'; 
-// If you deleted BalloonSky, remove the import below. If you have it, keep it!
-// import BalloonSky from './BalloonSky'; 
+// 🎈 IMPORT BALLOONS (Make sure BalloonSky.js exists!)
+import BalloonSky from './BalloonSky'; 
 
-// 📸 STEP 1: ADD YOUR PHOTOS AND NAMES HERE
 const MEMORIES = [
     { img: "/pic1.jpg", text: "My Love ❤️" },
     { img: "/pic2.jpg", text: "Best Day Ever" },
@@ -75,15 +74,16 @@ const BirthdayReveal = () => {
 
     return (
         <div className="birthday-container">
+            {/* 🎈 BALLOONS RESTORED HERE 🎈 */}
+            <div style={{zIndex: 0}}><BalloonSky /></div>
+
             <audio ref={audioRef} loop><source src="/song.mp3" /></audio>
 
-            {/* Theme Toggle */}
             <div className="theme-toggle" style={{ position: 'fixed', top: '20px', right: '20px', zIndex: 100 }}>
                 <button onClick={() => setTheme('light')}>☀️</button>
                 <button onClick={() => setTheme('dark')}>🌙</button>
             </div>
 
-            {/* Curtain */}
             <div className={`curtain ${curtainOpen ? 'open' : ''}`} onClick={handleCurtainClick} style={{zIndex: 200}}>
                 <div className="curtain-content">
                     <h1>🎉 A Surprise Awaits! 🎉</h1>
@@ -91,7 +91,6 @@ const BirthdayReveal = () => {
                 </div>
             </div>
 
-            {/* MAIN LAYOUT */}
             <div className="split-layout" style={{zIndex: 10}}>
                 
                 {/* LEFT: MEMORIES */}
@@ -107,13 +106,12 @@ const BirthdayReveal = () => {
                             return (
                                 <div key={index} className={className}>
                                     <div className="polaroid-inner"><img src={memory.img} alt="Memory" /></div>
-                                    {/* 🖋️ STEP 2: THIS SHOWS THE TEXT */}
                                     <div className="polaroid-caption">{memory.text}</div>
                                 </div>
                             );
                         })}
                     </div>
-                    {/* Note Section */}
+                    
                     <div className="note-section">
                         {!noteOpen ? (
                             <div className="folded-note" onClick={() => setNoteOpen(true)}>

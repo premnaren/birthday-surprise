@@ -1547,3 +1547,31 @@ a,
 .polaroid-card {
     padding-bottom: 60px !important; 
 }
+
+/* --- 🛠️ FIXES FOR TITLE & NOTE 🛠️ --- */
+
+/* 1. Fix "Happy Birthday" visibility in Dark Mode */
+.bday-title {
+    color: #ff4d6d;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    text-align: center;
+    text-shadow: 2px 2px 0px white; /* Adds a white outline for contrast */
+}
+
+[data-theme='dark'] .bday-title {
+    color: #ffb3c1 !important; /* Bright light pink in dark mode */
+    text-shadow: 0 0 10px rgba(255, 77, 109, 0.8); /* Glow effect */
+}
+
+/* 2. Fix Note "Shrinking" Issue */
+.note-section, 
+.folded-note, 
+.note-content {
+    flex-shrink: 0; /* 🛑 THIS STOPS THE SHRINKING! */
+}
+
+/* 3. Ensure Balloons stay behind */
+.balloon-sky-container {
+    z-index: 0 !important;
+}
