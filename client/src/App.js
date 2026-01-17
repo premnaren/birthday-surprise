@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import BirthdayReveal from './BirthdayReveal';
 import FlowerGarden from './FlowerGarden';
+import NumberLock from './NumberLock'; // 🔐 IMPORT THE NEW COMPONENT
 
 // --- 🔒 CONFIGURATION ---
 // The Fixed Birthday Date
@@ -23,12 +24,14 @@ const quests = [
       hint: "It has Iron Man and Thor in it. 🦸‍♂️",
       reward: "Correct! Reward: A Coupon for '1 Free Back Massage' from me! 💆‍♀️" 
     },
+    // 🔐 QUEST 3 IS NOW A NUMBER LOCK PUZZLE
     { 
       id: 3, 
-      question: "I have a specific nickname for you. Type it below:", 
-      answer: "babu", 
-      hint: "It starts with 'B' and is 4 letters long. 👶",
-      reward: "Aww! Reward: Check the 'Saved Messages' in our chat for a voice note. 🎤" 
+      type: 'lock', // ⚠️ SPECIAL MARKER FOR LOCK UI
+      question: "Enter the Secret PIN to open the vault.", 
+      answer: "2023", // 🔢 CHANGE THIS TO YOUR SECRET NUMBER
+      hint: "The year we first met.",
+      reward: "Access Granted! Reward: I booked tickets for that Concert/Event! 🎟️" 
     },
     { 
       id: 4, 
@@ -115,13 +118,19 @@ function App() {
     setView('countdown');
   };
 
+  // ✅ SHARED HELPER: UNLOCKS THE REWARD
+  const completeQuest = () => {
+      localStorage.setItem(`quest_${activeQuest.id}`, 'true');
+      setShowReward(activeQuest.reward);
+      setActiveQuest(null);
+      setInputAnswer("");
+      setShowHint(false);
+  };
+
+  // HANDLER FOR TEXT QUESTS
   const checkAnswer = () => {
     if (inputAnswer.trim().toLowerCase() === activeQuest.answer.toLowerCase()) {
-        localStorage.setItem(`quest_${activeQuest.id}`, 'true');
-        setShowReward(activeQuest.reward);
-        setActiveQuest(null);
-        setInputAnswer("");
-        setShowHint(false);
+        completeQuest(); // Call the helper
     } else {
         alert("Try again! ❌");
     }
@@ -217,30 +226,41 @@ function App() {
         })}
       </div>
 
-      {/* QUEST MODAL */}
+      {/* --- MODAL RENDERING LOGIC --- */}
       {activeQuest && (
-          <div className="modal">
-              <div className="modal-content">
-                  <h2>Day {activeQuest.id}</h2>
-                  <p>{activeQuest.question}</p>
-                  <input value={inputAnswer} onChange={e => setInputAnswer(e.target.value)} className="answer-input" placeholder="Type answer..." />
-                  
-                  <div className="button-group">
-                    <button className="btn-hint-toggle" onClick={() => setShowHint(!showHint)}>
-                        {showHint ? "Hide Hint" : "💡 Hint"}
-                    </button>
-                    <button className="btn-submit" onClick={checkAnswer}>Submit</button>
+          // 1. CHECK IF IT IS A LOCK PUZZLE
+          activeQuest.type === 'lock' ? (
+              <NumberLock 
+                  targetCode={activeQuest.answer}
+                  hint={activeQuest.hint}
+                  onUnlock={completeQuest} 
+                  onClose={() => setActiveQuest(null)} 
+              />
+          ) : (
+              // 2. OTHERWISE, RENDER STANDARD TEXT MODAL
+              <div className="modal">
+                  <div className="modal-content">
+                      <h2>Day {activeQuest.id}</h2>
+                      <p>{activeQuest.question}</p>
+                      <input value={inputAnswer} onChange={e => setInputAnswer(e.target.value)} className="answer-input" placeholder="Type answer..." />
+                      
+                      <div className="button-group">
+                        <button className="btn-hint-toggle" onClick={() => setShowHint(!showHint)}>
+                            {showHint ? "Hide Hint" : "💡 Hint"}
+                        </button>
+                        <button className="btn-submit" onClick={checkAnswer}>Submit</button>
+                      </div>
+                      
+                      {showHint && <p className="hint-text fade-in">{activeQuest.hint}</p>}
+                      
+                      <button className="btn-close" onClick={() => {
+                          setActiveQuest(null);
+                          setShowHint(false);
+                          setInputAnswer("");
+                      }}>Cancel</button>
                   </div>
-                  
-                  {showHint && <p className="hint-text fade-in">{activeQuest.hint}</p>}
-                  
-                  <button className="btn-close" onClick={() => {
-                      setActiveQuest(null);
-                      setShowHint(false);
-                      setInputAnswer("");
-                  }}>Cancel</button>
               </div>
-          </div>
+          )
       )}
 
       {/* REWARD MODAL */}
@@ -254,7 +274,7 @@ function App() {
           </div>
       )}
       
-      {/* NO RESET BUTTON HERE ANYMORE */}
+      {/* NO RESET BUTTON */}
     </div>
   );
 }
