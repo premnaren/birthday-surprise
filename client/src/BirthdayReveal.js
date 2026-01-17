@@ -50,14 +50,22 @@ const BirthdayCake = () => {
     const [candles, setCandles] = useState([true, true, true, true, true]); 
     const [wished, setWished] = useState(false);
 
-    const blowCandle = (index) => {
-        const newCandles = [...candles];
-        newCandles[index] = false; 
-        setCandles(newCandles);
+    // --- FIX APPLIED HERE ---
+    // We now accept 'e' (the event data) and stop it from bubbling up.
+    const blowCandle = (index, e) => {
+        e.stopPropagation(); // <--- STOP THE FLOWERS! 🛑
 
-        if (newCandles.every(c => c === false) && !wished) {
-            setWished(true);
-            triggerBigExplosion();
+        // Only proceed if the candle is currently lit
+        if (candles[index]) {
+            const newCandles = [...candles];
+            newCandles[index] = false; 
+            setCandles(newCandles);
+
+            // Check if all are out
+            if (newCandles.every(c => c === false) && !wished) {
+                setWished(true);
+                triggerBigExplosion();
+            }
         }
     };
 
@@ -72,7 +80,8 @@ const BirthdayCake = () => {
     };
 
     return (
-        <div className="cake-container">
+        // Added stopPropagation to container too, just in case clicks miss the candle slightly
+        <div className="cake-container" onClick={(e) => e.stopPropagation()}>
             <h3>{wished ? "🎉 YAY! Make a Wish! 🎉" : "🎂 Blow out the candles!"}</h3>
             <div className="cake">
                 <div className="plate"></div>
@@ -82,7 +91,8 @@ const BirthdayCake = () => {
                 <div className="icing"></div>
                 <div className="candles">
                     {candles.map((isLit, i) => (
-                        <div key={i} className="candle" onClick={() => blowCandle(i)}>
+                        // Updated onClick to pass 'e'
+                        <div key={i} className="candle" onClick={(e) => blowCandle(i, e)}>
                             <div className={`flame ${isLit ? 'lit' : 'out'}`}></div>
                         </div>
                     ))}
@@ -94,14 +104,12 @@ const BirthdayCake = () => {
 
 // --- 🏠 MAIN COMPONENT ---
 const BirthdayReveal = () => {
-    // 1. STATE
     const [theme, setTheme] = useState(localStorage.getItem('app_theme') || 'system');
     const [curtainOpen, setCurtainOpen] = useState(false);
     const [noteOpen, setNoteOpen] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0); 
     const audioRef = useRef(null);
 
-    // 2. THEME LOGIC (This was missing! Adding it fixes the error)
     useEffect(() => {
         const root = document.documentElement;
         const isDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
@@ -110,7 +118,6 @@ const BirthdayReveal = () => {
         localStorage.setItem('app_theme', theme);
     }, [theme]);
 
-    // 3. CAROUSEL LOGIC
     useEffect(() => {
         const interval = setInterval(() => setCurrentIndex((p) => (p + 1) % PHOTOS.length), 3500);
         return () => clearInterval(interval);
@@ -126,14 +133,12 @@ const BirthdayReveal = () => {
             <div style={{zIndex: 0}}><FlowerGarden /></div>
             <audio ref={audioRef} loop><source src="/song.mp3" /></audio>
 
-            {/* THEME TOGGLE (Updated to use 'theme' variable) */}
             <div className="theme-toggle" style={{ position: 'fixed', top: '20px', right: '20px', zIndex: 100 }}>
                 <button className={theme === 'light' ? 'active' : ''} onClick={() => setTheme('light')}>☀️</button>
                 <button className={theme === 'system' ? 'active' : ''} onClick={() => setTheme('system')}>💻</button>
                 <button className={theme === 'dark' ? 'active' : ''} onClick={() => setTheme('dark')}>🌙</button>
             </div>
 
-            {/* CURTAIN */}
             <div className={`curtain ${curtainOpen ? 'open' : ''}`} onClick={handleCurtainClick} style={{zIndex: 200}}>
                 <div className="curtain-content">
                     <h1>🎉 A Surprise Awaits! 🎉</h1>
@@ -142,10 +147,9 @@ const BirthdayReveal = () => {
                 </div>
             </div>
 
-            {/* --- 🌟 MAIN SPLIT LAYOUT 🌟 --- */}
             <div className="split-layout" style={{zIndex: 10}}>
                 
-                {/* LEFT SIDE: MEMORIES */}
+                {/* LEFT SIDE */}
                 <div className="left-zone">
                     <h1 className="bday-title">Happy Birthday!</h1>
                     <div className="polaroid-stack">
@@ -178,7 +182,7 @@ const BirthdayReveal = () => {
                     </div>
                 </div>
 
-                {/* RIGHT SIDE: CELEBRATION */}
+                {/* RIGHT SIDE */}
                 <div className="right-zone">
                     <LiveClock />
                     <div className="spacer"></div>
