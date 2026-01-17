@@ -1,54 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Brush+Script+MT&family=Indie+Flower&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
-/* ========================================= */
-/* 1. VARIABLES & THEMES                     */
-/* ========================================= */
-:root {
-    /* LIGHT MODE */
-    --bg-color: #ffe5ec;
-    --text-color: #590d22;
-    --card-bg: #ffffff;
-    --card-shadow: rgba(255, 143, 163, 0.3);
-    --primary-color: #ff4d6d;
-    --secondary-color: #ff8fa3;
-    --locked-bg: #e0e0e0;
-}
-
-[data-theme='dark'] {
-    /* DARK MODE */
-    --bg-color: #2b0811;
-    --text-color: #ffe5ec;
-    --card-bg: #4a101e;
-    --card-shadow: rgba(0, 0, 0, 0.4);
-    --primary-color: #ff8fa3;
-    --secondary-color: #800f2f;
-    --locked-bg: #3d2b2f;
-}
-
-/* ========================================= */
-/* 2. GLOBAL STYLES & CURSORS                */
-/* ========================================= */
 body {
-    background-color: var(--bg-color);
-    color: var(--text-color);
+    background-color: #ffeef2; /* Soft Pink Background */
     font-family: 'Poppins', sans-serif;
+    color: #4a4a4a;
     margin: 0;
     padding: 0;
-    transition: background-color 0.3s, color 0.3s;
-    
-    /* DEFAULT CURSOR: Hot Pink Arrow with White Border */
-    cursor: url("data:image/svg+xml;utf8,<svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z' fill='%23ff4d6d' stroke='white' stroke-width='1'/></svg>") 0 0, auto;
-}
-
-/* HOVER CURSOR: White Arrow with Black Border */
-button, a, .card, .btn-submit, .hint-btn, .curtain, 
-.name-input, .answer-input, .theme-toggle button, 
-.candle, .balloon-sky-container, .date-input {
-    cursor: url("data:image/svg+xml;utf8,<svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z' fill='white' stroke='black' stroke-width='1'/></svg>") 0 0, pointer;
-}
-
-p, h1, h2, h3, span, input {
-    cursor: text;
 }
 
 .app-container {
@@ -59,82 +16,16 @@ p, h1, h2, h3, span, input {
     padding-top: 50px;
 }
 
-h1 { color: #d63384; margin-bottom: 10px; }
-.subtitle { color: #888; margin-bottom: 40px; }
-
-/* ========================================= */
-/* 3. INTRO SCREEN (Login)                   */
-/* ========================================= */
-.intro-screen {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+h1 {
+    color: #d63384;
+    margin-bottom: 10px;
 }
 
-.intro-card {
-    width: 300px;
-    padding: 40px;
-    text-align: center;
-    background: var(--card-bg);
-    border-radius: 20px;
-    box-shadow: 0 10px 30px var(--card-shadow);
+.subtitle {
+    color: #888;
+    margin-bottom: 40px;
 }
 
-.name-input {
-    width: 70%;
-    padding: 12px 25px;
-    margin: 15px 0;
-    border: 2px solid #ffccd5;
-    border-radius: 50px;
-    background: rgba(255, 255, 255, 0.95);
-    color: #590d22;
-    font-size: 1rem;
-    outline: none;
-    transition: all 0.3s ease;
-    text-align: center;
-}
-
-.name-input:focus {
-    border-color: #ff4d6d;
-    box-shadow: 0 0 12px rgba(255, 77, 109, 0.3);
-    transform: scale(1.02);
-}
-
-/* Cute Date Input */
-.date-input {
-    width: 100%;
-    max-width: 280px;
-    padding: 15px 25px;
-    margin: 25px 0;
-    background-color: #fff0f3;
-    border: 3px solid #ffccd5;
-    border-radius: 50px;
-    color: #ff4d6d;
-    font-size: 1.2rem;
-    font-weight: bold;
-    text-align: center;
-    outline: none;
-    transition: all 0.3s ease;
-}
-
-.date-input:focus {
-    border-color: #ff4d6d;
-    background-color: #fff;
-    transform: scale(1.02);
-}
-
-/* Pink Calendar Icon */
-.date-input::-webkit-calendar-picker-indicator {
-    cursor: pointer;
-    filter: invert(46%) sepia(68%) saturate(3000%) hue-rotate(320deg) brightness(100%) contrast(103%);
-    transition: 0.2s;
-}
-.date-input::-webkit-calendar-picker-indicator:hover { transform: scale(1.2); }
-
-/* ========================================= */
-/* 4. QUEST CARDS & GRID                     */
-/* ========================================= */
 .quest-grid {
     display: flex;
     justify-content: center;
@@ -151,25 +42,23 @@ h1 { color: #d63384; margin-bottom: 10px; }
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: var(--card-bg);
-    color: var(--text-color);
     box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    transition: transform 0.4s, box-shadow 0.4s;
+    transition: all 0.3s ease;
     cursor: pointer;
-    position: relative;
-    overflow: visible;
+    background: white;
+    border: 3px solid transparent;
 }
 
-.card:hover {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-    z-index: 10;
+.day-badge {
+    font-weight: 600;
+    margin-bottom: 10px;
 }
 
-.day-badge { font-weight: 600; margin-bottom: 10px; }
-.status-icon { font-size: 2rem; }
+.status-icon {
+    font-size: 2rem;
+}
 
-/* Locked State */
+/* State Styles */
 .card.locked {
     background: #e9ecef;
     color: #adb5bd;
@@ -177,43 +66,412 @@ h1 { color: #d63384; margin-bottom: 10px; }
     filter: grayscale(100%);
 }
 
-/* Unlocked State */
 .card.unlocked {
     background: white;
-    border: 2px solid #ff8fa3;
+    border-color: #ff8fa3;
 }
 
-/* Done State */
+.card.unlocked:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(255, 143, 163, 0.4);
+}
+
 .card.done {
     background: #d4edda;
     border-color: #28a745;
     color: #155724;
-}
-
-/* Dark Mode Card Fixes */
-[data-theme='dark'] .card {
-    color: #ffffff !important;
-    text-shadow: 0 1px 3px rgba(0,0,0,0.8);
-    border: 1px solid rgba(255, 143, 163, 0.2);
-}
-[data-theme='dark'] .card.locked {
-    background-color: #1a0509 !important;
-    color: #b0b0b0 !important;
     opacity: 0.8;
 }
-[data-theme='dark'] .card.locked .status-icon {
-    filter: invert(1) brightness(2);
-    opacity: 0.5;
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6); /* Darker backdrop */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
 }
 
-/* Locked Tooltip */
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.question-text {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+.answer-input {
+    width: 80%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 1rem;
+    text-align: center;
+    outline: none;
+    margin-bottom: 20px;
+}
+
+.answer-input:focus {
+    border-color: #ff8fa3;
+}
+
+.button-group button {
+    padding: 10px 25px;
+    border: none;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 0 5px;
+    transition: 0.2s;
+}
+
+.btn-submit {
+    background: #ff8fa3;
+    color: white;
+}
+
+.btn-submit:hover { background: #ff5c7c; }
+
+.btn-close {
+    background: #ddd;
+    color: #555;
+}
+
+.btn-close:hover { background: #bbb; }
+
+.loading {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    color: #ff8fa3;
+}
+
+@keyframes popIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* --- Reward Popup Styles --- */
+
+.reward-overlay {
+    background: rgba(0, 0, 0, 0.8); /* Darker background for focus */
+    backdrop-filter: blur(5px); /* Blurs the background */
+}
+
+.reward-card {
+    background: linear-gradient(135deg, #fff0f3 0%, #ffe6e6 100%);
+    border: 4px solid #ff8fa3;
+    animation: popUp 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Bouncy effect */
+    max-width: 450px;
+}
+
+.confetti {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    animation: spin 2s infinite linear;
+}
+
+.reward-label {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #888;
+    margin-top: 20px;
+}
+
+.reward-text {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #d63384;
+    margin: 10px 0 30px 0;
+    line-height: 1.4;
+}
+
+.btn-claim {
+    background: #28a745;
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+    transition: transform 0.2s;
+}
+
+.btn-claim:hover {
+    transform: scale(1.05);
+    background: #218838;
+}
+
+@keyframes popUp {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* --- IMPROVED Hint Styles --- */
+
+.hint-section {
+    min-height: 40px;
+    margin: 15px 0;
+    display: flex;
+    justify-content: center; /* Center the button horizontally */
+}
+
+.btn-hint-toggle {
+    background: transparent;
+    border: 2px dashed #ff8fa3; /* Cute dashed border */
+    color: #ff8fa3;
+    padding: 8px 20px;
+    border-radius: 25px; /* Pill shape */
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Space between emoji and text */
+}
+
+.btn-hint-toggle:hover {
+    background: #fff0f3; /* Soft pink background on hover */
+    border-color: #d63384;
+    color: #d63384;
+    transform: translateY(-2px); /* Slight lift effect */
+}
+
+.hint-text {
+    background-color: #fff8e1; /* Warm light yellow */
+    color: #856404;
+    padding: 12px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    border: 1px solid #ffeeba;
+    animation: fadeIn 0.5s ease-in-out;
+    width: 100%;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.intro-screen {
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.intro-card {
+    width: 300px;
+    padding: 40px;
+    height: auto; /* Allow it to grow */
+}
+
+.date-input {
+    width: 100%;
+    padding: 15px;
+    margin: 20px 0;
+    border: 2px solid #ff8fa3;
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1rem;
+    color: #590d22;
+}
+
+.btn-reset {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.1);
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+/* Button Styles */
+.button-group {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-submit {
+    background: #ff8fa3;
+    color: white;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.btn-submit:hover { background: #ff5c7c; }
+
+.btn-close {
+    background: #ddd;
+    color: #555;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.btn-close:hover { background: #bbb; }
+
+/* The new Intro Screen Styles */
+.intro-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+.intro-card {
+    width: 300px;
+    padding: 40px;
+    text-align: center;
+}
+.date-input {
+    width: 80%;
+    padding: 10px;
+    margin: 20px 0;
+    border: 2px solid #ff8fa3;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    color: #590d22;
+    text-align: center;
+}
+
+/* --- CUTE DATE INPUT --- */
+.date-input {
+    width: 100%;
+    max-width: 280px;
+    padding: 15px 25px;
+    margin: 25px 0;
+    
+    /* Pretty Styling */
+    background-color: #fff0f3; /* Very light pink background */
+    border: 3px solid #ffccd5; /* Darker pink border */
+    border-radius: 50px;       /* Pill shape */
+    
+    /* Text Styling */
+    color: #ff4d6d;
+    font-size: 1.2rem;
+    font-family: inherit;
+    font-weight: bold;
+    text-align: center;
+    letter-spacing: 1px;
+    
+    /* Interactive */
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(255, 143, 163, 0.1);
+}
+
+.date-input:focus {
+    border-color: #ff4d6d;
+    background-color: #fff;
+    box-shadow: 0 0 15px rgba(255, 77, 109, 0.3);
+    transform: scale(1.02);
+}
+
+/* --- MAGICAL ICON COLORING --- */
+/* This makes the little calendar icon pink instead of black! */
+.date-input::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    background-size: contain;
+    margin-left: 10px;
+    /* This weird filter code turns black pixels into hot pink */
+    filter: invert(46%) sepia(68%) saturate(3000%) hue-rotate(320deg) brightness(100%) contrast(103%);
+    opacity: 0.8;
+    transition: 0.2s;
+}
+
+.date-input::-webkit-calendar-picker-indicator:hover {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+/* --- LOCKED CARD TOOLTIP --- */
+.card {
+    position: relative; /* Needed to position the tooltip inside */
+    overflow: visible;  /* Allow tooltip to go outside bounds if needed */
+}
+
 .locked-tooltip {
     visibility: hidden;
+    background-color: #590d22; /* Dark red/pink background */
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 10px;
+    
+    /* Position it */
+    position: absolute;
+    bottom: -35px; /* Floats below the card */
+    left: 50%;
+    transform: translateX(-50%);
+    
+    /* Font style */
+    font-size: 0.8rem;
+    white-space: nowrap; /* Keep it on one line */
+    z-index: 10;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
     opacity: 0;
+    transition: opacity 0.3s;
+}
+
+/* Create a tiny arrow pointing up */
+.locked-tooltip::after {
+    content: "";
+    position: absolute;
+    bottom: 100%; /* At the top of the tooltip */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #590d22 transparent;
+}
+
+/* Show tooltip on hover */
+.card.locked:hover .locked-tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* 1. Default State: HIDDEN */
+.locked-tooltip {
+    visibility: hidden; /* <--- CRITICAL: Hides it normally */
+    opacity: 0;         /* <--- CRITICAL: Makes it transparent */
+    
+    /* Styling */
     background-color: #590d22;
     color: #fff;
-    padding: 5px 10px;
+    text-align: center;
     border-radius: 6px;
+    padding: 5px 10px;
     position: absolute;
     bottom: -35px;
     left: 50%;
@@ -223,309 +481,1044 @@ h1 { color: #d63384; margin-bottom: 10px; }
     z-index: 10;
     transition: opacity 0.3s;
 }
+
+/* 2. Hover State: VISIBLE */
+/* This code runs ONLY when mouse is on the card */
 .card.locked:hover .locked-tooltip {
-    visibility: visible;
+    visibility: visible; /* <--- Shows it */
+    opacity: 1;          /* <--- Makes it solid */
+}
+
+/* --- COLOR VARIABLES (The Magic) --- */
+:root {
+    /* LIGHT MODE (Your current pink theme) */
+    --bg-color: #ffe5ec;
+    --text-color: #590d22;
+    --card-bg: #ffffff;
+    --card-shadow: rgba(255, 143, 163, 0.3);
+    --primary-color: #ff4d6d;
+    --secondary-color: #ff8fa3;
+    --locked-bg: #e0e0e0;
+}
+
+[data-theme='dark'] {
+    /* DARK MODE (Vampire/Romantic Dark Theme) */
+    --bg-color: #2b0811;       /* Very dark maroon */
+    --text-color: #ffe5ec;     /* Light pink text */
+    --card-bg: #4a101e;        /* Darker red card */
+    --card-shadow: rgba(0, 0, 0, 0.4);
+    --primary-color: #ff8fa3;  /* Softer pink for dark mode */
+    --secondary-color: #800f2f;
+    --locked-bg: #3d2b2f;
+}
+
+/* Apply the variables */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+}
+
+/* --- THEME BUTTONS --- */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--card-bg);
+    padding: 5px;
+    border-radius: 30px;
+    box-shadow: 0 4px 10px var(--card-shadow);
+    display: flex;
+    gap: 5px;
+    z-index: 1000;
+}
+
+.theme-toggle button {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 50%;
+    transition: 0.2s;
+    opacity: 0.5;
+}
+
+.theme-toggle button.active {
+    background-color: var(--bg-color);
     opacity: 1;
+    transform: scale(1.1);
+    box-shadow: 0 2px 5px var(--card-shadow);
 }
 
-/* ========================================= */
-/* 5. MODALS & BUTTONS                       */
-/* ========================================= */
-.modal {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.6);
-    display: flex; justify-content: center; align-items: center;
-    z-index: 100;
+.card {
+    background: var(--card-bg); /* Use variable */
+    color: var(--text-color);   /* Use variable */
+    /* ... keep your other settings like padding/border-radius ... */
+    box-shadow: 0 10px 20px var(--card-shadow);
 }
 
-.modal-content {
-    background: white;
-    padding: 30px;
-    border-radius: 20px;
-    width: 90%; max-width: 400px;
+.date-input {
+    background-color: var(--card-bg);
+    color: var(--primary-color);
+    border: 3px solid var(--secondary-color);
+    /* ... keep other settings ... */
+}
+
+/* --- BIRTHDAY REVEAL & CURTAIN STYLES --- */
+
+/* 1. The Curtain Overlay (Covers the whole screen initially) */
+.curtain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(to bottom, #ff4d6d, #590d22); /* Pink to Red */
+    z-index: 200; /* Highest priority - on top of everything */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 1.5s ease-in-out; /* Smooth slide up animation */
+    cursor: pointer;
+    color: white;
+}
+
+/* This class is added when you click, making it slide UP */
+.curtain.open {
+    transform: translateY(-100%);
+}
+
+.curtain-content {
     text-align: center;
-    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-[data-theme='dark'] .modal-content {
-    background-color: #4a101e;
+.curtain-content h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+/* 2. The Photo Card (Sits behind the curtain) */
+.birthday-card {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px); /* Frosted glass effect */
+    padding: 40px;
+    border-radius: 20px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    margin-top: 50px; /* Space from top */
+    animation: fadeIn 2s ease-in; /* Fade in slowly */
+    color: #590d22; /* Default text color */
+}
+
+/* Dark mode support for the card */
+[data-theme='dark'] .birthday-card {
+    background: rgba(40, 0, 10, 0.9);
+    color: #ffe5ec;
+}
+
+/* 3. The Photo Frame */
+.photo-frame {
+    margin: 20px auto;
+    width: 100%;
+    max-width: 300px; /* Limits photo size */
+    height: auto;
+    border: 8px solid white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    border-radius: 15px;
+    overflow: hidden;
+    transform: rotate(-3deg); /* The cute tilt! */
+    background-color: #eee;
+}
+
+.photo-frame img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* 4. Reset Button Styling */
+.reset-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: white;
+    color: #d62828;
+    border: 2px solid #d62828;
+    padding: 10px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: bold;
+    z-index: 50;
+    transition: 0.3s;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.reset-btn:hover {
+    background: #d62828;
+    color: white;
+    transform: scale(1.1);
+}
+
+/* --- NOTEBOOK PAPER STYLE --- */
+.note-content {
+    /* 1. Paper Background */
+    background-color: #fffbf0; /* Slight off-white/cream color */
+    
+    /* 2. Drawing the Lines (Magic!) */
+    background-image: 
+        /* The Vertical Red Margin Line */
+        linear-gradient(90deg, transparent 49px, #ff8fa3 49px, #ff8fa3 51px, transparent 51px),
+        /* The Horizontal Blue Lines */
+        linear-gradient(#e1e1e1 1px, transparent 1px);
+    
+    /* 3. Sizing the Lines */
+    background-size: 100% 100%, 100% 30px; /* 30px is the height of one line */
+    background-attachment: local;
+    
+    /* 4. Text Alignment */
+    line-height: 30px; /* MUST match the background-size height to sit on lines */
+    padding: 30px 20px 30px 60px; /* Left padding (60px) pushes text past the red margin */
+    
+    /* 5. Font Styling */
+    font-family: 'Indie Flower', 'Comic Sans MS', cursive; /* Handwritten style */
+    font-size: 1.1rem;
+    color: #2b2d42; /* Dark ink color */
+    text-align: left; /* Handwriting is usually left-aligned */
+    
+    /* 6. Paper Effects */
+    margin: 20px auto;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.1); /* Drop shadow */
+    border: 1px solid #e0e0e0;
+    border-radius: 2px; /* Slight sharp corners like real paper */
+    position: relative;
+}
+
+/* Optional: Add "Tape" at the top to make it look stuck on */
+.note-content::before {
+    content: "";
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 30px;
+    background-color: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transform: translateX(-50%) rotate(-2deg); /* Tilted tape */
+}
+
+/* --- INTERACTIVE NOTE STYLES --- */
+
+/* The Container */
+.note-section {
+    margin-top: 30px;
+    height: auto; /* Allow it to grow */
+    min-height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 1. The Folded Envelope (Hidden State) */
+.folded-note {
+    background: #fff;
+    width: 200px;
+    height: 120px;
+    border-radius: 10px;
+    border: 2px solid #ff8fa3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    background-image: repeating-linear-gradient(
+        45deg,
+        #fff,
+        #fff 10px,
+        #ffe5ec 10px,
+        #ffe5ec 20px
+    );
+}
+
+.folded-note:hover {
+    transform: scale(1.05) rotate(2deg);
+    box-shadow: 0 8px 20px rgba(255, 77, 109, 0.3);
+}
+
+.heart-seal {
+    font-size: 2.5rem;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+.folded-note p {
+    margin-top: 5px;
+    font-weight: bold;
+    color: #590d22;
+    font-size: 0.9rem;
+}
+
+/* 2. The Open Note (Visible State) */
+.note-content.open {
+    animation: unfold 0.6s ease-out; /* Fun unfolding animation */
+    cursor: pointer; /* Click to close */
+}
+
+/* Tiny hint text at bottom of note */
+.close-hint {
+    display: block;
+    margin-top: 15px;
+    font-size: 0.7rem;
+    color: #888;
+    font-style: italic;
+}
+
+/* Unfold Animation */
+@keyframes unfold {
+    0% {
+        transform: scaleY(0.1);
+        opacity: 0;
+    }
+    100% {
+        transform: scaleY(1);
+        opacity: 1;
+    }
+}
+
+/* --- DARK MODE VISIBILITY FIXES --- */
+
+/* 1. Make the Standard Card Text Bright White */
+[data-theme='dark'] .card {
+    color: #ffffff !important; /* Force white text */
+    text-shadow: 0 1px 3px rgba(0,0,0,0.8); /* Add a shadow so it pops */
+    border: 1px solid rgba(255, 143, 163, 0.2); /* Subtle pink border */
+}
+
+/* 2. Fix the "Locked" Cards (The main problem) */
+[data-theme='dark'] .card.locked {
+    background-color: #1a0509 !important; /* Very dark background */
+    color: #b0b0b0 !important; /* Light Grey text (so you can read "Day 4") */
+    opacity: 0.8;
+}
+
+/* 3. Fix the Lock Icon Color */
+[data-theme='dark'] .card.locked .status-icon {
+    filter: invert(1) brightness(2); /* Makes the black lock icon white */
+    opacity: 0.5;
+}
+
+/* 4. Fix the Modal/Popup (If you want it dark too) */
+[data-theme='dark'] .modal-content, 
+[data-theme='dark'] .quest-modal {
+    background-color: #4a101e; /* Dark Red matches theme */
     color: white;
     border: 2px solid #ff4d6d;
 }
 
+/* 5. Make the "Hint" text readable in Dark Mode */
+[data-theme='dark'] .hint-text {
+    color: #ffb3c1; /* Light pink instead of dark grey */
+}
+
+/* --- 1. CUSTOM INPUT FIELD STYLING --- */
+.name-input {
+    padding: 15px 25px;
+    font-size: 1.1rem;
+    border-radius: 50px; /* Fully rounded pill shape */
+    border: 2px solid #ffb3c1; /* Soft pink border */
+    background: rgba(255, 255, 255, 0.9);
+    color: #590d22;
+    outline: none;
+    transition: all 0.3s ease;
+    width: 60%;
+    text-align: center;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* When she clicks inside the box */
+.name-input:focus {
+    border-color: #ff4d6d; /* Darker pink */
+    box-shadow: 0 0 15px rgba(255, 77, 109, 0.4); /* Glowing effect */
+    transform: scale(1.05); /* Slight zoom */
+}
+
+/* --- 2. CUSTOM BUTTON STYLING --- */
+.btn-submit {
+    padding: 15px 35px;
+    margin-left: 10px; /* Space from input */
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 50px;
+    background: linear-gradient(135deg, #ff4d6d 0%, #ff758f 100%); /* Gradient */
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
+    letter-spacing: 1px;
+}
+
+/* Button Hover Effect */
+.btn-submit:hover {
+    transform: translateY(-3px) scale(1.05); /* Moves up and grows */
+    box-shadow: 0 8px 25px rgba(255, 77, 109, 0.6);
+    background: linear-gradient(135deg, #c9184a 0%, #ff4d6d 100%);
+}
+
+/* --- 3. HOVER EFFECTS FOR WELCOME BOX & QUEST CARDS --- */
+/* This applies to BOTH the Login Card and the Quest Cards */
+.card {
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                box-shadow 0.4s ease, 
+                border-color 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px) scale(1.02); /* Floats up nicely */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); /* Deep shadow */
+    border: 2px solid rgba(255, 255, 255, 0.8); /* Highlight border */
+}
+
+/* Dark Mode Specific Hover Glow */
+[data-theme='dark'] .card:hover {
+    box-shadow: 0 20px 40px rgba(255, 77, 109, 0.15); /* Pink glow in dark */
+    border-color: #ff4d6d;
+}
+
+/* Styling for both Name Input and Answer Input */
+.name-input, .answer-input {
+    width: 70%;
+    padding: 12px 25px;
+    margin: 15px 0;
+    border: 2px solid #ffccd5; /* Soft Pink Border */
+    border-radius: 50px; /* Pill Shape */
+    background: rgba(255, 255, 255, 0.95);
+    color: #590d22;
+    font-size: 1rem;
+    font-weight: 500;
+    outline: none;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* When clicking inside */
+.name-input:focus, .answer-input:focus {
+    border-color: #ff4d6d; /* Darker Pink */
+    box-shadow: 0 0 12px rgba(255, 77, 109, 0.3); /* Soft Glow */
+    transform: scale(1.02); /* Slight Zoom */
+}
+
 .btn-submit {
     padding: 12px 35px;
-    background: linear-gradient(135deg, #ff4d6d 0%, #ff8fa3 100%);
+    background: linear-gradient(135deg, #ff4d6d 0%, #ff8fa3 100%); /* Pink Gradient */
     color: white;
     border: none;
     border-radius: 50px;
     font-weight: bold;
+    font-size: 1rem;
     cursor: pointer;
     box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
-    transition: transform 0.2s;
+    transition: transform 0.2s, box-shadow 0.2s;
+    letter-spacing: 0.5px;
 }
-.btn-submit:hover { transform: translateY(-3px); }
 
-.btn-close {
-    padding: 10px 25px;
-    background: #ddd; color: #555;
-    border: none; border-radius: 25px;
-    font-weight: 600; cursor: pointer;
+.btn-submit:hover {
+    transform: translateY(-3px); /* Moves up slightly */
+    box-shadow: 0 6px 20px rgba(255, 77, 109, 0.6);
+    background: linear-gradient(135deg, #e01e37 0%, #ff4d6d 100%);
 }
-.btn-close:hover { background: #bbb; }
 
-/* Hint Toggle */
 .btn-hint-toggle {
     background: transparent;
-    border: 2px dashed #ff4d6d;
+    border: 2px dashed #ff4d6d; /* The Dotted Border is back! */
     color: #ff4d6d;
     padding: 8px 20px;
     border-radius: 25px;
     cursor: pointer;
     font-weight: 600;
-    margin: 10px auto;
-    display: block;
-}
-.hint-text {
-    background-color: #fff8e1;
-    color: #856404;
-    padding: 12px;
-    border-radius: 12px;
-    margin-top: 10px;
+    transition: all 0.3s ease;
+    margin-right: 10px;
 }
 
-/* Theme Toggle */
-.theme-toggle {
-    position: fixed; top: 20px; right: 20px;
-    background: var(--card-bg);
-    padding: 5px; border-radius: 30px;
-    box-shadow: 0 4px 10px var(--card-shadow);
-    display: flex; gap: 5px; z-index: 1000;
+.btn-hint-toggle:hover {
+    background: #fff0f3; /* Very light pink background on hover */
+    transform: scale(1.05);
 }
+
+/* Make sure .card has the transition property set */
+.card {
+    /* (Keep your existing card styles, just ensure this transition exists) */
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+}
+
+/* The Hover Effect */
+.card:hover {
+    transform: translateY(-10px) scale(1.02); /* Floats Up */
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2); /* Deep Shadow */
+    z-index: 10; /* Brings it to the front */
+}
+
+/* --- CUSTOM MOUSE POINTERS --- */
+
+/* 1. Default Cursor (The main mouse) */
+body {
+    /* Uses a Pink Heart Emoji as the cursor! */
+    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='48' viewport='0 0 100 100' style='fill:black;font-size:24px;'><text y='50%'>🩷</text></svg>") 16 0, auto;
+}
+
+/* 2. Hover Cursor (When touching buttons/cards) */
+/* This applies to buttons, the cards, input boxes, and the hint toggle */
+button, 
+a, 
+.card, 
+.btn-submit, 
+.hint-btn, 
+.curtain,
+.name-input,
+.answer-input {
+    /* Changes to a Sparkle Heart when you can click something */
+    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='48' viewport='0 0 100 100' style='fill:black;font-size:24px;'><text y='50%'>💖</text></svg>") 16 0, pointer;
+}
+
+/* --- FIGMA STYLE CURSORS --- */
+
+/* 1. Default Cursor (The Sharp Black Arrow) */
+body {
+    /* SVG: Black arrow with white stroke */
+    cursor: url("data:image/svg+xml;utf8,<svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z' fill='black' stroke='white' stroke-width='1'/></svg>") 0 0, auto;
+}
+
+/* 2. Hover Cursor (The White Hand) */
+/* Applies to buttons, links, cards, and inputs */
+button, 
+a, 
+.card, 
+.btn-submit, 
+.hint-btn, 
+.curtain, 
+.name-input, 
+.answer-input,
 .theme-toggle button {
-    background: none; border: none; font-size: 1.2rem;
-    padding: 8px 12px; border-radius: 50%; opacity: 0.5;
-}
-.theme-toggle button.active {
-    background-color: var(--bg-color);
-    opacity: 1; transform: scale(1.1);
+    /* SVG: White hand with black stroke */
+    cursor: url("data:image/svg+xml;utf8,<svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path fill-rule='evenodd' clip-rule='evenodd' d='M9.55 3.5C9.55 2.15 10.6 1.05 11.95 1.05C13.3 1.05 14.35 2.15 14.35 3.5V8.8C14.35 8.9 14.45 8.95 14.5 8.95C14.65 8.9 14.7 8.75 14.75 8.65L15.35 6.55C15.65 5.5 16.65 4.8 17.7 5.05C18.75 5.3 19.4 6.35 19.1 7.4L18.15 10.95C18.05 11.35 18.25 11.75 18.65 11.9C21.45 12.85 22.95 15.65 22.95 18.5C22.95 21.55 20.45 24.05 17.4 24.05H11.95C10.15 24.05 8.45 23.2 7.35 21.8L3.25 16.55C2.7 15.8 2.8 14.75 3.5 14.15C4.15 13.55 5.2 13.6 5.85 14.25L7.95 16.35C8.05 16.45 8.25 16.4 8.25 16.25V3.5C8.25 2.8 8.8 2.25 9.55 2.25C10.3 2.25 10.85 2.8 10.85 3.5H9.55Z' fill='white' stroke='black' stroke-width='1.5'/></svg>") 8 0, pointer;
 }
 
-/* ========================================= */
-/* 6. BIRTHDAY REVEAL PAGE                   */
-/* ========================================= */
-.birthday-container {
-    min-height: 100vh;
+/* 3. Text Selection Cursor (Standard I-Beam) */
+/* Keeps text selectable without looking weird */
+p, h1, h2, h3, span, input {
+    cursor: text;
+}
+
+/* --- CUSTOM CURSORS (Black & White Arrows) --- */
+
+/* 1. Default Cursor: Black Arrow with White Border */
+body {
+    cursor: url("data:image/svg+xml;utf8,<svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z' fill='black' stroke='white' stroke-width='1'/></svg>") 0 0, auto;
+}
+
+/* 2. Hover Cursor: White Arrow with Black Border */
+/* Applies to everything clickable */
+button, 
+a, 
+.card, 
+.btn-submit, 
+.hint-btn, 
+.curtain, 
+.name-input, 
+.answer-input,
+.theme-toggle button {
+    cursor: url("data:image/svg+xml;utf8,<svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z' fill='white' stroke='black' stroke-width='1'/></svg>") 0 0, pointer;
+}
+
+/* 3. Text Selection Cursor (Standard I-Beam) */
+p, h1, h2, h3, span, input {
+    cursor: text;
+}
+
+/* --- CUSTOM CURSORS (Pink Theme) --- */
+
+/* 1. Default Cursor: Hot Pink Arrow with White Border */
+body {
+    /* Fill changed to #ff4d6d (Hot Pink) */
+    cursor: url("data:image/svg+xml;utf8,<svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z' fill='%23ff4d6d' stroke='white' stroke-width='1'/></svg>") 0 0, auto;
+}
+
+/* 2. Hover Cursor: Light Pink Arrow with Black Border */
+/* Applies to everything clickable */
+button, 
+a, 
+.card, 
+.btn-submit, 
+.hint-btn, 
+.curtain, 
+.name-input, 
+.answer-input,
+.theme-toggle button {
+    /* Fill changed to #ffe5ec (Light Pink) */
+    cursor: url("data:image/svg+xml;utf8,<svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z' fill='%23ffe5ec' stroke='black' stroke-width='1'/></svg>") 0 0, pointer;
+}
+
+/* 3. Text Selection Cursor (Standard I-Beam) */
+p, h1, h2, h3, span, input {
+    cursor: text;
+}
+
+/* --- 🎡 3D WHEEL ANIMATION STYLES 🎡 --- */
+
+/* The Stage */
+.scene {
+    width: 280px; /* Adjust width of photos */
+    height: 350px; /* Adjust height of photos */
+    margin: 30px auto;
+    perspective: 1000px; /* This creates the 3D depth */
     position: relative;
-    overflow: hidden;
-    color: var(--text-color);
 }
 
-/* Curtain */
-.curtain {
-    position: fixed; top: 0; left: 0;
-    width: 100%; height: 100vh;
-    background: linear-gradient(to bottom, #ff4d6d, #590d22);
-    z-index: 200;
-    display: flex; justify-content: center; align-items: center;
-    transition: transform 1.5s ease-in-out;
-    color: white;
+/* The Wheel Container */
+.carousel {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
 }
-.curtain.open { transform: translateY(-100%); }
-.curtain-content h1 { font-size: 3rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
 
-/* Balloon Sky */
-.balloon-sky-container {
-    position: absolute; top: 0; left: 0;
-    width: 100%; height: 100%;
+/* Individual Photo Cards */
+.carousel-item {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    /* The transition controls the speed of the "Flip" */
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Default State: Hidden below and rotated */
+    transform: translateY(100px) rotateX(-90deg); 
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* 1. ACTIVE PHOTO (Center Stage) */
+.carousel-item.active {
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg) scale(1);
+    z-index: 2;
+    box-shadow: 0 20px 50px rgba(255, 77, 109, 0.4); /* Pink Glow */
+}
+
+/* 2. PREVIOUS PHOTO (Files Up and Away) */
+.carousel-item.prev {
+    opacity: 0;
+    transform: translateY(-120px) rotateX(90deg) scale(0.8);
+    z-index: 1;
+}
+
+/* 3. NEXT PHOTO (Waiting Below) */
+.carousel-item.next {
+    opacity: 0;
+    transform: translateY(120px) rotateX(-90deg) scale(0.8);
     z-index: 0;
-    overflow: hidden;
-}
-.balloon {
-    position: absolute; bottom: -120px;
-    width: 60px; height: 80px;
-    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-    animation: floatUp linear forwards;
-    box-shadow: inset -5px -5px 10px rgba(0,0,0,0.1);
-}
-.balloon::after {
-    content: ''; position: absolute; bottom: -5px; left: 50%;
-    transform: translateX(-50%); width: 10px; height: 8px;
-    background: inherit; border-radius: 50%;
-}
-.balloon .string {
-    position: absolute; bottom: -30px; left: 50%;
-    width: 1px; height: 30px; background: rgba(255, 255, 255, 0.6);
-}
-.color-0 { background-color: #ff4d6d; }
-.color-1 { background-color: #ff8fa3; }
-.color-2 { background-color: #c9184a; }
-.color-3 { background-color: #ffb3c1; }
-.color-4 { background-color: #ffd60a; }
-
-@keyframes floatUp {
-    0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
-    50% { transform: translateY(-50vh) rotate(5deg) translateX(10px); }
-    100% { transform: translateY(-120vh) rotate(-5deg); opacity: 0; }
 }
 
-/* ========================================= */
-/* 7. SPLIT LAYOUT (Reveal Content)          */
-/* ========================================= */
-.split-layout {
-    display: flex; flex-direction: row;
-    width: 90%; max-width: 1200px;
-    height: 80vh;
-    align-items: center; justify-content: space-between;
-    z-index: 10; position: relative;
-    margin: 0 auto;
-}
-.left-zone, .right-zone {
-    flex: 1; display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
+/* The Image Inside the Card */
+.photo-frame-3d {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 15px;
+    border: 5px solid white;
+    background: white;
 }
 
-@media (max-width: 768px) {
-    .split-layout { flex-direction: column; height: auto; }
-    .right-zone { margin-top: 50px; }
-}
 
-/* --- LEFT ZONE: POLAROIDS --- */
+/* --- 🃏 POLAROID SHUFFLE EFFECT 🃏 --- */
+
+/* The Stack Container */
 .polaroid-stack {
     position: relative;
-    width: 280px; height: 340px;
+    width: 280px;  /* Width of the Polaroid */
+    height: 340px; /* Height of the Polaroid */
     margin: 30px auto;
     perspective: 1000px;
 }
+
+/* Base Card Style */
 .polaroid-card {
-    position: absolute; top: 0; left: 0;
-    width: 100%; height: 100%;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transition: transform 0.5s ease;
+    
+    /* The "Polaroid" Look */
     background: white;
-    /* CHANGED: Increased bottom padding for caption */
-    padding: 15px 15px 60px 15px; 
+    padding: 15px 15px 50px 15px; /* Big bottom padding for the "Chin" */
     box-shadow: 0 10px 20px rgba(0,0,0,0.2);
     border-radius: 4px;
-    transform-origin: center bottom;
-    transition: transform 0.5s ease;
+    transform-origin: center bottom; /* Rotates from bottom */
 }
+
+/* Image inside the Polaroid */
 .polaroid-inner {
-    width: 100%; height: 100%;
-    background: #eee; overflow: hidden;
+    width: 100%;
+    height: 100%;
+    background: #eee;
+    overflow: hidden;
 }
+
 .polaroid-inner img {
-    width: 100%; height: 100%; object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
 
-/* Polaroid Animations */
-.polaroid-card.active { z-index: 10; transform: rotate(-2deg) scale(1); opacity: 1; }
-.polaroid-card.next { z-index: 5; transform: rotate(3deg) scale(0.95) translateY(10px); opacity: 1; filter: brightness(0.9); }
-.polaroid-card.prev { z-index: 15; animation: flyOutRight 1s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards; }
-.polaroid-card.hidden { opacity: 0; z-index: 0; }
+/* --- ANIMATION STATES --- */
 
+/* 1. ACTIVE (Top Card) */
+.polaroid-card.active {
+    z-index: 10;
+    transform: rotate(-2deg) scale(1); /* Slight tilt left */
+    opacity: 1;
+}
+
+/* 2. NEXT (Waiting Behind) */
+.polaroid-card.next {
+    z-index: 5;
+    transform: rotate(3deg) scale(0.95) translateY(10px); /* Tilted right, smaller */
+    opacity: 1;
+    filter: brightness(0.9); /* Slightly darker to show depth */
+}
+
+/* 3. PREV (The Fly Away Animation!) */
+.polaroid-card.prev {
+    z-index: 15; /* Moves to very front to fly out */
+    animation: flyOutRight 1s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards;
+}
+
+/* 4. HIDDEN (Rest of stack) */
+.polaroid-card.hidden {
+    opacity: 0;
+    z-index: 0;
+    transform: scale(0.8);
+}
+
+/* --- KEYFRAMES: The "Throw" Motion --- */
 @keyframes flyOutRight {
-    0% { transform: rotate(-2deg); opacity: 1; }
-    100% { transform: rotate(45deg) translate(400px, -100px); opacity: 0; }
+    0% {
+        transform: rotate(-2deg) translate(0, 0);
+        opacity: 1;
+    }
+    100% {
+        /* Flies to the right, rotates drastically, and fades */
+        transform: rotate(45deg) translate(400px, -100px); 
+        opacity: 0;
+    }
 }
 
-/* Polaroid Captions (BOLD, BLACK, CENTERED) */
-.polaroid-caption {
-    position: absolute; bottom: 0; left: 0;
-    width: 100%; height: 60px; /* Matches bottom padding */
-    display: flex; align-items: center; justify-content: center;
-    text-align: center;
-    color: #222 !important; /* Force Black */
-    font-size: 1.8rem;
-    font-weight: bold;
-    font-family: 'Brush Script MT', 'Comic Sans MS', cursive;
-    z-index: 20;
-    transform: rotate(-1deg);
+/* --- 🌟 SPLIT LAYOUT SYSTEM 🌟 --- */
+.split-layout {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    max-width: 1200px;
+    height: 80vh; /* Takes up most of the screen */
+    align-items: center;
+    justify-content: space-between;
 }
 
-/* --- LEFT ZONE: NOTE --- */
-.note-section {
-    margin-top: 30px; min-height: 100px;
-    display: flex; justify-content: center;
+.left-zone {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
-.folded-note {
-    background: #fff; width: 200px; height: 120px;
-    border: 2px solid #ff8fa3; border-radius: 10px;
-    display: flex; flex-direction: column; justify-content: center; align-items: center;
-    cursor: pointer; position: relative;
-    background-image: repeating-linear-gradient(45deg, #fff, #fff 10px, #ffe5ec 10px, #ffe5ec 20px);
-}
-.heart-seal { font-size: 2.5rem; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
 
-.note-content.open {
-    background-color: #fffbf0;
-    background-image: linear-gradient(90deg, transparent 49px, #ff8fa3 49px, #ff8fa3 51px, transparent 51px),
-                      linear-gradient(#e1e1e1 1px, transparent 1px);
-    background-size: 100% 100%, 100% 30px;
-    line-height: 30px;
-    padding: 30px 20px 30px 60px;
-    font-family: 'Indie Flower', cursive;
-    color: #2b2d42;
-    width: 90%; max-width: 500px;
-    box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
-    animation: unfold 0.6s ease-out;
+.right-zone {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
 }
-@keyframes unfold { 0% { transform: scaleY(0.1); opacity: 0; } 100% { transform: scaleY(1); opacity: 1; } }
 
-/* --- RIGHT ZONE: CLOCK & CAKE --- */
-.live-clock-container h3 { color: #ffb3c1; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
-.time-grid { display: flex; gap: 10px; }
+/* On Mobile, stack them */
+@media (max-width: 768px) {
+    .split-layout {
+        flex-direction: column;
+        height: auto;
+    }
+    .right-zone {
+        margin-top: 50px;
+    }
+}
+
+/* --- ⏳ LIVE CLOCK STYLES ⏳ --- */
+.live-clock-container h3 {
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    color: #ffb3c1;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.time-grid {
+    display: flex;
+    gap: 10px;
+}
+
 .time-box {
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.3);
-    padding: 10px; border-radius: 10px;
-    min-width: 60px; display: flex; flex-direction: column; align-items: center;
+    padding: 10px;
+    border-radius: 10px;
+    min-width: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     backdrop-filter: blur(5px);
 }
-.time-box span { font-size: 1.5rem; font-weight: bold; color: white; }
-.time-box small { font-size: 0.7rem; color: #ffccd5; text-transform: uppercase; }
 
-/* Cake */
-.cake-container { margin-top: 50px; text-align: center; position: relative; z-index: 20; }
-.cake { position: relative; width: 250px; height: 200px; margin: 30px auto 0; }
-.layer { position: absolute; width: 100%; border-radius: 10px; }
-.layer-bottom { bottom: 0; height: 60px; background: #590d22; width: 100%; }
-.layer-middle { bottom: 60px; height: 50px; background: #800f2f; width: 90%; left: 5%; }
-.layer-top { bottom: 110px; height: 50px; background: #a4133c; width: 80%; left: 10%; }
-.icing { position: absolute; bottom: 160px; left: 10%; width: 80%; height: 20px; background: #ffb3c1; border-radius: 10px 10px 0 0; }
-.plate { position: absolute; bottom: -10px; left: -10%; width: 120%; height: 10px; background: #ddd; border-radius: 50%; box-shadow: 0 5px 10px rgba(0,0,0,0.3); }
+.time-box span {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+}
+
+.time-box small {
+    font-size: 0.7rem;
+    color: #ffccd5;
+    text-transform: uppercase;
+}
+
+/* --- 🎂 CAKE STYLES (Fixed) 🎂 --- */
+.cake-container {
+    margin-top: 50px;
+    text-align: center;
+    position: relative;
+    z-index: 20; /* Ensures cake is above balloons */
+}
+
+.cake {
+    position: relative;
+    width: 250px;
+    height: 200px;
+    margin: 0 auto;
+    margin-top: 30px;
+}
+
+/* Layers */
+.layer {
+    position: absolute;
+    width: 100%;
+    border-radius: 10px;
+}
+
+.layer-bottom {
+    bottom: 0;
+    height: 60px;
+    background: #590d22;
+    width: 100%;
+}
+
+.layer-middle {
+    bottom: 60px;
+    height: 50px;
+    background: #800f2f;
+    width: 90%;
+    left: 5%;
+}
+
+.layer-top {
+    bottom: 110px;
+    height: 50px;
+    background: #a4133c;
+    width: 80%;
+    left: 10%;
+}
+
+.icing {
+    position: absolute;
+    bottom: 160px;
+    left: 10%;
+    width: 80%;
+    height: 20px;
+    background: #ffb3c1;
+    border-radius: 10px 10px 0 0;
+}
+
+/* Plate */
+.plate {
+    position: absolute;
+    bottom: -10px;
+    left: -10%;
+    width: 120%;
+    height: 10px;
+    background: #ddd;
+    border-radius: 50%;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+}
 
 /* Candles */
 .candles {
     position: absolute;
-    bottom: 175px; /* Fixed height */
-    left: 15%; width: 70%;
-    display: flex; justify-content: space-between;
-    z-index: 25;
+    bottom: 175px;
+    left: 15%;
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+    z-index: 25; /* Makes sure clicks hit the candle, not the balloon */
 }
+
 .candle {
-    width: 10px; height: 40px;
+    width: 10px;
+    height: 40px;
+    background: white;
     background: repeating-linear-gradient(45deg, white, white 5px, #ff4d6d 5px, #ff4d6d 10px);
-    position: relative; cursor: pointer;
+    position: relative;
+    cursor: pointer; /* Shows the hand pointer */
 }
+
+/* Flame Animation */
 .flame {
-    width: 12px; height: 20px;
-    background: orange; border-radius: 50% 50% 20% 20%;
-    position: absolute; top: -20px; left: -1px;
+    width: 12px;
+    height: 20px;
+    background: orange;
+    border-radius: 50% 50% 20% 20%;
+    position: absolute;
+    top: -20px;
+    left: -1px;
     box-shadow: 0 0 10px yellow, 0 0 20px orange;
-    transition: opacity 0.3s ease; opacity: 1;
+    transition: opacity 0.3s ease;
+    opacity: 1; /* Default to visible */
 }
-.flame.lit { animation: flicker 1s infinite alternate; }
-.flame.out { opacity: 0 !important; animation: none; }
+
+/* Flicker only when lit */
+.flame.lit {
+    animation: flicker 1s infinite alternate;
+}
+
+/* --- THE FIX: Forces flame to vanish --- */
+.flame.out {
+    opacity: 0 !important; 
+    animation: none;
+}
 
 @keyframes flicker {
     0% { transform: scale(1); opacity: 0.9; }
     100% { transform: scale(1.1); opacity: 1; }
 }
 
-/* Reset Button */
-.reset-btn {
-    position: fixed; bottom: 20px; right: 20px;
-    background: white; color: #d62828;
-    border: 2px solid #d62828; padding: 10px 20px;
-    border-radius: 30px; cursor: pointer; font-weight: bold;
-    z-index: 100;
+@keyframes flicker {
+    0% { transform: scale(1); opacity: 0.9; }
+    100% { transform: scale(1.1); opacity: 1; }
+}
+
+/* --- 🎈 BALLOON SKY EFFECT 🎈 --- */
+
+/* 1. The clickable background layer */
+.balloon-sky-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0; /* Behind everything else */
+    overflow: hidden;
+    cursor: crosshair; /* Fun cursor to indicate clicking */
+}
+
+/* 2. The Balloon Shape */
+.balloon {
+    position: absolute;
+    bottom: -120px; /* Start just below the screen */
+    width: 60px;
+    height: 80px;
+    /* Creates the classic oval balloon shape */
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    animation: floatUp linear forwards;
+    box-shadow: inset -5px -5px 10px rgba(0,0,0,0.1); /* Subtle depth */
+}
+
+/* Little knot at the bottom */
+.balloon::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 8px;
+    background: inherit;
+    border-radius: 50%;
+}
+
+/* The string hanging down */
+.balloon .string {
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    width: 1px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.6);
+}
+
+/* --- Balloon Theme Colors --- */
+.color-0 { background-color: #ff4d6d; } /* Hot Pink */
+.color-1 { background-color: #ff8fa3; } /* Soft Pink */
+.color-2 { background-color: #c9184a; } /* Deep Red */
+.color-3 { background-color: #ffb3c1; } /* Lighter Pink */
+.color-4 { background-color: #ffd60a; } /* Pop of Yellow */
+
+/* --- The Floating Animation --- */
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.8;
+    }
+    50% {
+        /* Slight wiggle as it goes up */
+        transform: translateY(-50vh) rotate(5deg) translateX(10px);
+    }
+    100% {
+        /* Float completely off the top */
+        transform: translateY(-120vh) rotate(-5deg);
+        opacity: 0;
+    }
+}
+
+/* --- CUSTOM CURSORS (Updated) --- */
+
+/* 1. Default Cursor: Hot Pink Arrow with White Border */
+body {
+    cursor: url("data:image/svg+xml;utf8,<svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z' fill='%23ff4d6d' stroke='white' stroke-width='1'/></svg>") 0 0, auto;
+}
+
+/* 2. Hover Cursor: White Arrow with Black Border */
+button, 
+a, 
+.card, 
+.btn-submit, 
+.hint-btn, 
+.curtain, 
+.name-input, 
+.answer-input,
+.theme-toggle button,
+.candle, /* Added candle here so it shows the hover cursor */
+.balloon-sky-container {
+    cursor: url("data:image/svg+xml;utf8,<svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z' fill='white' stroke='black' stroke-width='1'/></svg>") 0 0, pointer;
 }
