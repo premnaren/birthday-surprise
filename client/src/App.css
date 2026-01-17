@@ -1637,46 +1637,51 @@ a,
     text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
-/* --- 🎵 SPINNING MUSIC CONTROLLER (Bottom Left) 🎵 --- */
+/* --- 🎵 SPINNING VINYL RECORD (Bottom Left) 🎵 --- */
 
 .music-control {
     position: fixed;
-    bottom: 20px; /* changed from 'top' to 'bottom' */
-    left: 20px;   /* stays on the left */
-    width: 60px;  /* Made it slightly bigger */
-    height: 60px;
+    bottom: 20px;
+    left: 20px;
+    width: 80px;  /* Made it bigger so you can see the disc details */
+    height: 80px;
     cursor: pointer;
-    z-index: 1000; /* High z-index to sit above balloons */
+    z-index: 1000;
     transition: transform 0.2s ease;
-    
-    /* Optional: Add a subtle glow so it pops against the dark background */
     border-radius: 50%;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2); 
-    background: black; /* Fills the transparent parts of the PNG if any */
 }
 
 .music-control:hover {
     transform: scale(1.1); /* Pop effect on hover */
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
 }
 
 .music-icon {
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    border: 2px solid rgba(255, 255, 255, 0.8);
     object-fit: cover;
     display: block;
+
+    /* 💿 THE VINYL DISC EFFECT 💿 */
+    /* This thick border creates the black record around your photo */
+    border: 25px solid #181818; 
+    box-sizing: border-box; /* Keeps the size correct */
+    
+    /* This adds subtle "grooves" and a shine to the black plastic */
+    box-shadow: 
+        0 0 10px rgba(0,0,0,0.5), /* Drop shadow */
+        inset 0 0 0 1px #333,      /* Inner groove ring */
+        0 0 0 1px #333;            /* Outer edge ring */
 }
 
 /* THE SPIN ANIMATION */
 .music-icon.spinning {
-    animation: spinRecord 4s linear infinite; /* Smooth rotation */
+    animation: spinRecord 4s linear infinite;
 }
 
 /* STOP ANIMATION WHEN PAUSED */
 .music-icon {
-    animation: none; /* Default state is stopped */
+    animation: none; 
 }
 
 @keyframes spinRecord {
