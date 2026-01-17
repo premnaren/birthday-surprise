@@ -1575,3 +1575,45 @@ a,
 .balloon-sky-container {
     z-index: 0 !important;
 }
+
+/* --- 🛠️ LIGHT MODE VISIBILITY FIXES 🛠️ --- */
+
+/* 1. Fix the Timer Text & Box */
+.time-box {
+    /* Make the box border visible in both modes using your theme color */
+    border: 2px solid var(--primary-color) !important;
+    background: rgba(255, 255, 255, 0.2); /* Slight background */
+}
+
+.time-box span {
+    /* This is the magic fix: Use the theme text color instead of white */
+    color: var(--text-color) !important; 
+    font-weight: 800;
+}
+
+.time-box small {
+    /* Make the "YRS/DAYS" labels match the text color but slightly transparent */
+    color: var(--text-color) !important;
+    opacity: 0.8;
+    font-weight: bold;
+}
+
+/* 2. Fix the Cake Plate Visibility */
+.plate {
+    /* Darker grey so it stands out against the light pink background */
+    background: #bbb !important; 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3) !important; /* Stronger shadow */
+}
+
+/* 3. Make "Happy Birthday" Title Darker in Light Mode */
+.bday-title {
+    /* Darker Red/Pink so it's readable on light pink */
+    color: #c9184a; 
+    text-shadow: none;
+}
+
+/* ...But keep it bright in Dark Mode */
+[data-theme='dark'] .bday-title {
+    color: #ffb3c1;
+    text-shadow: 0 0 10px rgba(255, 77, 109, 0.8);
+}
