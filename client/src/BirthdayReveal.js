@@ -2,8 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import FlowerGarden from './FlowerGarden';
 import './App.css'; 
 
-// 📸 CONFIGURATION: Add your photo filenames here!
-// (Make sure these files are in your 'public' folder)
+// 📸 CONFIGURATION: Your photos in 'public' folder
 const PHOTOS = [
     "/pic1.jpg", 
     "/pic2.jpg", 
@@ -13,77 +12,52 @@ const PHOTOS = [
 ];
 
 const BirthdayReveal = () => {
-    // --- STATE MANAGEMENT ---
+    // --- STATE ---
     const [theme, setTheme] = useState(localStorage.getItem('app_theme') || 'system');
     const [curtainOpen, setCurtainOpen] = useState(false);
     const [noteOpen, setNoteOpen] = useState(false);
-    
-    // 🎡 CAROUSEL STATE (New)
-    const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
+    const [currentIndex, setCurrentIndex] = useState(0); // Tracks top card
     
     const audioRef = useRef(null);
 
     // --- 1. THEME LOGIC ---
     useEffect(() => {
         const root = document.documentElement;
-        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const isDark = theme === 'dark' || (theme === 'system' && systemDark);
-
+        const isDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
         if (isDark) root.setAttribute('data-theme', 'dark');
         else root.removeAttribute('data-theme');
-        
         localStorage.setItem('app_theme', theme);
     }, [theme]);
 
-    // --- 2. ROTATING WHEEL LOGIC (New) ---
+    // --- 2. SHUFFLE TIMER ---
     useEffect(() => {
         const interval = setInterval(() => {
-            setCurrentPhotoIndex((prev) => (prev + 1) % PHOTOS.length);
-        }, 3000); // Change photo every 3 seconds
+            setCurrentIndex((prev) => (prev + 1) % PHOTOS.length);
+        }, 3500); // Speed: New photo every 3.5 seconds
 
         return () => clearInterval(interval);
     }, []);
 
-    // --- 3. MUSIC CONTROL ---
+    // --- 3. HANDLERS ---
     const handleCurtainClick = () => {
         setCurtainOpen(true);
-        if (audioRef.current) {
-            audioRef.current.play().catch(e => console.log("Audio play failed:", e));
-        }
+        if (audioRef.current) audioRef.current.play().catch(e => console.log(e));
     };
 
     return (
-        <div className="birthday-container" style={{ 
-            minHeight: '100vh',
-            position: 'relative',
-            overflow: 'hidden',
-            color: 'var(--text-color)',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center'
-        }}>
-            
-            {/* 🌸 BACKGROUND FLOWERS 🌸 */}
+        <div className="birthday-container">
             <div style={{zIndex: 0}}><FlowerGarden /></div>
+            <audio ref={audioRef} loop><source src="/song.mp3" /></audio>
 
-            {/* 🎵 AUDIO PLAYER 🎵 */}
-            <audio ref={audioRef} loop>
-                <source src="/song.mp3" type="audio/mpeg" />
-            </audio>
-
-            {/* 🌗 THEME TOGGLE 🌗 */}
+            {/* THEME TOGGLE */}
             <div className="theme-toggle" style={{ position: 'fixed', top: '20px', right: '20px', zIndex: 100 }}>
                 <button className={theme === 'light' ? 'active' : ''} onClick={() => setTheme('light')}>☀️</button>
                 <button className={theme === 'system' ? 'active' : ''} onClick={() => setTheme('system')}>💻</button>
                 <button className={theme === 'dark' ? 'active' : ''} onClick={() => setTheme('dark')}>🌙</button>
             </div>
 
-            {/* 🎭 THE CURTAIN 🎭 */}
-            <div 
-                className={`curtain ${curtainOpen ? 'open' : ''}`} 
-                onClick={handleCurtainClick}
-                style={{zIndex: 200}}
-            >
+            {/* CURTAIN */}
+            <div className={`curtain ${curtainOpen ? 'open' : ''}`} onClick={handleCurtainClick} style={{zIndex: 200}}>
                 <div className="curtain-content">
                     <h1>🎉 A Surprise Awaits! 🎉</h1>
                     <p>Click to Reveal</p>
@@ -91,31 +65,36 @@ const BirthdayReveal = () => {
                 </div>
             </div>
 
-            {/* 💌 MAIN CONTENT CARD 💌 */}
+            {/* MAIN CARD */}
             <div className="birthday-card" style={{zIndex: 10}}>
                 <h1 className="bday-title">🎉 Happy Birthday! 🎉</h1>
                 
-                {/* 🎡 THE 3D PHOTO WHEEL (Replaces single image) 🎡 */}
-                <div className="scene">
-                    <div className="carousel">
-                        {PHOTOS.map((photo, index) => {
-                            // Determine position of each card
-                            let className = "carousel-item";
-                            if (index === currentPhotoIndex) className += " active";
-                            else if (index === (currentPhotoIndex - 1 + PHOTOS.length) % PHOTOS.length) className += " prev";
-                            else if (index === (currentPhotoIndex + 1) % PHOTOS.length) className += " next";
-                            else className += " hidden"; 
+                {/* 🃏 THE POLAROID STACK 🃏 */}
+                <div className="polaroid-stack">
+                    {PHOTOS.map((photo, index) => {
+                        // Calculate specific role for animation
+                        let className = "polaroid-card";
+                        
+                        // The Top Card (Visible)
+                        if (index === currentIndex) className += " active";
+                        // The Card that just left (Flying away)
+                        else if (index === (currentIndex - 1 + PHOTOS.length) % PHOTOS.length) className += " prev";
+                        // The Card waiting behind (Peeking)
+                        else if (index === (currentIndex + 1) % PHOTOS.length) className += " next";
+                        // Others (Hidden)
+                        else className += " hidden"; 
 
-                            return (
-                                <div key={index} className={className}>
-                                    <img src={photo} alt="Memory" className="photo-frame-3d" />
+                        return (
+                            <div key={index} className={className}>
+                                <div className="polaroid-inner">
+                                    <img src={photo} alt="Memory" />
                                 </div>
-                            );
-                        })}
-                    </div>
+                            </div>
+                        );
+                    })}
                 </div>
 
-                {/* --- THE INTERACTIVE NOTE --- */}
+                {/* NOTE SECTION */}
                 <div className="note-section">
                     {!noteOpen ? (
                         <div className="folded-note" onClick={() => setNoteOpen(true)}>
@@ -125,30 +104,21 @@ const BirthdayReveal = () => {
                     ) : (
                         <div className="note-content open" onClick={() => setNoteOpen(false)}>
                             <p>
-                                To my favorite person in the world, <br/><br/>
-                                I hope you enjoyed this little countdown! You make every day brighter 
-                                just by being you. I can't wait to celebrate with you today.
+                                To my favorite person,<br/><br/>
+                                Flipping through these photos reminds me of how lucky I am.
+                                Every memory with you is my favorite.
                                 <br/><br/>
-                                P.S. You can click on the background to plant flowers for me! 🌸
+                                Happy Birthday! 🎂
                             </p>
-                            <p className="signature">With all my love, <br/> <strong>Prem</strong> ❤️</p>
+                            <p className="signature">Love, <br/> <strong>Prem</strong> ❤️</p>
                             <span className="close-hint">(Click to close)</span>
                         </div>
                     )}
                 </div>
             </div>
 
-            {/* 🔄 RESET BUTTON 🔄 */}
-            <button 
-                onClick={() => {
-                    if(window.confirm("Reset the app to Day 1?")) {
-                        localStorage.clear();
-                        window.location.reload();
-                    }
-                }}
-                className="reset-btn"
-                style={{zIndex: 100}}
-            >
+            {/* RESET */}
+            <button onClick={() => { if(window.confirm("Reset?")) { localStorage.clear(); window.location.reload(); }}} className="reset-btn" style={{zIndex: 100}}>
                 🔄 Reset
             </button>
         </div>
