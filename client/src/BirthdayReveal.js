@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import FlowerGarden from './FlowerGarden';
-import confetti from 'canvas-confetti'; // Make sure to npm install canvas-confetti if you haven't!
+import confetti from 'canvas-confetti'; 
 import './App.css'; 
 
 // 📸 CONFIGURATION
 const PHOTOS = [
     "/pic1.jpg", "/pic2.jpg", "/pic3.jpg", "/pic4.jpg", "/pic5.jpg" 
 ];
-// 📅 START DATE (For the Clock) - Format: YYYY-MM-DD
+// 📅 START DATE (For the Clock)
 const START_DATE = "2022-10-16"; 
 
 // --- ⏳ SUB-COMPONENT: LIVE CLOCK ---
@@ -47,15 +47,14 @@ const LiveClock = () => {
 
 // --- 🎂 SUB-COMPONENT: INTERACTIVE CAKE ---
 const BirthdayCake = () => {
-    const [candles, setCandles] = useState([true, true, true, true, true]); // 5 Candles
+    const [candles, setCandles] = useState([true, true, true, true, true]); 
     const [wished, setWished] = useState(false);
 
     const blowCandle = (index) => {
         const newCandles = [...candles];
-        newCandles[index] = false; // Extinguish candle
+        newCandles[index] = false; 
         setCandles(newCandles);
 
-        // Check if all candles are out
         if (newCandles.every(c => c === false) && !wished) {
             setWished(true);
             triggerBigExplosion();
@@ -65,24 +64,10 @@ const BirthdayCake = () => {
     const triggerBigExplosion = () => {
         const duration = 3000;
         const end = Date.now() + duration;
-
         (function frame() {
-            confetti({
-                particleCount: 5,
-                angle: 60,
-                spread: 55,
-                origin: { x: 0 }
-            });
-            confetti({
-                particleCount: 5,
-                angle: 120,
-                spread: 55,
-                origin: { x: 1 }
-            });
-
-            if (Date.now() < end) {
-                requestAnimationFrame(frame);
-            }
+            confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 } });
+            confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 } });
+            if (Date.now() < end) requestAnimationFrame(frame);
         }());
     };
 
@@ -95,8 +80,6 @@ const BirthdayCake = () => {
                 <div className="layer layer-middle"></div>
                 <div className="layer layer-top"></div>
                 <div className="icing"></div>
-                
-                {/* CANDLES */}
                 <div className="candles">
                     {candles.map((isLit, i) => (
                         <div key={i} className="candle" onClick={() => blowCandle(i)}>
@@ -111,12 +94,23 @@ const BirthdayCake = () => {
 
 // --- 🏠 MAIN COMPONENT ---
 const BirthdayReveal = () => {
+    // 1. STATE
     const [theme, setTheme] = useState(localStorage.getItem('app_theme') || 'system');
     const [curtainOpen, setCurtainOpen] = useState(false);
     const [noteOpen, setNoteOpen] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0); 
     const audioRef = useRef(null);
 
+    // 2. THEME LOGIC (This was missing! Adding it fixes the error)
+    useEffect(() => {
+        const root = document.documentElement;
+        const isDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        if (isDark) root.setAttribute('data-theme', 'dark');
+        else root.removeAttribute('data-theme');
+        localStorage.setItem('app_theme', theme);
+    }, [theme]);
+
+    // 3. CAROUSEL LOGIC
     useEffect(() => {
         const interval = setInterval(() => setCurrentIndex((p) => (p + 1) % PHOTOS.length), 3500);
         return () => clearInterval(interval);
@@ -132,10 +126,11 @@ const BirthdayReveal = () => {
             <div style={{zIndex: 0}}><FlowerGarden /></div>
             <audio ref={audioRef} loop><source src="/song.mp3" /></audio>
 
-            {/* THEME TOGGLE */}
+            {/* THEME TOGGLE (Updated to use 'theme' variable) */}
             <div className="theme-toggle" style={{ position: 'fixed', top: '20px', right: '20px', zIndex: 100 }}>
-                <button onClick={() => setTheme('light')}>☀️</button>
-                <button onClick={() => setTheme('dark')}>🌙</button>
+                <button className={theme === 'light' ? 'active' : ''} onClick={() => setTheme('light')}>☀️</button>
+                <button className={theme === 'system' ? 'active' : ''} onClick={() => setTheme('system')}>💻</button>
+                <button className={theme === 'dark' ? 'active' : ''} onClick={() => setTheme('dark')}>🌙</button>
             </div>
 
             {/* CURTAIN */}
@@ -153,8 +148,6 @@ const BirthdayReveal = () => {
                 {/* LEFT SIDE: MEMORIES */}
                 <div className="left-zone">
                     <h1 className="bday-title">Happy Birthday!</h1>
-                    
-                    {/* POLAROIDS */}
                     <div className="polaroid-stack">
                         {PHOTOS.map((photo, index) => {
                             let className = "polaroid-card";
@@ -169,8 +162,6 @@ const BirthdayReveal = () => {
                             );
                         })}
                     </div>
-
-                    {/* LETTER */}
                     <div className="note-section">
                         {!noteOpen ? (
                             <div className="folded-note" onClick={() => setNoteOpen(true)}>
@@ -179,8 +170,9 @@ const BirthdayReveal = () => {
                             </div>
                         ) : (
                             <div className="note-content open" onClick={() => setNoteOpen(false)}>
-                                <p>To my favorite person... <br/>(Your letter text here)</p>
+                                <p>To my favorite person... <br/><br/>(Your letter text here)</p>
                                 <p className="signature">Love, <br/> <strong>Prem</strong> ❤️</p>
+                                <span className="close-hint">(Click to close)</span>
                             </div>
                         )}
                     </div>
