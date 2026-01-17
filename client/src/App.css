@@ -1228,3 +1228,187 @@ p, h1, h2, h3, span, input {
         opacity: 0;
     }
 }
+
+/* --- 🌟 SPLIT LAYOUT SYSTEM 🌟 --- */
+.split-layout {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    max-width: 1200px;
+    height: 80vh; /* Takes up most of the screen */
+    align-items: center;
+    justify-content: space-between;
+}
+
+.left-zone {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.right-zone {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+/* On Mobile, stack them */
+@media (max-width: 768px) {
+    .split-layout {
+        flex-direction: column;
+        height: auto;
+    }
+    .right-zone {
+        margin-top: 50px;
+    }
+}
+
+/* --- ⏳ LIVE CLOCK STYLES ⏳ --- */
+.live-clock-container h3 {
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    color: #ffb3c1;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.time-grid {
+    display: flex;
+    gap: 10px;
+}
+
+.time-box {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 10px;
+    border-radius: 10px;
+    min-width: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    backdrop-filter: blur(5px);
+}
+
+.time-box span {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+}
+
+.time-box small {
+    font-size: 0.7rem;
+    color: #ffccd5;
+    text-transform: uppercase;
+}
+
+/* --- 🎂 CAKE STYLES 🎂 --- */
+.cake-container {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.cake {
+    position: relative;
+    width: 250px;
+    height: 200px;
+    margin: 0 auto;
+    margin-top: 30px;
+}
+
+/* Layers */
+.layer {
+    position: absolute;
+    width: 100%;
+    border-radius: 10px;
+}
+
+.layer-bottom {
+    bottom: 0;
+    height: 60px;
+    background: #590d22;
+    width: 100%;
+}
+
+.layer-middle {
+    bottom: 60px;
+    height: 50px;
+    background: #800f2f;
+    width: 90%;
+    left: 5%;
+}
+
+.layer-top {
+    bottom: 110px;
+    height: 50px;
+    background: #a4133c;
+    width: 80%;
+    left: 10%;
+}
+
+.icing {
+    position: absolute;
+    bottom: 160px;
+    left: 10%;
+    width: 80%;
+    height: 20px;
+    background: #ffb3c1;
+    border-radius: 10px 10px 0 0;
+}
+
+/* Plate */
+.plate {
+    position: absolute;
+    bottom: -10px;
+    left: -10%;
+    width: 120%;
+    height: 10px;
+    background: #ddd;
+    border-radius: 50%;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+}
+
+/* Candles */
+.candles {
+    position: absolute;
+    bottom: 160px;
+    left: 15%;
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.candle {
+    width: 10px;
+    height: 40px;
+    background: white;
+    background: repeating-linear-gradient(45deg, white, white 5px, #ff4d6d 5px, #ff4d6d 10px);
+    position: relative;
+    cursor: pointer;
+}
+
+/* Flame Animation */
+.flame {
+    width: 12px;
+    height: 20px;
+    background: orange;
+    border-radius: 50% 50% 20% 20%;
+    position: absolute;
+    top: -20px;
+    left: -1px;
+    box-shadow: 0 0 10px yellow, 0 0 20px orange;
+    animation: flicker 1s infinite alternate;
+    transition: opacity 0.5s;
+}
+
+.flame.out {
+    opacity: 0;
+}
+
+@keyframes flicker {
+    0% { transform: scale(1); opacity: 0.9; }
+    100% { transform: scale(1.1); opacity: 1; }
+}
