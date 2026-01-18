@@ -2033,3 +2033,48 @@ a,
     background: rgba(255, 215, 0, 0.1);
     border: 1px dashed #ffd700;
 }
+
+/* --- 🌙 MIDNIGHT THEME BUTTON & HINT UPDATES --- */
+
+/* 1. Submit Button - Gold Theme */
+.midnight-theme .btn-submit {
+    /* Change from Pink to a Gold Gradient */
+    background: linear-gradient(45deg, #ffd700, #ffb347) !important; 
+    color: #1a2a33 !important; /* Dark text for contrast */
+    border: 1px solid #c6a300 !important;
+    /* Add a gold glow shadow */
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4); 
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+/* Hover effect for the new gold button */
+.midnight-theme .btn-submit:hover {
+    transform: translateY(-3px); /* Lifts up slightly */
+    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6); /* Stronger glow */
+    filter: brightness(1.1);
+}
+
+/* 2. Hint Toggle Button - Border & Animation */
+.midnight-theme .btn-hint-toggle {
+    border: 2px solid #ffd700 !important; /* Explicit Gold Border */
+    color: #ffd700 !important;
+    background: rgba(255, 215, 0, 0.05) !important;
+    font-weight: bold;
+    padding: 8px 15px;
+    border-radius: 20px;
+    /* ✨ Add Pulse Animation to draw attention ✨ */
+    animation: goldPulse 2s infinite;
+}
+
+.midnight-theme .btn-hint-toggle:hover {
+    background: rgba(255, 215, 0, 0.2) !important;
+}
+
+/* Keyframes for the new pulse animation */
+@keyframes goldPulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4); }
+    70% { box-shadow: 0 0 0 8px rgba(255, 215, 0, 0); } /* Fades out outwards */
+    100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+}
