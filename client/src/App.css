@@ -1772,10 +1772,11 @@ a,
 .btn-close-text {
     background: none;
     border: none;
-    color: #888;
+    color: #ff4d6d; /* 🩷 CHANGE FROM #888 TO PINK */
     text-decoration: underline;
     cursor: pointer;
     font-size: 0.9rem;
+    margin-top: 10px; /* Add a little space */
 }
 
 @keyframes shake {

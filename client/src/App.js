@@ -29,7 +29,7 @@ const quests = [
       type: 'lock', 
       question: "Unlock the memory: Enter the date (DDMM) of the first time we ever played 'Red Hands' together.", 
       answer: "2007", 
-      hint: "in the month of rains 🌧️",
+      hint: "Unlock the memory: Enter the date (DDMM) of the first time we ever played 'Red Hands' together.",
       reward: "Access Granted! Reward: You got a cashprise of 2007 INR! 💸" 
     },
     { 
@@ -189,7 +189,7 @@ function App() {
         <button onClick={() => setTheme('dark')}>🌙</button>
       </div>
 
-      <h1>🎂 {daysLeft} Days to Go, {username}! 🎂</h1>
+      <h1>🎂 {daysLeft} {daysLeft === 1 ? 'Day' : 'Days'} to Go, {username}! 🎂</h1>
       
       <div className="progress-container">
         <div className="progress-label">
