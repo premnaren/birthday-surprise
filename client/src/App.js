@@ -12,47 +12,47 @@ const TARGET_DATE = new Date("2026-01-18T00:00:00");
 const quests = [
     { 
       id: 1, 
-      question: "Let's start easy. Where did we go for our very first date?", 
-      answer: "coffee", 
-      hint: "It involves beans and milk! ☕", 
-      reward: "Yay! I transferred ₹500 to your GPay. Go buy yourself a treat! ☕" 
+      question: "Let's go back to the start. This is something we completed together for the very first time. You started it, and I finished it, sparking the first words between us.", 
+      answer: "butterfly", 
+      hint: "Check your memory of your EG notebook.", 
+      reward: "Flutter by! A beautiful butterfly is waiting for you in your bag right now. 🦋" 
     },
     { 
       id: 2, 
-      question: "What is the name of the first movie we watched together?", 
-      answer: "avengers", 
-      hint: "It has Iron Man and Thor in it. 🦸‍♂️",
-      reward: "Correct! Reward: A Coupon for '1 Free Back Massage' from me! 💆‍♀️" 
+      question: "Names have power, but nicknames have love. Do you remember the very first nickname I ever gave you?", 
+      answer: "jerry", 
+      hint: "It has a double 'rr' in it.",
+      reward: "You caught me! A set of Tom & Jerry stickers is waiting for you with your babhi. 🐭🐱" 
     },
     // 🔐 QUEST 3 IS NOW A NUMBER LOCK PUZZLE
     { 
       id: 3, 
       type: 'lock', // ⚠️ SPECIAL MARKER FOR LOCK UI
-      question: "Enter the Secret PIN to open the vault.", 
-      answer: "2023", // 🔢 CHANGE THIS TO YOUR SECRET NUMBER
-      hint: "The year we first met.",
-      reward: "Access Granted! Reward: I booked tickets for that Concert/Event! 🎟️" 
+      question: "Unlock the memory: Enter the date (DDMM) of the first time we ever played 'Red Hands' together.", 
+      answer: "2007", // 🔢 CHANGE THIS TO YOUR SECRET NUMBER
+      hint: "in the month of rains 🌧️",
+      reward: "Access Granted! Reward: You got a cashprise of 2007 INR! 💸" 
     },
     { 
       id: 4, 
-      question: "What color was the dress you wore on my last birthday?", 
-      answer: "red", 
-      hint: "It's the color of roses (and my face when I see you). 🌹",
-      reward: "You look beautiful in it. Reward: I'm cooking dinner tonight! 🍝" 
+      question: "A test of endurance and company. How long exactly did we sit together when we went to the movies for the first time?", 
+      answer: "3h 17m", 
+      hint: "Think 'Avatar'. Format: XH XM",
+      reward: "That's a lot of popcorn! Reward: One Free Movie Night ticket for your favorite film! and popcorn in on me😉🍿🎟️" 
     },
     { 
       id: 5, 
-      question: "Virtual Hunt: What is the passcode to my phone?", 
-      answer: "1234", 
-      hint: "It's the most common password in the world. 🔢",
-      reward: "Correct! Reward: A hidden chocolate bar is inside your laptop bag! 🍫" 
+      question: "Food tastes better with you. What was the very first item (or items) we ordered when we hung out at the movie-themed cafe?", 
+      answer: "dragon chicken"||"chicken roll"||"chocolate ice cream", 
+      hint: "Think spicy and sweet.",
+      reward: "Yum! Reward: A 'Dinner Date Coupon' is yours. Dress code: Gorgeous. 🍽️🍷" 
     },
     { 
       id: 6, 
-      question: "Almost there. Enter the date of our Anniversary (DDMM)", 
-      answer: "1016", 
-      hint: "It's in October! 📅",
-      reward: "Perfect. Reward: A custom Spotify Playlist I made just for you. 🎵" 
+      question: "Sweets for the sweet. What was the specific name of the very first chocolate you ever bought for me?", 
+      answer: "dairy milk oreo", 
+      hint: "It's a classic Cadbury flavor",
+      reward: "Sweet tooth satisfied! Reward: A real chocolate is coming your way! 🍫" 
     },
     { 
       id: 7, 
