@@ -29,7 +29,7 @@ const quests = [
       type: 'lock', 
       question: "Unlock the memory: Enter the date (DDMM) of the first time we ever played 'Red Hands' together.", 
       answer: "2007", 
-      hint: "in the month of rains 🌧️",
+      hint: "Unlock the memory: Enter the date (DDMM) of the first time we ever played 'Red Hands' together.",
       reward: "Access Granted! Reward: You got a cashprise of 2007 INR! 💸" 
     },
     { 
