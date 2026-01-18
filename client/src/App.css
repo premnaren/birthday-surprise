@@ -1983,3 +1983,53 @@ a,
     background: rgba(0, 0, 0, 0.3);
     color: #aaa;
 }
+
+/* --- 🌙 MIDNIGHT THEME MODAL FIX --- */
+
+/* 1. Dark Modal Box */
+.midnight-theme .modal-content {
+    background: linear-gradient(145deg, #1a2a33, #0f171c); /* Deep dark blue */
+    border: 1px solid rgba(255, 215, 0, 0.2); /* Subtle Gold Border */
+    color: #ffffff !important; /* Force White Text */
+    box-shadow: 0 20px 50px rgba(0,0,0,0.6); /* Deep shadow */
+}
+
+/* 2. Gold Title */
+.midnight-theme .modal-content h2 {
+    color: #ffd700; /* Gold */
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+/* 3. Dark Input Field */
+.midnight-theme .answer-input {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid #444;
+    color: #fff; /* White typing text */
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
+}
+
+.midnight-theme .answer-input::placeholder {
+    color: #888;
+}
+
+/* 4. Fix "Cancel" Button visibility */
+.midnight-theme .btn-close {
+    background: #333;
+    color: #ccc;
+    border: 1px solid #555;
+}
+
+.midnight-theme .btn-close:hover {
+    background: #444;
+    color: white;
+}
+
+/* 5. Fix "Hint" Text */
+.midnight-theme .hint-text {
+    color: #ffd700; /* Gold hint */
+    background: rgba(255, 215, 0, 0.1);
+    border: 1px dashed #ffd700;
+}
