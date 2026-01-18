@@ -1812,3 +1812,51 @@ a,
     color: #ffe5ec !important; /* Very Light Pink Paragraph */
     font-weight: 500;
 }
+
+/* --- 💌 OPENED LETTER (BOTTOM DRAWER MODE) 💌 --- */
+
+.note-content.open {
+    /* 1. Position at the Bottom */
+    position: fixed;
+    bottom: 20px;        /* 20px from the bottom edge */
+    left: 50%;           /* Center horizontally */
+    transform: translateX(-50%);
+    
+    /* 2. Sizing */
+    width: 90%;          /* Responsive width */
+    max-width: 600px;    /* Max width for desktops */
+    max-height: 40vh;    /* ⚠️ Only take up bottom 40% of screen (leaves top visible) */
+    overflow-y: auto;    /* Scroll if text is long */
+    
+    /* 3. Paper Styling */
+    background: #fffdf0;
+    background-image: linear-gradient(#e2e2e2 1px, transparent 1px);
+    background-size: 100% 30px; 
+    border: 1px solid #dcdcdc;
+    border-radius: 10px;
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.2); /* Shadow pointing up */
+    padding: 30px;
+    
+    /* 4. Layering */
+    z-index: 10000;
+    
+    /* 5. Animation */
+    animation: slideUpNote 0.5s ease-out forwards;
+    cursor: pointer;
+}
+
+/* Optional: Instruction text */
+.note-content.open::after {
+    content: "(Click to close)";
+    display: block;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #888;
+    margin-top: 15px;
+}
+
+/* Animation: Slide Up from Bottom */
+@keyframes slideUpNote {
+    0% { bottom: -100%; opacity: 0; }
+    100% { bottom: 20px; opacity: 1; }
+}
