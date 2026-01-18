@@ -2078,3 +2078,36 @@ a,
     70% { box-shadow: 0 0 0 8px rgba(255, 215, 0, 0); } /* Fades out outwards */
     100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
 }
+
+/* --- 🌙 LOGIN SCREEN MIDNIGHT FIX --- */
+
+/* 1. Make the Login Card Dark & Glassy */
+.midnight-theme .intro-card {
+    background: linear-gradient(145deg, #1a2a33, #0f171c);
+    border: 1px solid rgba(255, 215, 0, 0.2); /* Gold Border */
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    color: white;
+}
+
+/* 2. Style the Login Input */
+.midnight-theme .intro-card .name-input {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid #555;
+    color: white;
+    padding: 12px;
+    border-radius: 8px;
+    width: 80%;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.midnight-theme .intro-card .name-input::placeholder {
+    color: #888;
+}
+
+/* 3. Login Heading Color */
+.midnight-theme .intro-card h1 {
+    color: #ffd700; /* Gold */
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+}
+

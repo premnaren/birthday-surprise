@@ -164,7 +164,8 @@ function App() {
   
   if (!username) {
     return (
-        <div className="app-container intro-screen">
+        /* 👇 ADDED "midnight-theme" HERE 👇 */
+        <div className="app-container intro-screen midnight-theme">
             <div className="card intro-card fade-in">
                 <h1>👋 Welcome!</h1>
                 <p>I have a surprise for you.</p>
