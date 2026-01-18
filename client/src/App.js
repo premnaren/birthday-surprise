@@ -110,6 +110,20 @@ function App() {
     }
   };
 
+  /* 👇👇 INSERT THIS NEW BLOCK HERE 👇👇 */
+  useEffect(() => {
+    const timer = setTimeout(() => {
+        if (audioRef.current) {
+            audioRef.current.play()
+                .then(() => setIsPlaying(true))
+                .catch(e => console.log("Auto-play blocked until interaction:", e));
+        }
+    }, 3000); // 3-second delay
+
+    return () => clearTimeout(timer);
+  }, []);
+  /* 👆👆 END OF NEW BLOCK 👆👆 */
+
   const handleLogin = (name) => {
     if (!name.trim()) return;
     localStorage.setItem('user_name', name);
