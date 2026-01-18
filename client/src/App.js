@@ -6,7 +6,7 @@ import NumberLock from './NumberLock'; // 🔐 IMPORT THE NEW COMPONENT
 
 // --- 🔒 CONFIGURATION ---
 // The Fixed Birthday Date
-const TARGET_DATE = new Date("2026-01-18T00:00:00"); 
+const TARGET_DATE = new Date("2026-01-19T00:00:00"); 
 
 // --- 📜 QUEST DATA ---
 const quests = [
@@ -24,12 +24,11 @@ const quests = [
       hint: "It has a double 'rr' in it.",
       reward: "You caught me! A set of Tom & Jerry stickers is waiting for you with your babhi. 🐭🐱" 
     },
-    // 🔐 QUEST 3 IS NOW A NUMBER LOCK PUZZLE
     { 
       id: 3, 
-      type: 'lock', // ⚠️ SPECIAL MARKER FOR LOCK UI
+      type: 'lock', 
       question: "Unlock the memory: Enter the date (DDMM) of the first time we ever played 'Red Hands' together.", 
-      answer: "2007", // 🔢 CHANGE THIS TO YOUR SECRET NUMBER
+      answer: "2007", 
       hint: "in the month of rains 🌧️",
       reward: "Access Granted! Reward: You got a cashprise of 2007 INR! 💸" 
     },
@@ -38,21 +37,24 @@ const quests = [
       question: "A test of endurance and company. How long exactly did we sit together when we went to the movies for the first time?", 
       answer: "3h 17m", 
       hint: "Think 'Avatar'. Format: XH XM",
-      reward: "That's a lot of popcorn! Reward: One Free Movie Night ticket for your favorite film! and popcorn in on me😉🍿🎟️" 
+      reward: "That's a lot of popcorn! Reward: One Free Movie Night ticket for your favorite film! and popcorn in on me😉🍿🎟️",
+      rewardImage: "/movie-ticket.png" // 📸 MOVIE TICKET IMAGE
     },
     { 
       id: 5, 
-      question: "Food tastes better with you. What was the very first item (or items) we ordered when we hung out at the movie-themed cafe?", 
-      answer: "dragon chicken"||"chicken roll"||"chocolate ice cream", 
-      hint: "Think spicy and sweet.",
-      reward: "Yum! Reward: A 'Dinner Date Coupon' is yours. Dress code: Gorgeous. 🍽️🍷" 
-    },
-    { 
-      id: 6, 
       question: "Sweets for the sweet. What was the specific name of the very first chocolate you ever bought for me?", 
       answer: "dairy milk oreo", 
       hint: "It's a classic Cadbury flavor",
       reward: "Sweet tooth satisfied! Reward: A real chocolate is coming your way! 🍫" 
+    },
+    { 
+      id: 6, 
+      question: "Food tastes better with you. What was the very first item we ordered when we hung out at the movie-themed cafe?", 
+      // Note: We handle multiple answers in the check logic, but storing one main one here is fine for display
+      answer: "dragon chicken", 
+      hint: "Think spicy and sweet.",
+      reward: "Yum! Reward: A 'Dinner Date Coupon' is yours. Dress code: Gorgeous. 🍽️🍷",
+      rewardImage: "/dinner-ticket.png" // 📸 DINNER DATE IMAGE
     },
     { 
       id: 7, 
@@ -268,6 +270,17 @@ function App() {
           <div className="modal reward-overlay">
              <div className="modal-content reward-card bounce">
                  <h2>🎉 Quest Complete!</h2>
+                 
+                 {/* 📸 SHOW IMAGE IF IT EXISTS */}
+                 {/* We find the quest that matches the reward text to get the image */}
+                 {quests.find(q => q.reward === showReward)?.rewardImage && (
+                    <img 
+                        src={quests.find(q => q.reward === showReward).rewardImage} 
+                        alt="Reward Coupon" 
+                        style={{ width: '100%', borderRadius: '10px', marginBottom: '15px' }} 
+                    />
+                 )}
+                 
                  <p>{showReward}</p>
                  <button className="btn-claim" onClick={() => setShowReward(null)}>Close</button>
              </div>
