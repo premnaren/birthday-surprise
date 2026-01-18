@@ -2111,3 +2111,27 @@ a,
     text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
 }
 
+/* --- ⏳ LOADING SCREEN MIDNIGHT FIX --- */
+
+.loading-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full screen height */
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); /* Force Dark Background */
+    color: white;
+}
+
+.loading-screen h1 {
+    font-family: 'Courier New', monospace;
+    font-size: 1.5rem;
+    color: #ffd700; /* Gold Text */
+    letter-spacing: 2px;
+    animation: pulseText 1.5s infinite alternate;
+}
+
+@keyframes pulseText {
+    0% { opacity: 0.5; text-shadow: 0 0 0px #ffd700; }
+    100% { opacity: 1; text-shadow: 0 0 20px #ffd700; } /* Glowing effect */
+}
+

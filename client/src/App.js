@@ -158,8 +158,11 @@ function App() {
       return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
   };
 
-  if (view === 'loading') return <div className="loading">Checking timeline...</div>;
-  
+if (view === 'loading') return (
+      <div className="app-container midnight-theme loading-screen">
+          <h1> agara bujji...</h1>
+      </div>
+  );  
   if (view === 'birthday') return <BirthdayReveal />;
   
   if (!username) {
