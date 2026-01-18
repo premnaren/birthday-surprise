@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import confetti from 'canvas-confetti'; 
 import './App.css';
 import BirthdayReveal from './BirthdayReveal';
-import FlowerGarden from './FlowerGarden';
 import NumberLock from './NumberLock'; 
+import Fireflies from './Fireflies'; // ✨ IMPORT FIREFLIES
 
 // --- 🔒 CONFIGURATION ---
 const TARGET_DATE = new Date("2026-01-19T00:00:00"); 
@@ -73,11 +73,13 @@ function App() {
   const [inputAnswer, setInputAnswer] = useState("");
   const [showReward, setShowReward] = useState(null);
   const [showHint, setShowHint] = useState(false);
-  
-  // 📳 NEW STATE FOR SHAKE ANIMATION
   const [isShaking, setIsShaking] = useState(false);
   
   const [theme, setTheme] = useState(localStorage.getItem('app_theme') || 'system');
+
+  // 🎵 MUSIC STATE
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef(null);
 
   const completedCount = quests.filter(q => localStorage.getItem(`quest_${q.id}`) === 'true').length;
   const progressPercent = (completedCount / quests.length) * 100;
@@ -98,13 +100,17 @@ function App() {
     return () => clearInterval(timer);
   }, [username]);
 
-  useEffect(() => {
-    const root = document.documentElement;
-    const isDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
-    if (isDark) root.setAttribute('data-theme', 'dark');
-    else root.removeAttribute('data-theme');
-    localStorage.setItem('app_theme', theme);
-  }, [theme]);
+  // 🎵 TOGGLE MUSIC FUNCTION
+  const toggleMusic = () => {
+    if (audioRef.current) {
+        if (isPlaying) {
+            audioRef.current.pause();
+        } else {
+            audioRef.current.play().catch(e => console.log("Audio play failed:", e));
+        }
+        setIsPlaying(!isPlaying);
+    }
+  };
 
   const handleLogin = (name) => {
     if (!name.trim()) return;
@@ -120,7 +126,7 @@ function App() {
         particleCount: 100,
         spread: 70,
         origin: { y: 0.6 },
-        colors: ['#ff4d6d', '#ff8fa3', '#fff0f3'] 
+        colors: ['#ffd700', '#ffffff', '#ff4d6d'] // Gold/White confetti for Night Theme
       });
 
       setShowReward(activeQuest.reward);
@@ -132,7 +138,6 @@ function App() {
   const checkAnswer = () => {
     const userAnswer = inputAnswer.trim().toLowerCase();
     const correct = activeQuest.answer;
-    
     let isCorrect = false;
 
     if (Array.isArray(correct)) {
@@ -144,10 +149,8 @@ function App() {
     if (isCorrect) {
         completeQuest(); 
     } else {
-        // ❌ NO MORE ALERT! 
-        // ✅ TRIGGER SHAKE ANIMATION
         setIsShaking(true);
-        setTimeout(() => setIsShaking(false), 500); // Stop shaking after 0.5s
+        setTimeout(() => setIsShaking(false), 500);
     }
   };
 
@@ -158,10 +161,14 @@ function App() {
   };
 
   if (view === 'loading') return <div className="loading">Checking timeline...</div>;
+  
+  // 🎉 IF IT'S BIRTHDAY, SHOW THE PINK REVEAL PAGE
   if (view === 'birthday') return <BirthdayReveal />;
+  
   if (!username) {
     return (
         <div className="app-container intro-screen">
+            {/* Intro can stay simple/white or you can apply the midnight theme here too */}
             <div className="card intro-card fade-in">
                 <h1>👋 Welcome!</h1>
                 <p>I have a surprise for you.</p>
@@ -180,28 +187,35 @@ function App() {
   }
 
   return (
-    <div className="app-container">
-      <FlowerGarden />
+    // 🌌 APPLYING THE NEW MIDNIGHT THEME HERE!
+    <div className="app-container midnight-theme">
       
-      <div className="theme-toggle">
-        <button onClick={() => setTheme('light')}>☀️</button>
-        <button onClick={() => setTheme('system')}>💻</button>
-        <button onClick={() => setTheme('dark')}>🌙</button>
+      {/* ✨ NEW FIREFLIES BACKGROUND */}
+      <Fireflies />
+
+      {/* 🎵 NEW MUSIC PLAYER */}
+      {/* ⚠️ Make sure to save a new file 'quest-song.mp3' in public folder */}
+      <audio ref={audioRef} loop><source src="/quest-song.mp3" /></audio>
+      
+      <div className="music-control" onClick={toggleMusic} style={{ zIndex: 1000, position: 'fixed', bottom: '20px', right: '20px', fontSize: '2rem', cursor: 'pointer' }}>
+          {isPlaying ? '⏸️' : '▶️'}
       </div>
 
-      <h1>🎂 {daysLeft} {daysLeft === 1 ? 'Day' : 'Days'} to Go, {username}! 🎂</h1>
+      {/* No Theme Toggle needed if we force this theme, or you can keep it */}
+      
+      <h1>🌙 {daysLeft} {daysLeft === 1 ? 'Day' : 'Days'} to Go, {username}! 🌙</h1>
       
       <div className="progress-container">
-        <div className="progress-label">
-            <span>Surprise Progress</span>
+        <div className="progress-label" style={{color: '#ffd700'}}>
+            <span>Journey Progress</span>
             <span>{Math.round(progressPercent)}%</span>
         </div>
         <div className="progress-track">
-            <div className="progress-fill" style={{ width: `${progressPercent}%` }}></div>
+            <div className="progress-fill" style={{ width: `${progressPercent}%`, background: '#ffd700' }}></div>
         </div>
       </div>
 
-      <p className="subtitle">Target: {TARGET_DATE.toDateString()}</p>
+      <p className="subtitle" style={{color: '#ccc'}}>Target: {TARGET_DATE.toDateString()}</p>
       
       <div className="quest-grid">
         {quests.map((q, index) => {
@@ -247,11 +261,10 @@ function App() {
               />
           ) : (
               <div className="modal">
-                  <div className="modal-content">
+                  <div className="modal-content" style={{color: '#333'}}> {/* Force black text inside modal for readability */}
                       <h2>Day {activeQuest.id}</h2>
                       <p>{activeQuest.question}</p>
                       
-                      {/* 📳 ADDING THE SHAKE CLASS CONDITIONALLY HERE */}
                       <input 
                         value={inputAnswer} 
                         onChange={e => setInputAnswer(e.target.value)} 
@@ -259,7 +272,6 @@ function App() {
                         placeholder="Type answer..." 
                       />
                       
-                      {/* Optional: Tiny error text that appears only when shaking */}
                       {isShaking && <p className="error-text">❌ Incorrect, try again!</p>}
 
                       <div className="button-group">
@@ -281,7 +293,7 @@ function App() {
 
       {showReward && (
           <div className="modal reward-overlay">
-             <div className="modal-content reward-card bounce">
+             <div className="modal-content reward-card bounce" style={{color: '#333'}}>
                  <h2>🎉 Quest Complete!</h2>
                  {quests.find(q => q.reward === showReward)?.rewardImage && (
                     <img 

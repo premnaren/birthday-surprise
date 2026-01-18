@@ -1928,3 +1928,58 @@ a,
     font-weight: bold;
     animation: fadeIn 0.3s;
 }
+
+/* --- 🌌 MAGICAL MIDNIGHT THEME --- */
+
+/* 1. New Background for the Quest Page */
+/* We will apply this class to the main div in App.js */
+.midnight-theme {
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); /* Deep Blue/Teal Night */
+    min-height: 100vh;
+    color: white; /* Make text white to pop against dark bg */
+    transition: background 0.5s ease;
+}
+
+/* 2. Firefly Animation Styles */
+.firefly-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.firefly {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background-color: #ffd700; /* Gold Glow */
+    border-radius: 50%;
+    box-shadow: 0 0 10px #ffd700, 0 0 20px #ffea00;
+    opacity: 0.6;
+    animation: floatFirefly linear infinite;
+}
+
+@keyframes floatFirefly {
+    0% { transform: translateY(0) translateX(0); opacity: 0; }
+    10% { opacity: 1; }
+    50% { opacity: 0.5; }
+    90% { opacity: 1; }
+    100% { transform: translateY(-100px) translateX(50px); opacity: 0; }
+}
+
+/* 3. Adjust Cards for Dark Background */
+.midnight-theme .card {
+    background: rgba(255, 255, 255, 0.1); /* Glassmorphism effect */
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.midnight-theme .card.locked {
+    background: rgba(0, 0, 0, 0.3);
+    color: #aaa;
+}
