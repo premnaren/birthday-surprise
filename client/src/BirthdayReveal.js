@@ -5,11 +5,11 @@ import BalloonSky from './BalloonSky';
 
 // 📸 CONFIGURATION 1: PHOTOS
 const MEMORIES = [
-    { img: "/pic1.jpg", text: "My Love ❤️" },
-    { img: "/pic2.jpg", text: "Best Day Ever" },
-    { img: "/pic3.jpg", text: "Crazy Times 🤪" },
-    { img: "/pic4.jpg", text: "Our Trip ✈️" },
-    { img: "/pic5.jpg", text: "Forever Us" }
+    { img: "/pic1.jpeg", text: "Naa bangaru konda ❤️" },
+    { img: "/pic2.jpeg", text: "pottoda😁" },
+    { img: "/pic3.jpeg", text: "💕😍" },
+    { img: "/pic4.jpeg", text: "Forever Us" },
+    { img: "/pic5.jpeg", text: "Happy Birthday Raa" }
 ];
 
 // 💌 CONFIGURATION 2: YOUR LETTER (Write whatever you want here!)
