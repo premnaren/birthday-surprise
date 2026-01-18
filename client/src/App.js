@@ -3,7 +3,7 @@ import confetti from 'canvas-confetti';
 import './App.css';
 import BirthdayReveal from './BirthdayReveal';
 import NumberLock from './NumberLock'; 
-import Fireflies from './Fireflies'; // ✨ IMPORT FIREFLIES
+import Fireflies from './Fireflies'; 
 
 // --- 🔒 CONFIGURATION ---
 const TARGET_DATE = new Date("2026-01-19T00:00:00"); 
@@ -29,7 +29,7 @@ const quests = [
       type: 'lock', 
       question: "Unlock the memory: Enter the date (DDMM) of the first time we ever played 'Red Hands' together.", 
       answer: "2007", 
-      hint: "Unlock the memory: Enter the date (DDMM) of the first time we ever played 'Red Hands' together.",
+      hint: "in the month of rains 🌧️",
       reward: "Access Granted! Reward: You got a cashprise of 2007 INR! 💸" 
     },
     { 
@@ -75,8 +75,6 @@ function App() {
   const [showHint, setShowHint] = useState(false);
   const [isShaking, setIsShaking] = useState(false);
   
-  const [theme, setTheme] = useState(localStorage.getItem('app_theme') || 'system');
-
   // 🎵 MUSIC STATE
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
@@ -126,7 +124,7 @@ function App() {
         particleCount: 100,
         spread: 70,
         origin: { y: 0.6 },
-        colors: ['#ffd700', '#ffffff', '#ff4d6d'] // Gold/White confetti for Night Theme
+        colors: ['#ffd700', '#ffffff', '#ff4d6d'] 
       });
 
       setShowReward(activeQuest.reward);
@@ -162,13 +160,11 @@ function App() {
 
   if (view === 'loading') return <div className="loading">Checking timeline...</div>;
   
-  // 🎉 IF IT'S BIRTHDAY, SHOW THE PINK REVEAL PAGE
   if (view === 'birthday') return <BirthdayReveal />;
   
   if (!username) {
     return (
         <div className="app-container intro-screen">
-            {/* Intro can stay simple/white or you can apply the midnight theme here too */}
             <div className="card intro-card fade-in">
                 <h1>👋 Welcome!</h1>
                 <p>I have a surprise for you.</p>
@@ -187,21 +183,17 @@ function App() {
   }
 
   return (
-    // 🌌 APPLYING THE NEW MIDNIGHT THEME HERE!
     <div className="app-container midnight-theme">
       
-      {/* ✨ NEW FIREFLIES BACKGROUND */}
+      {/* ✨ FIREFLIES BACKGROUND */}
       <Fireflies />
 
-      {/* 🎵 NEW MUSIC PLAYER */}
-      {/* ⚠️ Make sure to save a new file 'quest-song.mp3' in public folder */}
+      {/* 🎵 MUSIC PLAYER */}
       <audio ref={audioRef} loop><source src="/quest-song.mp3" /></audio>
       
       <div className="music-control" onClick={toggleMusic} style={{ zIndex: 1000, position: 'fixed', bottom: '20px', right: '20px', fontSize: '2rem', cursor: 'pointer' }}>
           {isPlaying ? '⏸️' : '▶️'}
       </div>
-
-      {/* No Theme Toggle needed if we force this theme, or you can keep it */}
       
       <h1>🌙 {daysLeft} {daysLeft === 1 ? 'Day' : 'Days'} to Go, {username}! 🌙</h1>
       
@@ -261,7 +253,7 @@ function App() {
               />
           ) : (
               <div className="modal">
-                  <div className="modal-content" style={{color: '#333'}}> {/* Force black text inside modal for readability */}
+                  <div className="modal-content" style={{color: '#333'}}>
                       <h2>Day {activeQuest.id}</h2>
                       <p>{activeQuest.question}</p>
                       
