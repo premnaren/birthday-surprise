@@ -14,13 +14,14 @@ const MEMORIES = [
 
 // 💌 CONFIGURATION 2: YOUR LETTER (Write whatever you want here!)
 const LETTER_MESSAGE = `
-To my Dearest Love,
+ To my Dearest Love,
 
 Happy Birthday Nanna! From the moment we met everything happened is a memory. 
 Neetho gadipini prathi nimisham naa hrudayam lo oka special place ni tecchindi. All the laughter, the late-night talks, caring each other, fighting and fixing them - they are treasures I hold close to my heart.
 ee life ki inka nuvve le. nuv madyalo em raledhu nuv ravatame oka anandam.
 inka yevaru vachina ninnu replace cheyaleru so asala dhani gurinchi alochinchaku.
 I look forward to creating many more beautiful memories with you. May this year bring you endless joy, success, and all the love you deserve.
+inka chala undhi kani matalo chepaleka pothunna so kudirithe umma esta le.
 
 Once again Happy Birthday, Kanna! ❤️
 `;
