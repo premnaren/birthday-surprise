@@ -6,7 +6,7 @@ import NumberLock from './NumberLock';
 import Fireflies from './Fireflies'; 
 
 // --- 🔒 CONFIGURATION ---
-const TARGET_DATE = new Date("2026-01-18T00:00:00"); 
+const TARGET_DATE = new Date("2026-01-20T00:00:00"); 
 
 // --- 📜 QUEST DATA ---
 const quests = [
