@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import confetti from 'canvas-confetti'; // 🎉 IMPORT CONFETTI
 import './App.css';
 import BirthdayReveal from './BirthdayReveal';
 import FlowerGarden from './FlowerGarden';
-import NumberLock from './NumberLock'; // 🔐 IMPORT THE NEW COMPONENT
+import NumberLock from './NumberLock'; 
 
 // --- 🔒 CONFIGURATION ---
-// The Fixed Birthday Date
 const TARGET_DATE = new Date("2026-01-19T00:00:00"); 
 
 // --- 📜 QUEST DATA ---
@@ -38,7 +38,7 @@ const quests = [
       answer: "3h 17m", 
       hint: "Think 'Avatar'. Format: XH XM",
       reward: "That's a lot of popcorn! Reward: One Free Movie Night ticket for your favorite film! and popcorn in on me😉🍿🎟️",
-      rewardImage: "/movie-ticket.png" // 📸 MOVIE TICKET IMAGE
+      rewardImage: "/movie-ticket.png" 
     },
     { 
       id: 5, 
@@ -50,11 +50,10 @@ const quests = [
     { 
       id: 6, 
       question: "Food tastes better with you. What was the very first item we ordered when we hung out at the movie-themed cafe?", 
-      // Note: We handle multiple answers in the check logic, but storing one main one here is fine for display
       answer: ["dragon chicken", "chicken roll", "chocolate ice cream"], 
       hint: "Think spicy and sweet.",
       reward: "Yum! Reward: A 'Dinner Date Coupon' is yours. Dress code: Gorgeous. 🍽️🍷",
-      rewardImage: "/dinner-ticket.png" // 📸 DINNER DATE IMAGE
+      rewardImage: "/dinner-ticket.png" 
     },
     { 
       id: 7, 
@@ -66,26 +65,23 @@ const quests = [
 ];
 
 function App() {
-  // --- STATE ---
   const [username, setUsername] = useState(localStorage.getItem('user_name') || '');
   const [daysLeft, setDaysLeft] = useState(0);
-  const [view, setView] = useState('loading'); // 'loading', 'login', 'countdown', 'birthday'
+  const [view, setView] = useState('loading'); 
   
-  // Quest Logic State
   const [activeQuest, setActiveQuest] = useState(null);
   const [inputAnswer, setInputAnswer] = useState("");
   const [showReward, setShowReward] = useState(null);
   const [showHint, setShowHint] = useState(false);
-
-  // Theme State
   const [theme, setTheme] = useState(localStorage.getItem('app_theme') || 'system');
 
-  // --- 1. TIME CALCULATION ENGINE (Local) ---
+  // 📊 CALCULATE PROGRESS
+  const completedCount = quests.filter(q => localStorage.getItem(`quest_${q.id}`) === 'true').length;
+  const progressPercent = (completedCount / quests.length) * 100;
+
   useEffect(() => {
     const timer = setInterval(() => {
         const today = new Date();
-        
-        // Calculate difference
         const diffTime = TARGET_DATE - today;
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
@@ -93,26 +89,20 @@ function App() {
             setView('birthday');
         } else {
             setDaysLeft(diffDays);
-            // If we have a username, show countdown. If not, show login.
             setView(prev => prev === 'birthday' ? 'birthday' : (username ? 'countdown' : 'login'));
         }
-    }, 1000); // Check every second
-
+    }, 1000); 
     return () => clearInterval(timer);
   }, [username]);
 
-  // --- 2. THEME LOGIC ---
   useEffect(() => {
     const root = document.documentElement;
     const isDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
-    
     if (isDark) root.setAttribute('data-theme', 'dark');
     else root.removeAttribute('data-theme');
-    
     localStorage.setItem('app_theme', theme);
   }, [theme]);
 
-  // --- 3. HANDLERS ---
   const handleLogin = (name) => {
     if (!name.trim()) return;
     localStorage.setItem('user_name', name);
@@ -120,40 +110,51 @@ function App() {
     setView('countdown');
   };
 
-  // ✅ SHARED HELPER: UNLOCKS THE REWARD
   const completeQuest = () => {
       localStorage.setItem(`quest_${activeQuest.id}`, 'true');
+      
+      // 🎉 TRIGGER MINI CONFETTI
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#ff4d6d', '#ff8fa3', '#fff0f3'] // Pink theme confetti
+      });
+
       setShowReward(activeQuest.reward);
       setActiveQuest(null);
       setInputAnswer("");
       setShowHint(false);
   };
 
-  // HANDLER FOR TEXT QUESTS
   const checkAnswer = () => {
-    if (inputAnswer.trim().toLowerCase() === activeQuest.answer.toLowerCase()) {
-        completeQuest(); // Call the helper
+    const userAnswer = inputAnswer.trim().toLowerCase();
+    const correct = activeQuest.answer;
+    
+    let isCorrect = false;
+
+    if (Array.isArray(correct)) {
+        isCorrect = correct.some(ans => ans.toLowerCase() === userAnswer);
     } else {
+        isCorrect = userAnswer === correct.toLowerCase();
+    }
+
+    if (isCorrect) {
+        completeQuest(); 
+    } else {
+        // 📳 SHAKE EFFECT (Simple Alert for now, but feels better with confetti on success)
         alert("Try again! ❌");
     }
   };
 
-  // Helper to get readable date for locked cards
   const getUnlockDateString = (dayLevel) => {
       const date = new Date(TARGET_DATE);
       date.setDate(TARGET_DATE.getDate() - (8 - dayLevel));
       return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
   };
 
-  // --- RENDER HELPERS ---
-  
-  // A. LOADING
   if (view === 'loading') return <div className="loading">Checking timeline...</div>;
-
-  // B. BIRTHDAY REVEAL
   if (view === 'birthday') return <BirthdayReveal />;
-
-  // C. LOGIN SCREEN (Replaces Date Picker)
   if (!username) {
     return (
         <div className="app-container intro-screen">
@@ -174,31 +175,37 @@ function App() {
     );
   }
 
-  // D. COUNTDOWN & QUESTS
   return (
     <div className="app-container">
       <FlowerGarden />
       
-      {/* THEME TOGGLE */}
       <div className="theme-toggle">
-        <button className={theme === 'light' ? 'active' : ''} onClick={() => setTheme('light')}>☀️</button>
-        <button className={theme === 'system' ? 'active' : ''} onClick={() => setTheme('system')}>💻</button>
-        <button className={theme === 'dark' ? 'active' : ''} onClick={() => setTheme('dark')}>🌙</button>
+        <button onClick={() => setTheme('light')}>☀️</button>
+        <button onClick={() => setTheme('system')}>💻</button>
+        <button onClick={() => setTheme('dark')}>🌙</button>
       </div>
 
       <h1>🎂 {daysLeft} Days to Go, {username}! 🎂</h1>
+      
+      {/* 📊 PROGRESS BAR UI */}
+      <div className="progress-container">
+        <div className="progress-label">
+            <span>Surprise Progress</span>
+            <span>{Math.round(progressPercent)}%</span>
+        </div>
+        <div className="progress-track">
+            <div className="progress-fill" style={{ width: `${progressPercent}%` }}></div>
+        </div>
+      </div>
+
       <p className="subtitle">Target: {TARGET_DATE.toDateString()}</p>
       
       <div className="quest-grid">
         {quests.map((q, index) => {
             const level = index + 1;
-            
-            // LOGIC: Unlock calculation
-            // Day 1 unlocks 7 days before, Day 7 unlocks 1 day before
             const unlockDate = new Date(TARGET_DATE);
             unlockDate.setDate(TARGET_DATE.getDate() - (8 - level));
             unlockDate.setHours(0,0,0,0);
-            
             const now = new Date();
             now.setHours(0,0,0,0);
             
@@ -217,7 +224,6 @@ function App() {
                     <div className="status-icon">
                         {isCompleted ? "✅" : (isUnlocked ? "🔓" : "🔒")}
                     </div>
-
                     {!isUnlocked && (
                         <div className="locked-tooltip">
                             Unlocks {getUnlockDateString(level)} 🔒
@@ -228,9 +234,7 @@ function App() {
         })}
       </div>
 
-      {/* --- MODAL RENDERING LOGIC --- */}
       {activeQuest && (
-          // 1. CHECK IF IT IS A LOCK PUZZLE
           activeQuest.type === 'lock' ? (
               <NumberLock 
                   targetCode={activeQuest.answer}
@@ -239,22 +243,18 @@ function App() {
                   onClose={() => setActiveQuest(null)} 
               />
           ) : (
-              // 2. OTHERWISE, RENDER STANDARD TEXT MODAL
               <div className="modal">
                   <div className="modal-content">
                       <h2>Day {activeQuest.id}</h2>
                       <p>{activeQuest.question}</p>
                       <input value={inputAnswer} onChange={e => setInputAnswer(e.target.value)} className="answer-input" placeholder="Type answer..." />
-                      
                       <div className="button-group">
                         <button className="btn-hint-toggle" onClick={() => setShowHint(!showHint)}>
                             {showHint ? "Hide Hint" : "💡 Hint"}
                         </button>
                         <button className="btn-submit" onClick={checkAnswer}>Submit</button>
                       </div>
-                      
                       {showHint && <p className="hint-text fade-in">{activeQuest.hint}</p>}
-                      
                       <button className="btn-close" onClick={() => {
                           setActiveQuest(null);
                           setShowHint(false);
@@ -265,14 +265,10 @@ function App() {
           )
       )}
 
-      {/* REWARD MODAL */}
       {showReward && (
           <div className="modal reward-overlay">
              <div className="modal-content reward-card bounce">
                  <h2>🎉 Quest Complete!</h2>
-                 
-                 {/* 📸 SHOW IMAGE IF IT EXISTS */}
-                 {/* We find the quest that matches the reward text to get the image */}
                  {quests.find(q => q.reward === showReward)?.rewardImage && (
                     <img 
                         src={quests.find(q => q.reward === showReward).rewardImage} 
@@ -280,14 +276,11 @@ function App() {
                         style={{ width: '100%', borderRadius: '10px', marginBottom: '15px' }} 
                     />
                  )}
-                 
                  <p>{showReward}</p>
                  <button className="btn-claim" onClick={() => setShowReward(null)}>Close</button>
              </div>
           </div>
       )}
-      
-      {/* NO RESET BUTTON */}
     </div>
   );
 }
