@@ -1899,3 +1899,31 @@ a,
     background: #333;
     border-color: #555;
 }
+
+/* --- 📳 SHAKE ANIMATION --- */
+
+/* The class we toggle in React */
+.shake {
+    animation: shakeEffect 0.5s cubic-bezier(.36,.07,.19,.97) both;
+    border-color: #ff0000 !important; /* Turn border red */
+    background-color: #fff0f0;        /* Slight red tint */
+    color: red;
+}
+
+/* The actual movement */
+@keyframes shakeEffect {
+  10%, 90% { transform: translate3d(-1px, 0, 0); }
+  20%, 80% { transform: translate3d(2px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+  40%, 60% { transform: translate3d(4px, 0, 0); }
+}
+
+/* Optional: Styling for the tiny error text */
+.error-text {
+    color: #ff0000;
+    font-size: 0.85rem;
+    margin-top: -10px;
+    margin-bottom: 15px;
+    font-weight: bold;
+    animation: fadeIn 0.3s;
+}

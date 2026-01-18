@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import confetti from 'canvas-confetti'; // 🎉 IMPORT CONFETTI
+import confetti from 'canvas-confetti'; 
 import './App.css';
 import BirthdayReveal from './BirthdayReveal';
 import FlowerGarden from './FlowerGarden';
@@ -73,9 +73,12 @@ function App() {
   const [inputAnswer, setInputAnswer] = useState("");
   const [showReward, setShowReward] = useState(null);
   const [showHint, setShowHint] = useState(false);
+  
+  // 📳 NEW STATE FOR SHAKE ANIMATION
+  const [isShaking, setIsShaking] = useState(false);
+  
   const [theme, setTheme] = useState(localStorage.getItem('app_theme') || 'system');
 
-  // 📊 CALCULATE PROGRESS
   const completedCount = quests.filter(q => localStorage.getItem(`quest_${q.id}`) === 'true').length;
   const progressPercent = (completedCount / quests.length) * 100;
 
@@ -113,12 +116,11 @@ function App() {
   const completeQuest = () => {
       localStorage.setItem(`quest_${activeQuest.id}`, 'true');
       
-      // 🎉 TRIGGER MINI CONFETTI
       confetti({
         particleCount: 100,
         spread: 70,
         origin: { y: 0.6 },
-        colors: ['#ff4d6d', '#ff8fa3', '#fff0f3'] // Pink theme confetti
+        colors: ['#ff4d6d', '#ff8fa3', '#fff0f3'] 
       });
 
       setShowReward(activeQuest.reward);
@@ -142,8 +144,10 @@ function App() {
     if (isCorrect) {
         completeQuest(); 
     } else {
-        // 📳 SHAKE EFFECT (Simple Alert for now, but feels better with confetti on success)
-        alert("Try again! ❌");
+        // ❌ NO MORE ALERT! 
+        // ✅ TRIGGER SHAKE ANIMATION
+        setIsShaking(true);
+        setTimeout(() => setIsShaking(false), 500); // Stop shaking after 0.5s
     }
   };
 
@@ -187,7 +191,6 @@ function App() {
 
       <h1>🎂 {daysLeft} Days to Go, {username}! 🎂</h1>
       
-      {/* 📊 PROGRESS BAR UI */}
       <div className="progress-container">
         <div className="progress-label">
             <span>Surprise Progress</span>
@@ -247,7 +250,18 @@ function App() {
                   <div className="modal-content">
                       <h2>Day {activeQuest.id}</h2>
                       <p>{activeQuest.question}</p>
-                      <input value={inputAnswer} onChange={e => setInputAnswer(e.target.value)} className="answer-input" placeholder="Type answer..." />
+                      
+                      {/* 📳 ADDING THE SHAKE CLASS CONDITIONALLY HERE */}
+                      <input 
+                        value={inputAnswer} 
+                        onChange={e => setInputAnswer(e.target.value)} 
+                        className={`answer-input ${isShaking ? "shake" : ""}`} 
+                        placeholder="Type answer..." 
+                      />
+                      
+                      {/* Optional: Tiny error text that appears only when shaking */}
+                      {isShaking && <p className="error-text">❌ Incorrect, try again!</p>}
+
                       <div className="button-group">
                         <button className="btn-hint-toggle" onClick={() => setShowHint(!showHint)}>
                             {showHint ? "Hide Hint" : "💡 Hint"}
