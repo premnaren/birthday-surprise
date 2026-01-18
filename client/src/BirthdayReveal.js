@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import confetti from 'canvas-confetti'; 
 import './App.css'; 
-// 🎈 IMPORT BALLOONS (Make sure BalloonSky.js exists!)
 import BalloonSky from './BalloonSky'; 
 
+// 📸 CONFIGURATION 1: PHOTOS
 const MEMORIES = [
     { img: "/pic1.jpg", text: "My Love ❤️" },
     { img: "/pic2.jpg", text: "Best Day Ever" },
@@ -12,18 +12,35 @@ const MEMORIES = [
     { img: "/pic5.jpg", text: "Forever Us" }
 ];
 
-const START_DATE = "2023-11-13"; 
+// 💌 CONFIGURATION 2: YOUR LETTER (Write whatever you want here!)
+const LETTER_MESSAGE = `
+My Dearest Love,
+
+From the moment we met, my life changed forever. 
+Every laugh, every trip, and every quiet moment with you is a treasure I hold close to my heart.
+
+You are my best friend, my partner in crime, and my greatest adventure. 
+I can't wait to see what the future holds for us.
+
+Happy Birthday, my love! ❤️
+`;
+
+const START_DATE = "2022-10-16"; 
 
 const BirthdayReveal = () => {
     const [theme, setTheme] = useState(localStorage.getItem('app_theme') || 'system');
     const [curtainOpen, setCurtainOpen] = useState(false);
+    
+    // Note & Typewriter State
     const [noteOpen, setNoteOpen] = useState(false);
+    const [typedText, setTypedText] = useState("");
+
     const [currentIndex, setCurrentIndex] = useState(0); 
     const [time, setTime] = useState({ years: 0, days: 0, hours: 0, minutes: 0, seconds: 0 });
     const [candles, setCandles] = useState([true, true, true, true, true]); 
     const [wished, setWished] = useState(false);
     
-    // 🎵 MUSIC STATE
+    // Music State
     const [isPlaying, setIsPlaying] = useState(false);
     const audioRef = useRef(null);
 
@@ -59,7 +76,23 @@ const BirthdayReveal = () => {
         return () => clearInterval(interval);
     }, []);
 
-    // 🎵 UPDATED: Starts music + spinning state
+    // ⌨️ TYPEWRITER EFFECT LOGIC
+    useEffect(() => {
+        if (noteOpen) {
+            let i = 0;
+            setTypedText(""); // Reset text
+            const typingInterval = setInterval(() => {
+                if (i < LETTER_MESSAGE.length) {
+                    setTypedText(prev => prev + LETTER_MESSAGE.charAt(i));
+                    i++;
+                } else {
+                    clearInterval(typingInterval);
+                }
+            }, 50); // Speed: 50ms per letter
+            return () => clearInterval(typingInterval);
+        }
+    }, [noteOpen]);
+
     const handleCurtainClick = () => {
         setCurtainOpen(true);
         if (audioRef.current) {
@@ -68,7 +101,6 @@ const BirthdayReveal = () => {
         }
     };
 
-    // 🎵 NEW: Toggles music on/off
     const toggleMusic = () => {
         if (isPlaying) {
             audioRef.current.pause();
@@ -98,7 +130,7 @@ const BirthdayReveal = () => {
             {/* 🎵 SPINNING PHOTO FROM LAPTOP */}
             <div className="music-control" onClick={toggleMusic} style={{ zIndex: 1000 }}>
                 <img 
-                    src="/my-pic.jpg"  /* <--- Change this to your exact file name! */
+                    src="/my-pic.jpg" 
                     alt="Music Toggle" 
                     className={`music-icon ${isPlaying ? 'spinning' : ''}`} 
                 />
@@ -137,6 +169,7 @@ const BirthdayReveal = () => {
                         })}
                     </div>
                     
+                    {/* 💌 UPDATED NOTE SECTION */}
                     <div className="note-section">
                         {!noteOpen ? (
                             <div className="folded-note" onClick={() => setNoteOpen(true)}>
@@ -145,7 +178,8 @@ const BirthdayReveal = () => {
                             </div>
                         ) : (
                             <div className="note-content open" onClick={() => setNoteOpen(false)}>
-                                <p>To my love...<br/>(Write your letter here)</p>
+                                {/* This displays the Typewriter text with line breaks */}
+                                <p style={{ whiteSpace: 'pre-line' }}>{typedText}</p>
                             </div>
                         )}
                     </div>
