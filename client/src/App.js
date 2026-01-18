@@ -51,7 +51,7 @@ const quests = [
       id: 6, 
       question: "Food tastes better with you. What was the very first item we ordered when we hung out at the movie-themed cafe?", 
       // Note: We handle multiple answers in the check logic, but storing one main one here is fine for display
-      answer: "dragon chicken", 
+      answer: "dragon chicken"||"chicken roll"||"Chocolate ice cream", 
       hint: "Think spicy and sweet.",
       reward: "Yum! Reward: A 'Dinner Date Coupon' is yours. Dress code: Gorgeous. 🍽️🍷",
       rewardImage: "/dinner-ticket.png" // 📸 DINNER DATE IMAGE
