@@ -12,17 +12,18 @@ const TARGET_DATE = new Date("2026-02-07T00:00:00");
 const quests = [
     { 
       id: 1, 
-      question: "Let's go back to the start. This is something we completed together for the very first time. You started it, and I finished it, sparking the first words between us.", 
-      answer: "butterfly", 
-      hint: "Check your memory of your EG notebook.", 
-      reward: "Flutter by! A beautiful butterfly is waiting for you in your bag right now. 🦋" 
-    },
-    { 
-      id: 2, 
       question: "Names have power, but nicknames have love. Do you remember the very first nickname I ever gave you?", 
       answer: "jerry", 
-      hint: "It has a double 'rr' in it.",
+      hint: "It has a double 'rr' in it.", 
       reward: "You caught me! A set of Tom & Jerry stickers is waiting for you with your babhi. 🐭🐱" 
+    },
+    { 
+     id: 2, 
+      question: "A test of endurance and company. How long exactly did we sit together when we went to the movies for the first time?", 
+      answer: "3h 17m", 
+      hint: "Think 'Avatar'. Format: XH XM",
+      reward: "That's a lot of popcorn! Reward: One Free Movie Night ticket for your favorite film! and popcorn in on me😉🍿🎟️",
+      rewardImage: "/movie-ticket.png" 
     },
     { 
       id: 3, 
@@ -34,11 +35,10 @@ const quests = [
     },
     { 
       id: 4, 
-      question: "A test of endurance and company. How long exactly did we sit together when we went to the movies for the first time?", 
-      answer: "3h 17m", 
-      hint: "Think 'Avatar'. Format: XH XM",
-      reward: "That's a lot of popcorn! Reward: One Free Movie Night ticket for your favorite film! and popcorn in on me😉🍿🎟️",
-      rewardImage: "/movie-ticket.png" 
+      question: "Let's go back to the start. This is something we completed together for the very first time. You started it, and I finished it, sparking the first words between us.", 
+      answer: "butterfly", 
+      hint: "Check your memory of your notebook of first sem.",
+      reward: "Flutter by! A beautiful butterfly is waiting for you in your bag right now. 🦋",
     },
     { 
       id: 5, 
