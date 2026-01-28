@@ -21,7 +21,7 @@ const quests = [
      id: 2, 
       question: "A test of endurance and company. How long exactly did we sit together when we went to the movies for the first time?", 
       answer: "3h 17m", 
-      hint: "Think 'Avatar'. Format: XH XM",
+      hint: "XH XM",
       reward: "That's a lot of popcorn! Reward: One Free Movie Night ticket for your favorite film! and popcorn in on me😉🍿🎟️",
       rewardImage: "/movie-ticket.png" 
     },
@@ -31,7 +31,7 @@ const quests = [
       question: "Unlock the memory: Enter the date (DDMM) of the first time we ever played 'Red Hands' together.", 
       answer: "2007", 
       hint: "Unlock the memory: Enter the date (DDMM) of the first time we ever played 'Red Hands' together.",
-      reward: "Access Granted! Reward: You got a cashprise of 2007 INR! 💸" 
+      reward: "Access Granted! Reward: You got a cashprise of 200.7 INR! 💸" 
     },
     { 
       id: 4, 
