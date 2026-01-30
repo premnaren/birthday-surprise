@@ -15,7 +15,7 @@ const quests = [
       question: "Names have power, but nicknames have love. Do you remember the very first nickname I ever gave you?", 
       answer: "jerry", 
       hint: "It has a double 'rr' in it.", 
-      reward: "You caught me! A set of Tom & Jerry stickers is waiting for you with your babhi. 🐭🐱" 
+      reward: "You caught me! Jerry is waiting for you with your babhi. 🐭🐱" 
     },
     { 
      id: 2, 
