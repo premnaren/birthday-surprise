@@ -38,7 +38,7 @@ const quests = [
       question: "Let's go back to the start. This is something we completed together for the very first time. You started it, and I finished it, sparking the first words between us.", 
       answer: "butterfly", 
       hint: "Check your memory of your notebook of first sem.",
-      reward: "come again on 4PM in the evening😁😁",
+      reward: "Flutter by! A beautiful butterfly is waiting for you in your bag right now. 🦋",
     },
     { 
       id: 5, 
